@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="sun" cx="50%" cy="30%" r="45%">
+      <stop offset="0%" stop-color="#f5d77f" />
+      <stop offset="60%" stop-color="#d9ae4a" />
+      <stop offset="100%" stop-color="#b6892e" />
+    </radialGradient>
+    <linearGradient id="tree" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c9f36" />
+      <stop offset="100%" stop-color="#123f48" />
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="#f7f4ec" stroke="#d9ae4a" stroke-width="3" stroke-dasharray="6 4" />
+  <circle cx="100" cy="65" r="28" fill="url(#sun)" />
+  <path d="M100 50C85 50 72 62 74 76C64 80 60 92 68 102C72 106 80 108 88 106C94 114 106 114 112 106C120 108 128 106 132 102C140 92 136 80 126 76C128 62 115 50 100 50Z" fill="url(#tree)" />
+  <circle cx="88" cy="92" r="6" fill="#f7f4ec" />
+  <circle cx="112" cy="96" r="5" fill="#f7f4ec" />
+  <path d="M80 116C80 104 96 102 96 116M104 118C104 108 120 106 120 118" stroke="#f7f4ec" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M64 172C84 148 76 136 100 120C124 104 100 84 100 65" stroke="#d9ae4a" stroke-width="6" stroke-linecap="round" fill="none" />
+  <text x="100" y="194" text-anchor="middle" font-family="'Sora', sans-serif" font-weight="800" font-size="14" fill="#0b3037" letter-spacing="3">SHREE</text>
+</svg>
