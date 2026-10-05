@@ -1,4 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
+import {
+  Phone,
+  MessageCircle,
+  Mail,
+  MapPin,
+  Clock,
+  ArrowRight,
+  Menu as MenuIcon,
+  X as XIcon,
+  Check,
+  Calendar,
+  ExternalLink,
+  Headphones,
+  MessageSquare,
+  Activity,
+  Sparkles,
+  ShieldCheck
+} from 'lucide-react';
 
 // ==========================================
 // REAL HEALTHCARE PHOTOGRAPHY (from internet)
@@ -20,91 +38,232 @@ const SECTION3_BG =
   'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1280&q=85';
 
 // ==========================================
+// CLINIC CONTACT CONSTANTS
+// ==========================================
+const CLINIC_PHONE = '+91 79954 78069';
+const CLINIC_PHONE_CALL = 'tel:+917995478069';
+const CLINIC_WHATSAPP_NUM = '917995478069';
+const CLINIC_EMAIL = 'nimmasakethsaketh@gmail.com';
+const WHATSAPP_URL =
+  'https://wa.me/917995478069?text=Hello%20Shree%20Clinic,%20I%20would%20like%20to%20inquire%20about%20a%20consultation';
+
+const CLINIC_FULL_ADDRESS =
+  'SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203';
+const CLINIC_PLUS_CODE = 'C5QM+PX Mokila, Telangana';
+const CLINIC_MAP_URL =
+  'https://www.google.com/maps/search/?api=1&query=FREEDOM+HOSPITALS+SUBISHI+TOWN+CENTER+Mokila+Hyderabad+Telangana+501203';
+const CLINIC_MAP_EMBED_URL =
+  'https://maps.google.com/maps?q=FREEDOM%20HOSPITALS%2C%20SUBISHI%20TOWN%20CENTER%2C%20Shankarpalli%2C%20Mokila%2C%20Hyderabad%2C%20Telangana%20501203&t=&z=16&ie=UTF8&iwloc=&output=embed';
+
+const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.456 5.711 1.457h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/>
+  </svg>
+);
+
+// ==========================================
 // DATA CONSTANTS (SHREE MULTIDISCIPLINARY CLINIC)
 // Clear, simple, patient-centered descriptions
 // ==========================================
-const featureBars = [
-  '01. Audiology & Hearing Diagnostics',
-  '02. Speech, Voice & Swallowing Therapy',
-  '03. Physical & Neurological Rehabilitation'
+interface ClinicalDiscipline {
+  id: string;
+  title: string;
+  tagline: string;
+  serviceIdx: number;
+  icon: 'audiology' | 'speech' | 'physio';
+}
+
+const clinicalDisciplines: ClinicalDiscipline[] = [
+  {
+    id: 'audiology',
+    title: 'Audiology Services',
+    tagline: 'Complete Hearing Assessment & Hearing Aid Care',
+    serviceIdx: 0,
+    icon: 'audiology'
+  },
+  {
+    id: 'speech',
+    title: 'Speech Therapy',
+    tagline: 'Communication & Swallowing Solutions',
+    serviceIdx: 1,
+    icon: 'speech'
+  },
+  {
+    id: 'physio',
+    title: 'Physiotherapy',
+    tagline: 'Personalized Pain Relief & Motor Rehab',
+    serviceIdx: 2,
+    icon: 'physio'
+  }
+];
+
+export interface DetailedServiceItem {
+  title: string;
+  description: string;
+}
+
+export interface DetailedCategory {
+  id: string;
+  name: string;
+  tagline: string;
+  icon: 'audiology' | 'speech' | 'physio';
+  services: DetailedServiceItem[];
+}
+
+const detailedClinicServices: DetailedCategory[] = [
+  {
+    id: 'audiology',
+    name: 'Audiology Services',
+    tagline: 'Complete hearing assessment and hearing aid care for children and adults.',
+    icon: 'audiology',
+    services: [
+      {
+        title: 'Pure Tone Audiometry (PTA)',
+        description: 'Measures the softest sounds you can hear at different pitches to find the type and degree of hearing loss.'
+      },
+      {
+        title: 'Speech Audiometry',
+        description: 'Checks how clearly you understand speech, which guides hearing aid decisions.'
+      },
+      {
+        title: 'Tympanometry (Impedance Audiometry)',
+        description: 'A quick, painless test of eardrum and middle-ear function, useful for fluid and eardrum problems.'
+      },
+      {
+        title: 'OAE (if available)',
+        description: "An objective hearing screening test for infants and children who can't respond to regular tests."
+      },
+      {
+        title: 'Hearing Aid Consultation, Trial and Fitting',
+        description: 'Choosing, trying, programming and fine-tuning hearing aids, with follow-up visits and servicing.'
+      },
+      {
+        title: 'Hearing Aid Walk-ins',
+        description: 'Walk-in consultations, with a trial before you decide to buy.'
+      }
+    ]
+  },
+  {
+    id: 'speech',
+    name: 'Speech Therapy Services',
+    tagline: 'Assessment and therapy for communication and swallowing difficulties, from toddlers to older adults.',
+    icon: 'speech',
+    services: [
+      {
+        title: 'Speech Delay and Language Development',
+        description: 'Helps children who are late talkers or struggle to understand or express language.'
+      },
+      {
+        title: 'Articulation and Speech Sound Therapy',
+        description: 'Corrects unclear speech and mispronounced sounds.'
+      },
+      {
+        title: 'Stuttering/Fluency Therapy',
+        description: 'Techniques for smoother speech in children and adults.'
+      },
+      {
+        title: 'Voice Therapy',
+        description: 'For hoarseness, vocal strain and voice changes, including for teachers and other professional voice users.'
+      },
+      {
+        title: 'Aphasia and Post-Stroke Rehabilitation',
+        description: 'Rebuilding speech, language and communication after stroke or brain injury.'
+      },
+      {
+        title: 'Cognitive-Communication Therapy',
+        description: 'Support for memory, attention and communication problems after brain injury or in dementia.'
+      },
+      {
+        title: 'Dysphagia (Swallowing) Management',
+        description: 'Assessment and therapy for safe swallowing in children and adults.'
+      },
+      {
+        title: 'VitalStim Therapy for Dysphagia',
+        description: 'Gentle electrical stimulation of the swallowing muscles in the throat, combined with swallowing exercises, to help strengthen and retrain swallowing after stroke, brain injury or other neurological conditions.'
+      },
+      {
+        title: 'Autism and Developmental Disorders',
+        description: 'Social communication and language support.'
+      }
+    ]
+  },
+  {
+    id: 'physio',
+    name: 'Physiotherapy Services',
+    tagline: 'Personalized rehabilitation to reduce pain, restore movement and improve independence.',
+    icon: 'physio',
+    services: [
+      {
+        title: 'Musculoskeletal and Orthopaedic',
+        description: 'Back, neck and joint pain, arthritis, and fracture recovery.'
+      },
+      {
+        title: 'Neuro Rehabilitation',
+        description: "Stroke, paralysis, Parkinson's and nerve problems."
+      },
+      {
+        title: 'Pediatric Physiotherapy',
+        description: 'Developmental delay, cerebral palsy and motor difficulties.'
+      },
+      {
+        title: 'Geriatric Physiotherapy',
+        description: 'Mobility, balance and fall-prevention programs.'
+      },
+      {
+        title: 'Sports Injury and Post-Surgery Rehabilitation',
+        description: 'Safe recovery after injury or surgery.'
+      },
+      {
+        title: 'Electrotherapy and Exercise Therapy',
+        description: 'TENS, ultrasound, therapeutic exercise and similar modalities, as available.'
+      },
+      {
+        title: 'Home Visits (optional)',
+        description: 'Therapy at home, if you offer it.'
+      }
+    ]
+  }
 ];
 
 interface ServiceItem {
   id: string;
   name: string;
-  num: string | null;
   active: boolean;
   plainEnglishSummary: string;
   whoItHelps: string;
-  keyTreatments: string[];
+  treatmentCount: number;
+  icon: 'audiology' | 'speech' | 'physio';
 }
 
 const initialServices: ServiceItem[] = [
   {
     id: 'audiology',
-    name: 'Audiology &\nHearing Care',
-    num: '01',
+    name: 'Audiology\nServices',
     active: true,
     plainEnglishSummary:
-      'We test how well you hear sound and speech in quiet and noisy rooms. If you have hearing loss, we fit and verify digital hearing aids tailored to your ears.',
-    whoItHelps: 'Children with hearing delay, working adults struggling in meetings, and seniors wanting clear conversations.',
-    keyTreatments: [
-      'Pure Tone Audiometry (PTA) — Finds the softest sounds you can hear',
-      'Speech Audiometry — Tests how clearly you understand words',
-      'Tympanometry — Checks ear drum pressure and fluid buildup',
-      'OAE Newborn Screening — Early hearing check for babies',
-      'Hearing Aid Trial & Fitting — Real-ear calibrated hearing devices',
-      'Walk-In Device Care — Cleaning, tuning, and instant repairs'
-    ]
+      'Complete hearing assessment and hearing aid care for children and adults.',
+    whoItHelps: 'Infants, late-talking children, working adults, and seniors needing clear hearing.',
+    treatmentCount: 6,
+    icon: 'audiology'
   },
   {
     id: 'speech',
-    name: 'Speech &\nLanguage Therapy',
-    num: '02',
+    name: 'Speech Therapy\nServices',
     active: false,
     plainEnglishSummary:
-      'We help children and adults communicate clearly. This includes teaching children first words, correcting stammers, treating vocal fatigue, and helping stroke survivors regain speech and swallow safely.',
-    whoItHelps: 'Toddlers not speaking yet, school children who stutter, singers with voice strain, and stroke survivors.',
-    keyTreatments: [
-      'Speech Delay Therapy — Building vocabulary and clear sentences',
-      'Articulation Therapy — Correcting sound pronunciation',
-      'Stuttering & Fluency Therapy — Smooth, tension-free speech techniques',
-      'Voice Therapy — Relieving vocal strain, hoarseness, and fatigue',
-      'Aphasia Rehabilitation — Restoring language after stroke',
-      'VitalStim® Swallowing Therapy — Electrical stimulation for safe swallowing'
-    ]
+      'Assessment and therapy for communication and swallowing difficulties, from toddlers to older adults.',
+    whoItHelps: 'Late talkers, stuttering/fluency challenges, voice fatigue, and stroke rehabilitation.',
+    treatmentCount: 9,
+    icon: 'speech'
   },
   {
     id: 'physio',
-    name: 'Physiotherapy &\nRehabilitation',
-    num: '03',
+    name: 'Physiotherapy\nServices',
     active: false,
     plainEnglishSummary:
-      'We treat back pain, joint stiffness, sports injuries, and neurological conditions like stroke and Parkinson’s to restore your walking, balance, and independence.',
-    whoItHelps: 'People with chronic back pain, post-surgery patients, seniors worried about falling, and children with motor delays.',
-    keyTreatments: [
-      'Spine & Joint Physiotherapy — Relieving neck, back, and knee pain',
-      'Neuro Rehabilitation — Retraining balance and walking after stroke',
-      'Pediatric Physiotherapy — Helping babies sit, crawl, and walk',
-      'Geriatric Balance Training — Fall prevention and muscle strength',
-      'Post-Surgery Recovery — Step-by-step healing after joint surgery',
-      'Home Visit Physiotherapy — For bed-bound or acute patients'
-    ]
-  },
-  {
-    id: 'rehab',
-    name: 'Integrated\nNeuro Rehab',
-    num: null,
-    active: false,
-    plainEnglishSummary:
-      'When conditions affect both movement and speech (such as stroke or child development delays), our audiologists, speech pathologists, and physiotherapists work together as one team.',
-    whoItHelps: 'Stroke patients needing speech, swallowing, and walking therapy together, and children with developmental needs.',
-    keyTreatments: [
-      'Unified Stroke Recovery Roadmap',
-      'Child Developmental Milestone Team Assessment',
-      'Elderly Independence & Balance Program',
-      'Family Home Care Coaching'
-    ]
+      'Personalized rehabilitation to reduce pain, restore movement and improve independence.',
+    whoItHelps: 'Back & joint pain sufferers, post-surgery recovery, stroke patients, and motor delays.',
+    treatmentCount: 7,
   }
 ];
 
@@ -409,7 +568,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
 };
 
 // ==========================================
-// FIXED NAVBAR & MOBILE MENU
+// FIXED NAVBAR & SLIDE-OVER MENU
 // ==========================================
 interface NavbarProps {
   onBookClick: () => void;
@@ -433,114 +592,208 @@ const Navbar: React.FC<NavbarProps> = ({
     { label: 'Contact', href: '#contact' }
   ];
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    onCloseMenu();
+    const id = href.replace('#', '');
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-6 py-2 md:py-3 bg-white/90 backdrop-blur-md border-b border-neutral-100 transition-all">
-        {/* Logo (left side): Stacked with tight negative margin */}
-        <a href="#home" className="flex flex-col select-none group">
-          <span className="text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-none text-black">
-            SHREE
-          </span>
-          <span className="text-xl md:text-2xl font-extrabold uppercase tracking-tight leading-none text-black -mt-1.5 md:-mt-2">
-            CLINIC
-          </span>
-          <span className="text-[8px] md:text-[9px] font-medium leading-none mt-1.5 md:mt-2 uppercase tracking-widest text-neutral-600">
-            multidisciplinary healthcare
-          </span>
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-3 md:px-6 py-2 md:py-2.5 bg-white/95 backdrop-blur-md border-b border-neutral-100 transition-all shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)]">
+        {/* Official Clinic Logo */}
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, '#home')}
+          className="flex items-center select-none group py-0.5"
+          title="Shree Clinic"
+        >
+          <img
+            src="/shree-logo-transparent.png"
+            alt="Shree Clinic Logo"
+            className="h-10 sm:h-12 md:h-13 w-auto object-contain hover:opacity-90 transition-opacity drop-shadow-sm"
+          />
         </a>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6">
-          <button
-            onClick={onMenuToggle}
-            className="px-6 py-3 bg-white rounded-full border border-black text-sm font-semibold text-black hover:bg-black hover:text-white transition-colors duration-200"
-          >
-            Menu
-          </button>
+        {/* Desktop Direct Nav Links */}
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-xs font-bold text-neutral-600 hover:text-black transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Right Actions: Call, WhatsApp, Book, Menu */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+          {/* Quick Call Action */}
           <a
-            href="tel:+91"
-            className="text-sm font-semibold text-black hover:underline"
+            href={CLINIC_PHONE_CALL}
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 text-xs font-bold text-black transition-all shadow-sm active:scale-95 group"
+            title="Direct Helpline: +91 79954 78069"
           >
-            Care Desk: +91 [CONTACT REQUIRED]
+            <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <Phone className="w-2.5 h-2.5" />
+            </span>
+            <span className="hidden sm:inline font-semibold text-[11px] sm:text-xs">
+              Call
+            </span>
           </a>
+
+          {/* Quick WhatsApp Action */}
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 text-xs font-bold transition-all shadow-sm active:scale-95 group"
+            title="Chat on WhatsApp: +91 79954 78069"
+          >
+            <span className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <WhatsAppIcon className="w-3 h-3" />
+            </span>
+            <span className="hidden md:inline font-semibold text-[11px] sm:text-xs">
+              WhatsApp
+            </span>
+          </a>
+
+          {/* Book Appointment CTA */}
           <button
             onClick={onBookClick}
-            className="px-6 py-3 bg-black rounded-full text-white text-sm font-semibold hover:bg-neutral-800 transition-colors duration-200"
+            className="px-3 sm:px-5 py-1.5 sm:py-2 bg-black rounded-full text-white text-xs sm:text-sm font-semibold hover:bg-neutral-800 transition-all active:scale-95 shadow-sm"
           >
             Book Appointment
           </button>
-        </div>
 
-        {/* Mobile Hamburger (3 spans) */}
-        <button
-          onClick={onMenuToggle}
-          className="md:hidden w-10 h-10 flex items-center justify-center relative focus:outline-none"
-          aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-        >
-          <span
-            className={`absolute h-0.5 w-6 bg-black rounded-full transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-              mobileMenuOpen ? 'rotate-45 translate-y-0' : '-translate-y-2'
-            }`}
-          />
-          <span
-            className={`absolute h-0.5 w-6 bg-black rounded-full transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-              mobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
-            }`}
-          />
-          <span
-            className={`absolute h-0.5 w-6 bg-black rounded-full transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-              mobileMenuOpen ? '-rotate-45 translate-y-0' : 'translate-y-2'
-            }`}
-          />
-        </button>
+          {/* Universal Menu Button (Works for both Desktop & Mobile) */}
+          <button
+            onClick={onMenuToggle}
+            className="p-2 sm:px-3 sm:py-2 rounded-full border border-neutral-200 hover:border-black text-xs font-bold text-black flex items-center gap-1.5 hover:bg-black hover:text-white transition-colors"
+            aria-label="Toggle Navigation Menu"
+          >
+            <MenuIcon className="w-4 h-4" />
+            <span className="hidden xl:inline">Menu</span>
+          </button>
+        </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Universal Slide-over Drawer (Desktop & Mobile) */}
       <div
-        className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 transition-opacity duration-300 ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div onClick={onCloseMenu} className="absolute inset-0 bg-black/25 backdrop-blur-sm" />
+        <div onClick={onCloseMenu} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
 
         <div
-          className={`absolute top-0 right-0 h-full w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] flex flex-col justify-between p-8 ${
+          className={`absolute top-0 right-0 h-full w-[90%] max-w-md bg-white shadow-2xl transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between p-6 md:p-8 overflow-y-auto ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div className="flex flex-col gap-5 pt-12">
-            {navLinks.map((link, i) => (
+          {/* Drawer Header */}
+          <div className="flex items-center justify-between pb-5 border-b border-neutral-100">
+            <img
+              src="/shree-logo-transparent.png"
+              alt="Shree Clinic Logo"
+              className="h-10 w-auto object-contain"
+            />
+            <button
+              onClick={onCloseMenu}
+              className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-black font-bold transition-colors"
+              aria-label="Close menu"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="flex flex-col gap-3.5 py-6">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold">
+              Site Navigation
+            </span>
+            {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                onClick={onCloseMenu}
-                style={{
-                  transitionDelay: mobileMenuOpen ? `${100 + i * 50}ms` : '0ms'
-                }}
-                className={`text-3xl font-bold text-black hover:text-neutral-500 transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-                  mobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-                }`}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-2xl md:text-3xl font-bold text-black hover:text-neutral-500 transition-colors flex items-center justify-between group py-1"
               >
-                {link.label}
+                <span>{link.label}</span>
+                <ArrowRight className="w-5 h-5 text-neutral-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
               </a>
             ))}
           </div>
 
-          <div className="pt-8 border-t border-neutral-200">
-            <p className="text-xs font-mono font-bold text-neutral-400 uppercase tracking-widest mb-1">
-              Direct Clinical Assistance
-            </p>
-            <p className="text-sm font-semibold text-black mb-4">
-              Mon–Sat: 09:00 AM – 07:00 PM
-            </p>
+          {/* Direct Contact Card */}
+          <div className="pt-6 border-t border-neutral-200 space-y-3.5">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-bold block mb-1">
+                Direct Clinical Assistance
+              </span>
+              <p className="text-xs text-neutral-600">
+                Mon–Sat: 09:00 AM – 07:00 PM · Sunday: By Appointment
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <a
+                href={CLINIC_PHONE_CALL}
+                className="flex items-center gap-3 p-3 rounded-xl bg-neutral-50 hover:bg-neutral-100 border border-neutral-200/80 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center shrink-0">
+                  <Phone className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase font-mono text-neutral-500 font-bold">Call Helpline</span>
+                  <span className="text-sm font-bold text-black font-mono">{CLINIC_PHONE}</span>
+                </div>
+              </a>
+
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                  <WhatsAppIcon className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase font-mono text-emerald-700 font-bold">WhatsApp Direct</span>
+                  <span className="text-sm font-bold text-emerald-950 font-mono">{CLINIC_PHONE}</span>
+                </div>
+              </a>
+
+              <a
+                href={`mailto:${CLINIC_EMAIL}`}
+                className="flex items-center gap-3 p-3 rounded-xl bg-stone-50 hover:bg-stone-100 border border-neutral-200/80 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-full bg-neutral-800 text-white flex items-center justify-center shrink-0">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[10px] uppercase font-mono text-neutral-500 font-bold">Email Desk</span>
+                  <span className="text-xs font-semibold text-black truncate">{CLINIC_EMAIL}</span>
+                </div>
+              </a>
+            </div>
+
             <button
               onClick={() => {
                 onCloseMenu();
                 onBookClick();
               }}
-              className="w-full px-6 py-4 bg-black rounded-full text-white text-sm font-semibold hover:bg-neutral-800 transition-colors"
+              className="w-full py-3.5 bg-black rounded-full text-white text-xs font-bold hover:bg-neutral-800 transition-colors shadow-md mt-2"
             >
-              Book Consultation →
+              Book In-Person Consultation →
             </button>
           </div>
         </div>
@@ -592,6 +845,24 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   if (!isOpen) return null;
 
+  const getFullEnquiryUrl = () => {
+    const message = [
+      '*CLINICAL CONSULTATION ENQUIRY — SHREE CLINIC*',
+      '----------------------------------------',
+      `• *Patient / Guardian Name:* ${name.trim() || 'Not specified'}`,
+      `• *Contact Phone Number:* ${phone.trim() || 'Not specified'}`,
+      `• *Patient Age Group:* ${careTarget}`,
+      `• *Requested Clinical Service:* ${selectedService}`,
+      `• *Preferred Appointment Date:* ${date || 'Earliest available'}`,
+      `• *Preferred Time Window:* ${time}`,
+      `• *Symptoms / Clinical Concern:* ${concern.trim() || 'None provided'}`,
+      '----------------------------------------',
+      'Sent directly from Shree Clinic Website'
+    ].join('\n');
+
+    return `https://wa.me/917995478069?text=${encodeURIComponent(message)}`;
+  };
+
   const handleNext = () => {
     setErrorMsg('');
     if (step === 3 && !name.trim()) {
@@ -610,6 +881,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     if (step < 7) {
       setStep(step + 1);
     } else {
+      const url = getFullEnquiryUrl();
+      window.open(url, '_blank');
       setSubmitted(true);
     }
   };
@@ -679,9 +952,32 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">
                   Which clinical service do you need?
                 </h3>
-                <p className="text-xs text-neutral-600 mb-5">
-                  Choose the primary area of care or choose "Not Sure" if you want general guidance:
+                <p className="text-xs text-neutral-600 mb-4">
+                  Confirm your procedure or choose your primary area of care:
                 </p>
+
+                {selectedService &&
+                  ![
+                    'Audiology & Hearing Care',
+                    'Speech & Language Therapy',
+                    'Physiotherapy & Mobility',
+                    'Not Sure (Need Assessment)'
+                  ].includes(selectedService) && (
+                    <div className="mb-4 p-3.5 rounded-xl bg-black text-white flex items-center justify-between shadow-sm">
+                      <div>
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block font-semibold">
+                          Selected Procedure
+                        </span>
+                        <span className="text-sm font-bold text-white block mt-0.5">
+                          {selectedService}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold bg-white/20 text-white px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        Confirmed
+                      </span>
+                    </div>
+                  )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     { title: 'Audiology & Hearing Care', desc: 'Hearing tests, audiometry & hearing aid fittings' },
@@ -829,38 +1125,84 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
               <button
                 type="button"
                 onClick={handleNext}
-                className="px-8 py-3.5 rounded-full bg-black text-white text-xs md:text-sm font-bold hover:bg-neutral-800 transition-colors shadow-md"
+                className={`px-7 py-3.5 rounded-full text-white text-xs md:text-sm font-bold transition-all shadow-md active:scale-95 flex items-center gap-2 ${
+                  step < 7
+                    ? 'bg-black hover:bg-neutral-800'
+                    : 'bg-emerald-600 hover:bg-emerald-700'
+                }`}
               >
-                {step < 7 ? 'Next Step →' : 'REQUEST APPOINTMENT →'}
+                {step < 7 ? (
+                  'Next Step →'
+                ) : (
+                  <>
+                    <WhatsAppIcon className="w-4 h-4" />
+                    <span>SEND DETAILS TO CLINIC ({CLINIC_PHONE}) →</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
         ) : (
-          <div className="py-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+          <div className="py-6 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-5 text-2xl font-bold shadow-lg">
               ✓
             </div>
-            <h3 className="text-3xl font-bold text-black mb-2">
-              REQUEST RECEIVED.
+            <h3 className="text-2xl md:text-3xl font-bold text-black mb-2">
+              ENQUIRY SENT TO CLINIC
             </h3>
-            <p className="text-sm text-neutral-700 max-w-md mx-auto mb-6 leading-relaxed">
-              Thank you, <strong className="text-black">{name || 'Patient'}</strong>. We have logged your request. Our clinical care coordinator will call or message you shortly at <strong className="text-black">{phone}</strong> to confirm your appointment time.
+            <p className="text-xs md:text-sm text-neutral-700 max-w-md mx-auto mb-6 leading-relaxed">
+              Your details for <strong className="text-black">{name || 'Patient'}</strong> have been redirected to our displayed business number <strong className="text-black font-mono">{CLINIC_PHONE}</strong>. Our clinical team will confirm your consultation shortly.
             </p>
 
-            <div className="p-4 rounded-xl bg-stone-50 border border-neutral-200 text-left text-xs space-y-1.5 mb-6 text-black max-w-sm mx-auto">
-              <div><strong>Patient Group:</strong> {careTarget}</div>
-              <div><strong>Service:</strong> {selectedService}</div>
-              <div><strong>Preferred Schedule:</strong> {date || 'First Available'} ({time})</div>
-              <div><strong>Status:</strong> Pending Clinical Review</div>
+            <div className="p-4 sm:p-5 rounded-xl bg-stone-50 border border-neutral-200 text-left text-xs space-y-2 mb-6 text-black max-w-md mx-auto">
+              <div className="flex justify-between border-b border-neutral-200/70 pb-1.5">
+                <span className="text-neutral-500 font-semibold">Patient Name:</span>
+                <span className="font-bold text-black">{name || 'Not provided'}</span>
+              </div>
+              <div className="flex justify-between border-b border-neutral-200/70 pb-1.5">
+                <span className="text-neutral-500 font-semibold">Contact Phone:</span>
+                <span className="font-bold text-black font-mono">{phone}</span>
+              </div>
+              <div className="flex justify-between border-b border-neutral-200/70 pb-1.5">
+                <span className="text-neutral-500 font-semibold">Patient Category:</span>
+                <span className="font-bold text-black">{careTarget}</span>
+              </div>
+              <div className="flex justify-between border-b border-neutral-200/70 pb-1.5">
+                <span className="text-neutral-500 font-semibold">Requested Service:</span>
+                <span className="font-bold text-black">{selectedService}</span>
+              </div>
+              <div className="flex justify-between border-b border-neutral-200/70 pb-1.5">
+                <span className="text-neutral-500 font-semibold">Preferred Schedule:</span>
+                <span className="font-bold text-black">{date || 'Earliest Available'} ({time})</span>
+              </div>
+              {concern.trim() && (
+                <div className="pt-1">
+                  <span className="text-neutral-500 font-semibold block mb-0.5">Clinical Concern / Symptoms:</span>
+                  <p className="text-neutral-800 italic bg-white p-2.5 rounded-lg border border-neutral-200">{concern}</p>
+                </div>
+              )}
             </div>
 
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-8 py-3 bg-black text-white rounded-full text-xs font-bold hover:bg-neutral-800"
-            >
-              Done
-            </button>
+            {/* Direct Business Actions: "Done" button removed per owner request */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={getFullEnquiryUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-600 text-white rounded-full text-xs md:text-sm font-bold hover:bg-emerald-700 transition-all shadow-md active:scale-95"
+              >
+                <WhatsAppIcon className="w-4 h-4" />
+                <span>Open WhatsApp Chat ({CLINIC_PHONE})</span>
+              </a>
+
+              <a
+                href={CLINIC_PHONE_CALL}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black text-white rounded-full text-xs md:text-sm font-bold hover:bg-neutral-800 transition-all shadow-md active:scale-95"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>Call Business Number</span>
+              </a>
+            </div>
           </div>
         )}
       </div>
@@ -876,6 +1218,8 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [activeServices, setActiveServices] = useState<ServiceItem[]>(initialServices);
+  const [selectedCategoryTab, setSelectedCategoryTab] = useState<string>('all');
+  const [bookingService, setBookingService] = useState<string>('Audiology Services');
 
   const isMobile = useIsMobile();
 
@@ -903,6 +1247,15 @@ export default function App() {
         active: idx === index
       }))
     );
+    const catId = detailedClinicServices[index]?.id;
+    if (catId) {
+      setSelectedCategoryTab(catId);
+    }
+  };
+
+  const handleInquireTreatment = (treatmentName: string) => {
+    setBookingService(treatmentName);
+    setBookingModalOpen(true);
   };
 
   const activeServiceData = activeServices.find((s) => s.active) || activeServices[0];
@@ -914,7 +1267,7 @@ export default function App() {
 
       {/* 02. FIXED NAVBAR */}
       <Navbar
-        onBookClick={() => setBookingModalOpen(true)}
+        onBookClick={() => handleInquireTreatment(activeServiceData.name.replace('\n', ' '))}
         onMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
         mobileMenuOpen={mobileMenuOpen}
         onCloseMenu={() => setMobileMenuOpen(false)}
@@ -924,7 +1277,7 @@ export default function App() {
       <AppointmentModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
-        preselectedService={activeServiceData.name.replace('\n', ' ')}
+        preselectedService={bookingService}
       />
 
       {/* ======================================================== */}
@@ -936,28 +1289,58 @@ export default function App() {
           section1Ref.current = el;
           s1Reveal.containerRef.current = el;
         }}
-        className="min-h-screen md:h-screen w-full flex flex-col pt-24 md:pt-20 px-3 md:px-5 pb-1.5 md:pb-2 gap-1.5 md:gap-2"
+        className="min-h-screen md:h-screen w-full flex flex-col pt-20 md:pt-20 px-3 md:px-5 pb-2 md:pb-3 gap-2 md:gap-2.5"
       >
-        {/* 3 Clinical Feature Bars */}
-        {featureBars.map((text, i) => (
-          <MaskedCard
-            key={i}
-            cardRef={(el) => {
-              s1CardRefs.current[i] = el;
-            }}
-            bgImage={HERO_IMAGE}
-            position={s1Positions[i]}
-            imageDimensions={s1ImageDimensions}
-            focalX={isMobile ? 0.7 : 0.8}
-            style={s1Reveal.getAnimStyle(i)}
-            className="w-full h-11 md:h-13 shrink-0 rounded-xl md:rounded-2xl overflow-hidden relative shadow-sm border border-neutral-200/40"
-          >
-            <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px]" />
-            <span className="flex items-center justify-center h-full text-black text-sm md:text-xl font-bold text-center relative z-10 px-4 tracking-tight">
-              {text}
-            </span>
-          </MaskedCard>
-        ))}
+        {/* 3 Clinical Feature Disciplines - Premium 3-Column Glass Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5 md:gap-2.5 shrink-0 z-10">
+          {clinicalDisciplines.map((item, i) => (
+            <MaskedCard
+              key={item.id}
+              cardRef={(el) => {
+                s1CardRefs.current[i] = el;
+              }}
+              bgImage={HERO_IMAGE}
+              position={s1Positions[i]}
+              imageDimensions={s1ImageDimensions}
+              focalX={isMobile ? 0.7 : 0.8}
+              style={s1Reveal.getAnimStyle(i)}
+              onClick={() => {
+                handleSelectService(item.serviceIdx);
+                const el = document.getElementById(`category-${item.id}`) || document.getElementById('services');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full h-14 md:h-16 rounded-xl md:rounded-2xl overflow-hidden relative shadow-sm border border-neutral-200/70 hover:border-black/50 transition-all duration-300 cursor-pointer group hover:shadow-md"
+            >
+              <div className="absolute inset-0 bg-white/80 group-hover:bg-white/95 backdrop-blur-[6px] transition-colors duration-300" />
+              <div className="relative z-10 h-full px-3.5 md:px-5 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 md:gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center text-black shrink-0 group-hover:bg-black group-hover:text-white transition-all duration-300">
+                    {item.icon === 'audiology' && <Headphones className="w-4 h-4" />}
+                    {item.icon === 'speech' && <MessageSquare className="w-4 h-4" />}
+                    {item.icon === 'physio' && <Activity className="w-4 h-4" />}
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-black text-xs md:text-sm font-bold tracking-tight truncate leading-tight group-hover:text-black">
+                      {item.title}
+                    </span>
+                    <span className="text-[10px] md:text-[11px] font-medium text-neutral-600 truncate leading-tight mt-0.5">
+                      {item.tagline}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="hidden xl:inline text-[9px] font-mono uppercase tracking-wider text-neutral-500 font-semibold bg-black/5 px-2 py-0.5 rounded-md">
+                    Explore
+                  </span>
+                  <div className="w-6 h-6 rounded-full bg-black/5 group-hover:bg-black group-hover:text-white flex items-center justify-center transition-all duration-300">
+                    <ArrowRight className="w-3.5 h-3.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                </div>
+              </div>
+            </MaskedCard>
+          ))}
+        </div>
 
         {/* Main Hero Card (Card index 3) */}
         <MaskedCard
@@ -969,34 +1352,64 @@ export default function App() {
           imageDimensions={s1ImageDimensions}
           focalX={isMobile ? 0.7 : 0.8}
           style={s1Reveal.getAnimStyle(3)}
-          className="w-full flex-1 min-h-[360px] md:min-h-0 rounded-xl md:rounded-2xl overflow-hidden relative shadow-sm border border-neutral-200/50"
+          className="w-full flex-1 min-h-[380px] md:min-h-0 rounded-xl md:rounded-2xl overflow-hidden relative shadow-sm border border-neutral-200/50"
         >
           {/* Readability gradient scrim */}
-          <div className="absolute inset-0 bg-gradient-to-t from-white/75 via-white/20 to-white/50 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/20 to-white/40 pointer-events-none" />
 
           {/* Structured flex content container that prevents any overlapping */}
           <div className="relative z-10 h-full p-5 md:p-8 flex flex-col justify-between">
             {/* Top row */}
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-              <p className="text-black text-xs md:text-sm font-semibold leading-relaxed max-w-[280px] md:max-w-md bg-white/80 backdrop-blur-sm p-2.5 rounded-lg border border-neutral-200/40">
+              <p className="text-black text-xs md:text-sm font-semibold leading-relaxed max-w-[300px] md:max-w-md bg-white/85 backdrop-blur-md p-3 rounded-xl border border-neutral-200/60 shadow-sm">
                 Dedicated clinical care for children, adults & seniors
                 combining audiology, speech & physical rehabilitation.
               </p>
-              <span className="text-black text-xs font-semibold px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-neutral-200 shadow-sm w-fit shrink-0">
-                Direct Consultation Intake
-              </span>
+              <button
+                type="button"
+                onClick={() => setBookingModalOpen(true)}
+                className="inline-flex items-center gap-2 text-black text-xs font-bold px-4 py-2 rounded-full bg-white/95 hover:bg-black hover:text-white backdrop-blur-md border border-neutral-300 shadow-sm transition-all duration-200 w-fit shrink-0 cursor-pointer active:scale-95 group"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Direct Consultation Intake</span>
+                <ArrowRight className="w-3.5 h-3.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+              </button>
             </div>
 
             {/* Bottom row */}
-            <div className="pt-6">
-              <span className="block text-black text-xs md:text-sm font-semibold tracking-wider uppercase mb-1.5">
-                SHREE Multidisciplinary Healthcare Clinic
-              </span>
-              <h1 className="text-black text-[clamp(2.8rem,6.5vw,6rem)] font-bold leading-[0.86] tracking-tight">
-                Clinical
-                <br />
-                Care
-              </h1>
+            <div className="pt-4 md:pt-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                {/* Official Clinic Logo - Big, Clear & High Visibility */}
+                <div className="bg-white/95 backdrop-blur-md p-4 sm:p-5 md:p-6 rounded-2xl md:rounded-3xl border border-neutral-200/90 shadow-xl inline-flex items-center justify-center max-w-[280px] sm:max-w-[360px] md:max-w-[420px] transition-transform duration-300 hover:scale-[1.01]">
+                  <img
+                    src="/shree-logo.png"
+                    alt="Shree Clinic Logo"
+                    className="w-full h-auto max-h-24 sm:max-h-32 md:max-h-40 object-contain select-none"
+                  />
+                </div>
+
+                {/* Direct Quick Contact Action Pill - Clean Icons */}
+                <div className="mt-3.5 flex flex-wrap items-center gap-2 bg-white/90 backdrop-blur-md p-2 rounded-2xl border border-neutral-200/80 shadow-sm w-fit">
+                  <a
+                    href={CLINIC_PHONE_CALL}
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black text-white hover:bg-neutral-800 text-xs font-bold transition-all shadow-sm active:scale-95"
+                    title="Direct Call"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call Us</span>
+                  </a>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 text-xs font-bold transition-all shadow-sm active:scale-95"
+                    title="Direct WhatsApp"
+                  >
+                    <WhatsAppIcon className="w-3.5 h-3.5" />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </MaskedCard>
@@ -1061,12 +1474,21 @@ export default function App() {
                   <br />
                   Speak directly with our clinical coordinators.
                 </div>
-                <button
-                  onClick={() => setBookingModalOpen(true)}
-                  className="px-6 py-3.5 bg-black rounded-full text-white text-sm md:text-base font-bold hover:bg-neutral-800 transition-transform active:scale-95 shadow-md w-fit shrink-0"
-                >
-                  Call Us
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={CLINIC_PHONE_CALL}
+                    className="inline-flex items-center gap-2 px-4 py-3 bg-white text-black border border-neutral-300 rounded-full text-xs md:text-sm font-bold hover:bg-neutral-100 transition-all active:scale-95 shadow-sm"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call Us</span>
+                  </a>
+                  <button
+                    onClick={() => setBookingModalOpen(true)}
+                    className="px-5 py-3 bg-black rounded-full text-white text-xs md:text-sm font-bold hover:bg-neutral-800 transition-all active:scale-95 shadow-md"
+                  >
+                    Book Online
+                  </button>
+                </div>
               </div>
             </div>
           </MaskedCard>
@@ -1108,36 +1530,51 @@ export default function App() {
             style={s2Reveal.getAnimStyle(3)}
             className="col-span-1 md:col-span-2 rounded-xl md:rounded-2xl overflow-hidden relative min-h-[190px] md:min-h-0 shadow-sm border border-neutral-200/50"
           >
-            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-2.5 p-2 md:p-3 h-full">
+            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-2.5 p-2 md:p-3 h-full">
               {activeServices.map((svc, idx) => (
                 <div
                   key={svc.id}
-                  onClick={() => handleSelectService(idx)}
-                  className={`w-full h-full rounded-xl md:rounded-2xl p-3.5 md:p-5 flex flex-col justify-between cursor-pointer transition-all duration-300 ${
+                  onClick={() => {
+                    handleSelectService(idx);
+                    const el = document.getElementById(`category-${svc.id}`);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className={`w-full h-full rounded-xl md:rounded-2xl p-3.5 md:p-5 flex flex-col justify-between cursor-pointer transition-all duration-300 group ${
                     svc.active
-                      ? 'bg-white/95 backdrop-blur-md shadow-md scale-[1.01] border border-black/10'
-                      : 'bg-white/40 backdrop-blur-md hover:bg-white/60'
+                      ? 'bg-white/95 backdrop-blur-md shadow-md scale-[1.01] border border-black/20'
+                      : 'bg-white/50 backdrop-blur-md hover:bg-white/75'
                   }`}
                 >
-                  <h3
-                    className={`text-base md:text-xl font-bold leading-snug whitespace-pre-line ${
-                      svc.active ? 'text-black' : 'text-neutral-800'
-                    }`}
-                  >
-                    {svc.name}
-                  </h3>
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-black/5 border border-black/10 flex items-center justify-center text-black">
+                      {svc.icon === 'audiology' && <Headphones className="w-4 h-4" />}
+                      {svc.icon === 'speech' && <MessageSquare className="w-4 h-4" />}
+                      {svc.icon === 'physio' && <Activity className="w-4 h-4" />}
+                    </div>
+                    <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-neutral-500 bg-black/5 px-2.5 py-0.5 rounded-full">
+                      {svc.treatmentCount} Treatments
+                    </span>
+                  </div>
 
-                  {svc.num && (
-                    <div
-                      className={`self-end w-7 h-7 md:w-10 md:h-10 rounded-full border flex items-center justify-center text-xs md:text-sm font-semibold mt-2 ${
-                        svc.active
-                          ? 'border-black text-black bg-black/5'
-                          : 'border-neutral-400 text-neutral-600'
+                  <div className="mt-2.5">
+                    <h3
+                      className={`text-base md:text-xl font-bold leading-snug whitespace-pre-line ${
+                        svc.active ? 'text-black' : 'text-neutral-800'
                       }`}
                     >
-                      {svc.num}
-                    </div>
-                  )}
+                      {svc.name}
+                    </h3>
+                    <p className="text-[11px] text-neutral-600 mt-1 line-clamp-2 leading-relaxed">
+                      {svc.plainEnglishSummary}
+                    </p>
+                  </div>
+
+                  <div className="mt-2.5 flex items-center justify-between pt-2 border-t border-neutral-200/50">
+                    <span className="text-[10px] font-mono font-bold text-neutral-400 group-hover:text-black uppercase tracking-wider">
+                      Explore All Procedures
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                  </div>
                 </div>
               ))}
             </div>
@@ -1302,61 +1739,171 @@ export default function App() {
       {/* SECTION 4 - CLEAR CLINICAL PROCEDURES BREAKDOWN           */}
       {/* ======================================================== */}
       <section id="procedures" className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto">
-        <div className="mb-12 md:mb-16">
+        <div className="mb-10 md:mb-14">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
-            PRACTICE PROCEDURES · WHAT WE DO
+            CLINICAL DIRECTORY · ALL 22 EVIDENCE-BASED SERVICES
           </span>
-          <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
-            Specialized Procedures
-          </h2>
-          <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl">
-            Clear, evidence-based treatments explained in plain language so you and your family know exactly what to expect.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
+                Our Clinical Services
+              </h2>
+              <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl font-medium">
+                Comprehensive assessment and therapy across Audiology, Speech Therapy, and Physiotherapy. Every service is detailed below so you and your family can make informed healthcare choices.
+              </p>
+            </div>
+
+            {/* Direct Quick Assistance Badge */}
+            <div className="flex items-center gap-2 bg-stone-100 p-2 rounded-2xl border border-neutral-200 shrink-0">
+              <a
+                href={CLINIC_PHONE_CALL}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black text-white hover:bg-neutral-800 text-xs font-bold transition-all shadow-sm"
+              >
+                <Phone className="w-3 h-3" />
+                <span>Call Helpline</span>
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 text-xs font-bold transition-all shadow-sm"
+              >
+                <WhatsAppIcon className="w-3 h-3" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Interactive Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2 mt-8 pt-6 border-t border-neutral-200/80">
+            <button
+              type="button"
+              onClick={() => setSelectedCategoryTab('all')}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                selectedCategoryTab === 'all'
+                  ? 'bg-black text-white shadow-sm'
+                  : 'bg-stone-100 hover:bg-stone-200 text-neutral-700'
+              }`}
+            >
+              All Services (22)
+            </button>
+            {detailedClinicServices.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setSelectedCategoryTab(cat.id)}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                  selectedCategoryTab === cat.id
+                    ? 'bg-black text-white shadow-sm'
+                    : 'bg-stone-100 hover:bg-stone-200 text-neutral-700'
+                }`}
+              >
+                {cat.icon === 'audiology' && <Headphones className="w-3.5 h-3.5" />}
+                {cat.icon === 'speech' && <MessageSquare className="w-3.5 h-3.5" />}
+                {cat.icon === 'physio' && <Activity className="w-3.5 h-3.5" />}
+                <span>
+                  {cat.name} ({cat.services.length})
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-          {initialServices.slice(0, 3).map((item) => (
-            <div
-              key={item.id}
-              className="bg-stone-50 rounded-xl md:rounded-2xl p-6 md:p-8 flex flex-col justify-between border border-neutral-200"
-            >
-              <div>
-                <span className="text-xs font-mono font-bold text-neutral-400 block mb-3">
-                  {item.num} / CLINICAL DISCIPLINE
-                </span>
-                <h3 className="text-2xl md:text-3xl font-bold text-black whitespace-pre-line mb-3">
-                  {item.name}
-                </h3>
-                <p className="text-xs md:text-sm text-neutral-700 mb-4 leading-relaxed font-medium">
-                  {item.plainEnglishSummary}
-                </p>
+        {/* Categories and Treatment Cards */}
+        <div className="space-y-16">
+          {detailedClinicServices
+            .filter((cat) => selectedCategoryTab === 'all' || selectedCategoryTab === cat.id)
+            .map((category) => (
+              <div
+                key={category.id}
+                id={`category-${category.id}`}
+                className="scroll-mt-28"
+              >
+                {/* Category Header Banner */}
+                <div className="bg-white rounded-2xl p-5 md:p-6 border border-neutral-200 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex items-start md:items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-black text-white flex items-center justify-center shrink-0 shadow-sm">
+                      {category.icon === 'audiology' && <Headphones className="w-6 h-6" />}
+                      {category.icon === 'speech' && <MessageSquare className="w-6 h-6" />}
+                      {category.icon === 'physio' && <Activity className="w-6 h-6" />}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2.5">
+                        <h3 className="text-2xl md:text-3xl font-bold text-black">
+                          {category.name}
+                        </h3>
+                        <span className="text-[11px] font-mono font-semibold bg-stone-100 text-neutral-600 px-2.5 py-0.5 rounded-full border border-neutral-200">
+                          {category.services.length} Specialized Services
+                        </span>
+                      </div>
+                      <p className="text-xs md:text-sm text-neutral-600 mt-1 font-medium">
+                        {category.tagline}
+                      </p>
+                    </div>
+                  </div>
 
-                <div className="p-3 rounded-lg bg-neutral-100 text-xs text-neutral-700 mb-6">
-                  <strong className="text-black block mb-0.5">Who this helps:</strong>
-                  {item.whoItHelps}
+                  <button
+                    type="button"
+                    onClick={() => handleInquireTreatment(category.name)}
+                    className="self-start md:self-auto px-5 py-2.5 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-all shadow-sm shrink-0"
+                  >
+                    Consult {category.name.replace(' Services', '')} Specialist →
+                  </button>
                 </div>
 
-                <div className="space-y-2.5 pt-4 border-t border-neutral-200">
-                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-                    Key Clinical Procedures:
-                  </span>
-                  {item.keyTreatments.map((proc, pIdx) => (
-                    <div key={pIdx} className="flex items-start gap-2 text-xs font-semibold text-black">
-                      <span className="text-neutral-400 font-mono">0{pIdx + 1}.</span>
-                      <span>{proc}</span>
+                {/* Grid of All Services in this Category */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                  {category.services.map((service) => (
+                    <div
+                      key={service.title}
+                      className="bg-stone-50 hover:bg-white rounded-xl md:rounded-2xl p-6 md:p-7 flex flex-col justify-between border border-neutral-200/80 hover:border-black/40 transition-all duration-300 shadow-sm hover:shadow-md group"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3.5">
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500 bg-black/5 px-2.5 py-1 rounded-full">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            {category.name.replace(' Services', '')}
+                          </span>
+                          <span className="text-[10px] font-mono font-semibold text-neutral-400 uppercase tracking-widest">
+                            Evidence-Based
+                          </span>
+                        </div>
+
+                        <h4 className="text-xl font-bold text-black mb-3 leading-snug group-hover:text-black transition-colors">
+                          {service.title}
+                        </h4>
+
+                        <p className="text-xs md:text-sm text-neutral-600 leading-relaxed font-normal">
+                          {service.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-5 mt-6 border-t border-neutral-200/70 flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleInquireTreatment(service.title)}
+                          className="flex-1 py-2.5 px-4 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-all active:scale-95 shadow-sm flex items-center justify-center gap-1.5"
+                        >
+                          <span>Book Consultation</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                        <a
+                          href={`https://wa.me/917995478069?text=${encodeURIComponent(
+                            `Hello Shree Clinic, I would like to inquire about ${service.title}.`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2.5 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 transition-all active:scale-95 shrink-0"
+                          title={`WhatsApp inquiry for ${service.title}`}
+                        >
+                          <WhatsAppIcon className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-
-              <button
-                onClick={() => setBookingModalOpen(true)}
-                className="mt-8 w-full py-3.5 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-colors"
-              >
-                Inquire For {item.name.replace('\n', ' ')} →
-              </button>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
 
@@ -1461,43 +2008,122 @@ export default function App() {
       </section>
 
       {/* ======================================================== */}
-      {/* SECTION 7 - CONTACT & CLINIC DESK                        */}
+      {/* SECTION 7 - CONTACT, CLINIC LOCATION & MAPS               */}
       {/* ======================================================== */}
       <section id="contact" className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
-          <div className="bg-stone-50 p-6 md:p-12 rounded-xl md:rounded-2xl border border-neutral-200 flex flex-col justify-between min-h-[380px]">
+        <div className="mb-10 md:mb-14">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
+            CLINIC LOCATION & ACCESS · FREEDOM HOSPITALS
+          </span>
+          <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
+            Come See Us.
+          </h2>
+          <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl font-medium">
+            Located at Freedom Hospitals in Subishi Town Center, Mokila. Convenient clinical access with 24-hour facility support and dedicated therapy studios.
+          </p>
+        </div>
+
+        {/* 2-Column Info Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch mb-8">
+          {/* Card 1: Official Address & Clinic Info */}
+          <div className="bg-stone-50 p-6 md:p-10 rounded-2xl md:rounded-3xl border border-neutral-200 flex flex-col justify-between shadow-sm">
             <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
-                CLINIC LOCATION & INQUIRIES
-              </span>
-              <h2 className="text-3xl md:text-6xl font-bold text-black mb-6 leading-tight">
-                Come See Us.
-              </h2>
-              <div className="space-y-4 text-xs md:text-sm text-neutral-700">
-                <div>
-                  <strong className="block text-black">Address:</strong>
-                  [CLINIC LOCATION TO BE CONFIRMED ON LAUNCH], India
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                  Open 24 Hours Facility
+                </span>
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
+                Freedom Hospitals Facility
+              </h3>
+
+              <div className="space-y-3.5 text-xs md:text-sm text-neutral-700">
+                <div className="p-4 rounded-xl bg-white border border-neutral-200/90 shadow-sm">
+                  <div className="flex items-start gap-2.5">
+                    <MapPin className="w-4 h-4 text-black shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-black font-bold text-sm mb-1">
+                        Exact Hospital Address:
+                      </strong>
+                      <p className="text-neutral-800 font-medium leading-relaxed">
+                        SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203
+                      </p>
+                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                        <span className="inline-flex items-center gap-1 font-mono text-[11px] bg-stone-100 text-neutral-700 px-2.5 py-1 rounded-md border border-neutral-200 font-semibold">
+                          Plus Code: {CLINIC_PLUS_CODE}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <strong className="block text-black">Telephone Helpline:</strong>
-                  +91 [CONTACT REQUIRED]
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-xl bg-white border border-neutral-200 shadow-sm">
+                    <strong className="block text-black font-bold text-xs uppercase tracking-wider mb-1">
+                      Direct Helpline:
+                    </strong>
+                    <a href={CLINIC_PHONE_CALL} className="text-sm font-bold text-black font-mono hover:underline block">
+                      {CLINIC_PHONE}
+                    </a>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-white border border-neutral-200 shadow-sm">
+                    <strong className="block text-black font-bold text-xs uppercase tracking-wider mb-1">
+                      Direct WhatsApp:
+                    </strong>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-bold text-emerald-700 font-mono hover:underline block"
+                    >
+                      {CLINIC_PHONE}
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <strong className="block text-black">Consultation Windows:</strong>
-                  Monday – Saturday: 09:00 AM – 07:00 PM · Sunday: By Prior Appointment
+
+                <div className="p-3.5 rounded-xl bg-white border border-neutral-200 shadow-sm">
+                  <div className="flex items-start gap-2">
+                    <Clock className="w-4 h-4 text-black shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-black font-bold text-xs uppercase tracking-wider mb-0.5">
+                        Operating Hours:
+                      </strong>
+                      <p className="text-neutral-700 text-xs leading-relaxed">
+                        <strong className="text-black">Hospital Facility:</strong> Open 24 Hours
+                        <br />
+                        <strong className="text-black">Consultation Windows:</strong> Monday – Saturday: 09:00 AM – 07:00 PM · Sunday: By Prior Appointment
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <button
-              onClick={() => setBookingModalOpen(true)}
-              className="mt-8 px-8 py-4 bg-black text-white rounded-full font-bold text-xs md:text-sm hover:bg-neutral-800 transition-colors w-fit"
-            >
-              Book In-Person Consultation →
-            </button>
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              <button
+                type="button"
+                onClick={() => setBookingModalOpen(true)}
+                className="px-6 py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-all shadow-md active:scale-95"
+              >
+                Book In-Person Consultation →
+              </button>
+              <a
+                href={CLINIC_MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-5 py-3.5 bg-white text-black border border-neutral-300 rounded-full font-bold text-xs hover:bg-neutral-100 transition-all shadow-sm active:scale-95"
+              >
+                <span>Open in Google Maps</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
 
-          <div className="bg-zinc-200 p-6 md:p-12 rounded-xl md:rounded-2xl border border-neutral-300 min-h-[380px] flex flex-col justify-between">
+          {/* Card 2: Coordinator Support & Fast Navigation */}
+          <div className="bg-zinc-100 p-6 md:p-10 rounded-2xl md:rounded-3xl border border-neutral-200 flex flex-col justify-between shadow-sm">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-500 block mb-2">
                 SPEAK WITH A CARE COORDINATOR
@@ -1505,25 +2131,120 @@ export default function App() {
               <h3 className="text-2xl md:text-4xl font-bold text-black mb-4">
                 Have a question before booking?
               </h3>
-              <p className="text-xs md:text-sm text-neutral-700 leading-relaxed mb-6">
-                Our care coordinators can answer questions regarding speech milestones, hearing aid repairs, or home physiotherapy options.
+              <p className="text-xs md:text-sm text-neutral-700 leading-relaxed mb-6 font-medium">
+                Our care coordinators at Freedom Hospitals, Subishi Town Center are available directly on telephone or WhatsApp to answer questions regarding speech milestones, audiometry diagnostics, hearing aid trials, or home physiotherapy visits.
               </p>
+
+              <div className="space-y-2.5">
+                <a
+                  href={CLINIC_PHONE_CALL}
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 transition-all group shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase text-neutral-500 font-bold block">
+                        Telephone Helpline
+                      </span>
+                      <span className="text-sm font-bold text-black font-mono">
+                        {CLINIC_PHONE}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-neutral-400 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                </a>
+
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-all group shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
+                      <WhatsAppIcon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase text-emerald-700 font-bold block">
+                        WhatsApp Instant Inquiry
+                      </span>
+                      <span className="text-sm font-bold text-emerald-950 font-mono">
+                        {CLINIC_PHONE}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-all" />
+                </a>
+
+                <a
+                  href={`mailto:${CLINIC_EMAIL}`}
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 transition-all group shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-neutral-800 text-white flex items-center justify-center">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase text-neutral-500 font-bold block">
+                        Email Desk
+                      </span>
+                      <span className="text-xs font-semibold text-black">
+                        {CLINIC_EMAIL}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-neutral-400 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                </a>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="tel:+91"
-                className="px-6 py-3 bg-white text-black font-bold rounded-full text-xs hover:bg-neutral-100 transition-colors"
-              >
-                Call Clinic Desk
-              </a>
-              <a
-                href="https://wa.me/?text=Hello%20SHREE%20Clinic,%20I%20would%20like%20to%20inquire%20about%20an%20appointment."
-                className="px-6 py-3 bg-white text-black font-bold rounded-full text-xs hover:bg-neutral-100 transition-colors"
-              >
-                WhatsApp Inquiry
-              </a>
+            <div className="mt-6 pt-5 border-t border-neutral-200/80">
+              <span className="text-[11px] text-neutral-600 font-medium block">
+                📍 Subishi Town Center, Shankarpalli Road, Mokila, Hyderabad
+              </span>
             </div>
+          </div>
+        </div>
+
+        {/* Interactive Google Map Frame with Exact Location */}
+        <div className="rounded-2xl md:rounded-3xl overflow-hidden border border-neutral-200 bg-white shadow-lg">
+          <div className="p-4 md:p-5 bg-neutral-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white shrink-0">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-sm md:text-base font-bold text-white block">
+                  Freedom Hospitals, Subishi Town Center
+                </span>
+                <span className="text-xs text-neutral-300 font-mono">
+                  Mokila, Shankarpalli, Hyderabad · Plus Code: {CLINIC_PLUS_CODE}
+                </span>
+              </div>
+            </div>
+
+            <a
+              href={CLINIC_MAP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-black text-xs font-bold hover:bg-neutral-200 transition-all shrink-0 self-start sm:self-auto shadow-sm active:scale-95"
+            >
+              <span>Get Directions</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <div className="w-full h-[380px] sm:h-[440px] md:h-[500px] bg-stone-100 relative">
+            <iframe
+              title="Freedom Hospitals Subishi Town Center Mokila Map"
+              src={CLINIC_MAP_EMBED_URL}
+              className="w-full h-full border-0"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>
@@ -1538,13 +2259,54 @@ export default function App() {
               <span className="text-xs font-mono font-bold tracking-widest uppercase text-neutral-400 block mb-3">
                 SHREE MULTIDISCIPLINARY HEALTHCARE
               </span>
-              <h2 className="text-4xl md:text-8xl font-bold tracking-tight text-white leading-none">
+              <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-white leading-none mb-4">
                 Quality Healthcare.
               </h2>
+              <div className="flex items-start gap-2 text-xs text-neutral-300 max-w-xl mb-6">
+                <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="leading-relaxed">
+                    SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203
+                  </p>
+                  <a
+                    href={CLINIC_MAP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] text-emerald-400 hover:text-emerald-300 mt-1.5 font-semibold underline"
+                  >
+                    <span>View Location on Google Maps ({CLINIC_PLUS_CODE})</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-300">
+                <a href={CLINIC_PHONE_CALL} className="flex items-center gap-1.5 hover:text-white">
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{CLINIC_PHONE}</span>
+                </a>
+                <span>·</span>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-white"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5" />
+                  <span>WhatsApp Inquiries</span>
+                </a>
+                <span>·</span>
+                <a
+                  href={`mailto:${CLINIC_EMAIL}`}
+                  className="flex items-center gap-1.5 hover:text-white font-sans"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{CLINIC_EMAIL}</span>
+                </a>
+              </div>
             </div>
             <button
               onClick={() => setBookingModalOpen(true)}
-              className="px-8 py-4 bg-white text-black rounded-full font-bold text-xs md:text-sm hover:bg-neutral-200 transition-colors self-start md:self-end"
+              className="px-8 py-4 bg-white text-black rounded-full font-bold text-xs md:text-sm hover:bg-neutral-200 transition-colors self-start md:self-end shadow-lg"
             >
               Book Consultation →
             </button>
@@ -1560,6 +2322,37 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* ======================================================== */}
+      {/* 09. FLOATING ACTION DOCK (Call & WhatsApp Quick Access)   */}
+      {/* ======================================================== */}
+      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2 p-1.5 bg-white/95 backdrop-blur-lg rounded-full border border-neutral-200 shadow-xl transition-all duration-300 hover:shadow-2xl">
+        <a
+          href={CLINIC_PHONE_CALL}
+          aria-label={`Call ${CLINIC_PHONE}`}
+          className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center shadow hover:scale-105 active:scale-95 transition-transform"
+          title={`Call Clinic: ${CLINIC_PHONE}`}
+        >
+          <Phone className="w-4 h-4" />
+        </a>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`WhatsApp ${CLINIC_PHONE}`}
+          className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow hover:scale-105 active:scale-95 transition-transform"
+          title={`WhatsApp: ${CLINIC_PHONE}`}
+        >
+          <WhatsAppIcon className="w-4 h-4" />
+        </a>
+        <button
+          onClick={() => setBookingModalOpen(true)}
+          className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-neutral-900 text-white rounded-full text-xs font-bold hover:bg-black transition-colors"
+        >
+          <span>Book Visit</span>
+          <ArrowRight className="w-3 h-3" />
+        </button>
+      </div>
     </div>
   );
 }
