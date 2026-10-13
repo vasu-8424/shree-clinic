@@ -116,7 +116,7 @@ router.post('/', async (req: AuthenticatedRequest, res: Response): Promise<void>
 
     // Atomically create Patient and ConsentRecord with UHID in 1 transaction
     const result = await prisma.$transaction(async (tx) => {
-      const uhid = await generateNextUHID(tx);
+      const uhid = await generateNextUHID(tx as any);
 
       const patient = await tx.patient.create({
         data: {

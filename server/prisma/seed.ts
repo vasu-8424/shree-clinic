@@ -144,6 +144,11 @@ async function main() {
     console.log('ℹ️ Skipping sample inventory seed (SEED_SAMPLE_DATA != true)');
   }
 
+  // 4. Seed Website Images for /edit dynamic image manager
+  const { ensureDefaultWebsiteImages } = await import('../src/utils/seedImages.js');
+  await ensureDefaultWebsiteImages();
+  console.log('✅ Seeded All Default Website Images into Database for /edit route');
+
   console.log('🎉 Database Seeding Completed Successfully!');
 }
 

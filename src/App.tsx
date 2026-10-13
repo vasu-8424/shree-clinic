@@ -16,6 +16,7 @@ import {
   Paperclip,
   FileText
 } from 'lucide-react';
+import { useWebsiteImages } from './context/ImageContext';
 
 // ==========================================
 // REAL HEALTHCARE PHOTOGRAPHY (from internet)
@@ -1627,19 +1628,28 @@ export default function App() {
   const [activeSubGroup, setActiveSubGroup] = useState<Record<string, number>>({});
 
   const isMobile = useIsMobile();
+  const { resolveImageUrl } = useWebsiteImages();
+
+  // Dynamic Images from Database / Cache
+  const heroImage = resolveImageUrl(HERO_IMAGE);
+  const section2Image = resolveImageUrl(SECTION2_IMAGE);
+  const section3Img1 = resolveImageUrl(SECTION3_IMG1);
+  const section3Img2 = resolveImageUrl(SECTION3_IMG2);
+  const section3Bg = resolveImageUrl(SECTION3_BG);
+  const clinicLogo = resolveImageUrl('/shree-logo.png');
 
   // Section 1 Mask positions & dimensions
   const section1Ref = useRef<HTMLElement | null>(null);
   const s1CardRefs = useRef<(HTMLElement | null)[]>([]);
   const s1Positions = useMaskPositions(section1Ref, s1CardRefs);
-  const s1ImageDimensions = useImageDimensions(HERO_IMAGE);
+  const s1ImageDimensions = useImageDimensions(heroImage);
   const s1Reveal = useStaggeredReveal(0.1);
 
   // Section 2 Mask positions & dimensions
   const section2Ref = useRef<HTMLElement | null>(null);
   const s2CardRefs = useRef<(HTMLElement | null)[]>([]);
   const s2Positions = useMaskPositions(section2Ref, s2CardRefs);
-  const s2ImageDimensions = useImageDimensions(SECTION2_IMAGE);
+  const s2ImageDimensions = useImageDimensions(section2Image);
   const s2Reveal = useStaggeredReveal(0.1);
 
   // Section 3 Reveal
@@ -1781,7 +1791,7 @@ export default function App() {
           cardRef={(el) => {
             s1CardRefs.current[3] = el;
           }}
-          bgImage={HERO_IMAGE}
+          bgImage={heroImage}
           position={s1Positions[3]}
           imageDimensions={s1ImageDimensions}
           focalX={isMobile ? 0.7 : 0.8}
@@ -1803,7 +1813,7 @@ export default function App() {
                 {/* Official Clinic Logo - Big, Clear & High Visibility */}
                 <div className="bg-white/95 backdrop-blur-md p-4 sm:p-5 md:p-6 rounded-2xl md:rounded-3xl border border-neutral-200/90 shadow-xl inline-flex items-center justify-center max-w-[280px] sm:max-w-[360px] md:max-w-[420px] transition-transform duration-300 hover:scale-[1.01]">
                   <img
-                    src="/shree-logo.png"
+                    src={clinicLogo}
                     alt="Shree Clinic Logo"
                     className="w-full h-auto max-h-24 sm:max-h-32 md:max-h-40 object-contain select-none"
                   />
@@ -1831,7 +1841,7 @@ export default function App() {
             cardRef={(el) => {
               s2CardRefs.current[0] = el;
             }}
-            bgImage={SECTION2_IMAGE}
+            bgImage={section2Image}
             position={s2Positions[0]}
             imageDimensions={s2ImageDimensions}
             focalX={isMobile ? 0.65 : 0.8}
@@ -1854,7 +1864,7 @@ export default function App() {
             cardRef={(el) => {
               s2CardRefs.current[1] = el;
             }}
-            bgImage={SECTION2_IMAGE}
+            bgImage={section2Image}
             position={s2Positions[1]}
             imageDimensions={s2ImageDimensions}
             focalX={isMobile ? 0.65 : 0.8}
@@ -1890,7 +1900,7 @@ export default function App() {
             cardRef={(el) => {
               s2CardRefs.current[2] = el;
             }}
-            bgImage={SECTION2_IMAGE}
+            bgImage={section2Image}
             position={s2Positions[2]}
             imageDimensions={s2ImageDimensions}
             focalX={isMobile ? 0.65 : 0.8}
@@ -2024,16 +2034,22 @@ export default function App() {
             >
               <div className="flex-1 rounded-xl md:rounded-2xl overflow-hidden relative group border border-neutral-200">
                 <img
-                  src={SECTION3_IMG1}
+                  src={section3Img1}
                   alt="Pediatric child developmental speech and occupational therapy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = SECTION3_IMG1;
+                  }}
                 />
               </div>
               <div className="flex-1 rounded-xl md:rounded-2xl overflow-hidden relative group border border-neutral-200">
                 <img
-                  src={SECTION3_IMG2}
+                  src={section3Img2}
                   alt="Manual physical therapy joint mobilization and spine rehabilitation"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = SECTION3_IMG2;
+                  }}
                 />
               </div>
             </div>
@@ -2070,9 +2086,12 @@ export default function App() {
             className="rounded-xl md:rounded-2xl overflow-hidden relative min-h-[320px] md:min-h-0 group border border-neutral-200"
           >
             <img
-              src={SECTION3_BG}
+              src={section3Bg}
               alt="Audiologist specialist fitting pediatric digital hearing aid"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = SECTION3_BG;
+              }}
             />
 
             {/* Overlay Container */}
@@ -2249,10 +2268,13 @@ export default function App() {
                             <div className="relative rounded-2xl overflow-hidden border border-neutral-200 shadow-sm aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/5] bg-neutral-100 transition-all duration-300">
                               <img
                                 key={displayImage}
-                                src={displayImage}
+                                src={resolveImageUrl(displayImage)}
                                 alt={displayAlt}
                                 className="w-full h-full object-cover object-center transition-all duration-500"
                                 loading="lazy"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = displayImage;
+                                }}
                               />
                               <div className={`absolute top-3.5 left-3.5 ${badgeColor} text-[11px] font-mono font-bold px-3 py-1 rounded-full shadow-md transition-all`}>
                                 {displayBadge}
@@ -2298,7 +2320,14 @@ export default function App() {
                                         }`}
                                         title={`${grp.number}. ${grp.title}`}
                                       >
-                                        <img src={grp.image} alt={grp.title} className="w-full h-full object-cover" />
+                                        <img
+                                          src={resolveImageUrl(grp.image)}
+                                          alt={grp.title}
+                                          className="w-full h-full object-cover"
+                                          onError={(e) => {
+                                            (e.target as HTMLImageElement).src = grp.image;
+                                          }}
+                                        />
                                         <span className="absolute bottom-0.5 right-0.5 bg-black/85 text-white font-mono text-[9px] px-1 rounded font-bold">
                                           {grp.number}
                                         </span>

@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: shree-clinic-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: DATA_ENCRYPTION_KEY
+        sync: false
+      - key: ADMIN_EMAIL
+        value: admin@shreeclinic.com
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: INVOICE_PREFIX
+        value: SHREE/26-27/
+      - key: CLINIC_NAME
+        value: SHREE Multidisciplinary Healthcare
+      - key: CLINIC_PHONE
+        value: "+91 79954 78069"
+      - key: CLINIC_WHATSAPP
+        value: "+91 79954 78069"
+      - key: CLINIC_ADDRESS
+        value: "SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203"
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

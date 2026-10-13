@@ -560,3 +560,22 @@ model AuditLog {
   @@index([action, entity])
   @@map("audit_logs")
 }
+
+// -------------------------------------------------------------
+// 15. DYNAMIC WEBSITE IMAGES (Customizable via /edit)
+// -------------------------------------------------------------
+
+model WebsiteImage {
+  id          String   @id @default(uuid()) @db.Uuid
+  key         String   @unique @db.VarChar(100)
+  title       String   @db.VarChar(150)
+  section     String   @db.VarChar(50)
+  description String?  @db.Text
+  imageUrl    String   @db.Text
+  defaultUrl  String   @db.Text
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("website_images")
+}
+

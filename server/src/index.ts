@@ -26,8 +26,8 @@ app.use(
 );
 
 app.use(cookieParser());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: '12mb' }));
+app.use(express.urlencoded({ extended: true, limit: '12mb' }));
 
 // Global standard rate limiter on all API routes
 app.use('/api/', apiRateLimiter);
@@ -63,7 +63,12 @@ app.use('/api/v1/public/appointments', express.json({ limit: '10kb' }), appointm
 // 4. Patient & Consent Routes (/api/v1/patients/*)
 app.use('/api/v1/patients', patientRoutes);
 
-// 3. Example Protected Route to verify requireAuth middleware
+// 5. Dynamic Website Image Routes (/api/v1/images/*)
+import imageRoutes from './routes/image.routes.js';
+import { ensureDefaultWebsiteImages } from './utils/seedImages.js';
+app.use('/api/v1/images', imageRoutes);
+
+// 6. Example Protected Route to verify requireAuth middleware
 app.get('/api/v1/admin/ping', requireAuth, (req: AuthenticatedRequest, res) => {
   res.status(200).json({
     message: 'Authorized access to admin API.',
@@ -78,6 +83,8 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`🚀 SHREE Clinic Backend running on http://localhost:${env.PORT}`);
     console.log(`🏥 Clinic: ${env.CLINIC_NAME}`);
     console.log(`📊 Health check: http://localhost:${env.PORT}/api/v1/health`);
+    // Seed and verify website images in database
+    ensureDefaultWebsiteImages().catch(console.error);
   });
 }
 
