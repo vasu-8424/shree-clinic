@@ -1,0 +1,562 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// -------------------------------------------------------------
+// ENUMS
+// -------------------------------------------------------------
+
+enum DepartmentType {
+  SPEECH_THERAPY
+  AUDIOLOGY
+  HEARING_AID
+  PHYSIOTHERAPY
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  RESCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum EarSide {
+  LEFT
+  RIGHT
+  BINAURAL
+}
+
+enum HearingAidEnquiryStatus {
+  OPEN
+  TRIAL_SCHEDULED
+  CONVERTED
+  DROPPED
+}
+
+enum TrialOutcome {
+  ONGOING
+  PURCHASED
+  RETURNED
+  EXTENDED
+}
+
+enum InventoryStatus {
+  IN_STOCK
+  ON_TRIAL
+  SOLD
+  UNDER_REPAIR
+}
+
+enum RepairStatus {
+  SENT
+  IN_PROGRESS
+  RETURNED
+  DECOMMISSIONED
+}
+
+enum PaymentMode {
+  CASH
+  UPI
+  CREDIT_CARD
+  DEBIT_CARD
+  BANK_TRANSFER
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PARTIALLY_PAID
+  PAID
+  CANCELLED
+}
+
+enum ReminderChannel {
+  WHATSAPP
+  SMS
+}
+
+enum ReminderStatus {
+  PENDING
+  SENT
+  FAILED
+  SKIPPED
+}
+
+// -------------------------------------------------------------
+// 1. AUTHENTICATION & SINGLE ADMIN (With tokenVersion)
+// -------------------------------------------------------------
+
+model Admin {
+  id             String    @id @default(uuid()) @db.Uuid
+  email          String    @unique @db.VarChar(150)
+  passwordHash   String    @map("password_hash") @db.VarChar(255)
+  tokenVersion   Int       @default(0) @map("token_version")
+  failedAttempts Int       @default(0) @map("failed_attempts")
+  lockedUntil    DateTime? @map("locked_until")
+  lastLoginAt    DateTime? @map("last_login_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  auditLogs AuditLog[]
+
+  @@map("admin")
+}
+
+// -------------------------------------------------------------
+// 2. COUNTER & SEQUENCE GENERATOR (UHID & Invoices)
+// -------------------------------------------------------------
+
+model Counter {
+  key   String @id @db.VarChar(50) // e.g. "patient_uhid_2026", "invoice_26-27"
+  value Int    @default(0)
+
+  @@map("counters")
+}
+
+// -------------------------------------------------------------
+// 3. CLINIC SETTINGS
+// -------------------------------------------------------------
+
+model ClinicSettings {
+  id            String   @id @default(uuid()) @db.Uuid
+  clinicName    String   @default("SHREE Multidisciplinary Healthcare") @map("clinic_name") @db.VarChar(150)
+  address       String   @default("SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203") @db.Text
+  phone         String   @default("+91 79954 78069") @db.VarChar(20)
+  whatsapp      String   @default("+91 79954 78069") @db.VarChar(20)
+  gstin         String?  @db.VarChar(30)
+  rciNumber     String?  @map("rci_number") @db.VarChar(50)
+  invoiceFooter String?  @default("Thank you for choosing SHREE Multidisciplinary Healthcare. For clinical appointments and queries, contact: +91 79954 78069.") @map("invoice_footer") @db.Text
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("clinic_settings")
+}
+
+// -------------------------------------------------------------
+// 4. PATIENT MASTER RECORD & CONSENT (DPDP Act 2023 Compliant)
+// -------------------------------------------------------------
+
+model Patient {
+  id               String    @id @default(uuid()) @db.Uuid
+  uhid             String    @unique @db.VarChar(30) // e.g. SHREE-2026-0001
+  fullName         String    @map("full_name") @db.VarChar(150)
+  phone            String    @db.VarChar(20)
+  alternatePhone   String?   @map("alternate_phone") @db.VarChar(20)
+  email            String?   @db.VarChar(120)
+  age              Int?
+  gender           String?   @db.VarChar(20)
+  address          String?   @db.Text
+  referralSource   String?   @map("referral_source") @db.VarChar(150)
+  chiefComplaint   String    @map("chief_complaint") @db.Text
+  caseHistory      String?   @map("case_history") @db.Text // Encrypted at rest (AES-256-GCM)
+  isDeleted        Boolean   @default(false) @map("is_deleted")
+  deletedAt        DateTime? @map("deleted_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  consentRecords      ConsentRecord[]
+  visits              Visit[]
+  audiograms          Audiogram[]
+  attachments         Attachment[]
+  hearingAidEnquiries HearingAidEnquiry[]
+  hearingAidTrials    HearingAidTrial[]
+  hearingAidSales     HearingAidSale[]
+  therapyPlans        TherapyPlan[]
+  therapySessions     TherapySession[]
+  appointments        Appointment[]
+  invoices            Invoice[]
+  payments            Payment[]
+  reminderLogs        ReminderLog[]
+
+  @@index([phone])
+  @@index([fullName])
+  @@index([uhid])
+  @@index([isDeleted])
+  @@map("patients")
+}
+
+model ConsentRecord {
+  id             String    @id @default(uuid()) @db.Uuid
+  patientId      String    @map("patient_id") @db.Uuid
+  consentVersion String    @default("1.0") @map("consent_version") @db.VarChar(20)
+  consentGiven   Boolean   @default(true) @map("consent_given")
+  consentDate    DateTime  @default(now()) @map("consent_date")
+  withdrawn      Boolean   @default(false)
+  withdrawnDate  DateTime? @map("withdrawn_date")
+  ipAddress      String?   @map("ip_address") @db.VarChar(45)
+  notes          String?   @db.Text
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@map("consent_records")
+}
+
+// -------------------------------------------------------------
+// 5. CLINICAL VISITS & ENCOUNTERS
+// -------------------------------------------------------------
+
+model Visit {
+  id                  String         @id @default(uuid()) @db.Uuid
+  patientId           String         @map("patient_id") @db.Uuid
+  visitDate           DateTime       @default(now()) @map("visit_date")
+  visitType           DepartmentType @map("visit_type")
+  notes               String?        @db.Text // Encrypted (AES-256-GCM)
+  diagnosis           String?        @db.Text // Unencrypted for keyword search
+  plan                String?        @db.Text
+  nextAppointmentDate DateTime?      @map("next_appointment_date") @db.Date
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+
+  patient    Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  audiograms Audiogram[]
+
+  @@index([patientId])
+  @@index([visitDate])
+  @@map("visits")
+}
+
+// -------------------------------------------------------------
+// 6. AUDIOLOGY & ATTACHMENTS
+// -------------------------------------------------------------
+
+model Audiogram {
+  id                 String    @id @default(uuid()) @db.Uuid
+  patientId          String    @map("patient_id") @db.Uuid
+  visitId            String?   @map("visit_id") @db.Uuid
+  testDate           DateTime  @default(now()) @map("test_date") @db.Date
+  testType           String    @default("Pure Tone Audiometry") @map("test_type") @db.VarChar(80)
+  frequencies        Json      @db.JsonB
+  tympanometryLeft   String?   @map("tympanometry_left") @db.VarChar(30)
+  tympanometryRight  String?   @map("tympanometry_right") @db.VarChar(30)
+  interpretation     String?   @db.Text
+  attachmentId       String?   @map("attachment_id") @db.Uuid
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  patient    Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  visit      Visit?      @relation(fields: [visitId], references: [id], onDelete: SetNull)
+  attachment Attachment? @relation(fields: [attachmentId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@map("audiograms")
+}
+
+model Attachment {
+  id        String   @id @default(uuid()) @db.Uuid
+  patientId String   @map("patient_id") @db.Uuid
+  fileName  String   @map("file_name") @db.VarChar(255)
+  fileKey   String   @map("file_key") @db.VarChar(255) // Cloudinary public_id or S3 key (Private)
+  fileType  String   @map("file_type") @db.VarChar(80)
+  fileSize  Int      @map("file_size")
+  category  String   @default("clinical_report") @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  patient    Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  audiograms Audiogram[]
+
+  @@index([patientId])
+  @@map("attachments")
+}
+
+// -------------------------------------------------------------
+// 7. HEARING AID INVENTORY, REPAIRS, TRIALS & SALES
+// -------------------------------------------------------------
+
+model HearingAidInventory {
+  id            String          @id @default(uuid()) @db.Uuid
+  brand         String          @db.VarChar(80)
+  modelName     String          @map("model_name") @db.VarChar(120)
+  style         String          @db.VarChar(40)
+  serialNumber  String          @unique @map("serial_number") @db.VarChar(100)
+  purchasePrice Decimal?        @map("purchase_price") @db.Decimal(10, 2)
+  mrp           Decimal         @db.Decimal(10, 2)
+  status        InventoryStatus @default(IN_STOCK)
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+
+  repairs InventoryRepair[]
+  trials  HearingAidTrial[]
+  sales   HearingAidSale[]
+
+  @@index([serialNumber])
+  @@index([status])
+  @@map("hearing_aid_inventory")
+}
+
+model InventoryRepair {
+  id               String       @id @default(uuid()) @db.Uuid
+  inventoryId      String       @map("inventory_id") @db.Uuid
+  issueDescription String       @map("issue_description") @db.Text
+  sentDate         DateTime     @map("sent_date") @db.Date
+  returnedDate     DateTime?    @map("returned_date") @db.Date
+  repairCost       Decimal?     @map("repair_cost") @db.Decimal(10, 2)
+  vendor           String?      @db.VarChar(120)
+  status           RepairStatus @default(SENT)
+  notes            String?      @db.Text
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  inventory HearingAidInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+
+  @@index([inventoryId])
+  @@map("inventory_repairs")
+}
+
+model HearingAidEnquiry {
+  id          String                  @id @default(uuid()) @db.Uuid
+  patientId   String?                 @map("patient_id") @db.Uuid
+  name        String                  @db.VarChar(150)
+  phone       String                  @db.VarChar(20)
+  enquiryDate DateTime                @default(now()) @map("enquiry_date") @db.Date
+  source      String                  @default("Walk-in") @db.VarChar(80)
+  status      HearingAidEnquiryStatus @default(OPEN)
+  notes       String?                 @db.Text
+  createdAt   DateTime                @default(now()) @map("created_at")
+  updatedAt   DateTime                @updatedAt @map("updated_at")
+
+  patient Patient? @relation(fields: [patientId], references: [id], onDelete: SetNull)
+
+  @@index([phone])
+  @@map("hearing_aid_enquiries")
+}
+
+model HearingAidTrial {
+  id             String       @id @default(uuid()) @db.Uuid
+  patientId      String       @map("patient_id") @db.Uuid
+  inventoryId    String       @map("inventory_id") @db.Uuid
+  earSide        EarSide      @default(BINAURAL) @map("ear_side")
+  trialStartDate DateTime     @default(now()) @map("trial_start_date") @db.Date
+  trialEndDate   DateTime     @map("trial_end_date") @db.Date
+  depositAmount  Decimal      @default(0.00) @map("deposit_amount") @db.Decimal(10, 2)
+  feedback       String?      @db.Text
+  outcome        TrialOutcome @default(ONGOING)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
+  patient   Patient             @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  inventory HearingAidInventory @relation(fields: [inventoryId], references: [id], onDelete: Restrict)
+  sales     HearingAidSale[]
+
+  @@index([patientId])
+  @@index([trialEndDate])
+  @@index([outcome])
+  @@map("hearing_aid_trials")
+}
+
+model HearingAidSale {
+  id                   String    @id @default(uuid()) @db.Uuid
+  patientId            String    @map("patient_id") @db.Uuid
+  trialId              String?   @map("trial_id") @db.Uuid
+  inventoryId          String    @map("inventory_id") @db.Uuid
+  invoiceId            String?   @map("invoice_id") @db.Uuid
+  earSide              EarSide   @map("ear_side")
+  salePrice            Decimal   @map("sale_price") @db.Decimal(10, 2)
+  warrantyStartDate    DateTime  @map("warranty_start_date") @db.Date
+  warrantyEndDate      DateTime  @map("warranty_end_date") @db.Date
+  followUpReminderDate DateTime? @map("follow_up_reminder_date") @db.Date
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+
+  patient   Patient             @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  trial     HearingAidTrial?    @relation(fields: [trialId], references: [id], onDelete: SetNull)
+  inventory HearingAidInventory @relation(fields: [inventoryId], references: [id], onDelete: Restrict)
+  invoice   Invoice?            @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@map("hearing_aid_sales")
+}
+
+// -------------------------------------------------------------
+// 8. THERAPY PLANS & SESSION NOTES (SOAP)
+// -------------------------------------------------------------
+
+model TherapyPlan {
+  id          String         @id @default(uuid()) @db.Uuid
+  patientId   String         @map("patient_id") @db.Uuid
+  department  DepartmentType
+  title       String         @db.VarChar(150)
+  goals       String         @db.Text
+  homeProgram String?        @map("home_program") @db.Text
+  startDate   DateTime       @default(now()) @map("start_date") @db.Date
+  targetDate  DateTime?      @map("target_date") @db.Date
+  isActive    Boolean        @default(true) @map("is_active")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  patient  Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  sessions TherapySession[]
+
+  @@index([patientId])
+  @@map("therapy_plans")
+}
+
+model TherapySession {
+  id                  String         @id @default(uuid()) @db.Uuid
+  planId              String?        @map("plan_id") @db.Uuid
+  patientId           String         @map("patient_id") @db.Uuid
+  department          DepartmentType
+  sessionNumber       Int            @map("session_number")
+  sessionDate         DateTime       @default(now()) @map("session_date") @db.Date
+  subjective          String?        @db.Text // Encrypted (AES-256-GCM)
+  objective           String?        @db.Text // Encrypted (AES-256-GCM)
+  assessment          String?        @db.Text
+  planNext            String?        @map("plan_next") @db.Text
+  vitalstimUsed       Boolean        @default(false) @map("vitalstim_used")
+  homeProgramAssigned String?        @map("home_program_assigned") @db.Text
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+
+  plan    TherapyPlan? @relation(fields: [planId], references: [id], onDelete: SetNull)
+  patient Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([sessionDate])
+  @@map("therapy_sessions")
+}
+
+// -------------------------------------------------------------
+// 9. APPOINTMENTS (Optional appointmentDate for website intake)
+// -------------------------------------------------------------
+
+model Appointment {
+  id              String            @id @default(uuid()) @db.Uuid
+  patientId       String?           @map("patient_id") @db.Uuid
+  patientName     String            @map("patient_name") @db.VarChar(150)
+  phone           String            @db.VarChar(20)
+  department      DepartmentType
+  appointmentDate DateTime?         @map("appointment_date") @db.Date // Optional: NULL on initial web inquiry
+  timeSlot        String            @map("time_slot") @db.VarChar(60)
+  status          AppointmentStatus @default(PENDING)
+  healthConcern   String?           @map("health_concern") @db.Text
+  source          String            @default("website") @db.VarChar(40)
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+
+  patient      Patient?      @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  reminderLogs ReminderLog[]
+
+  @@index([appointmentDate, status])
+  @@index([phone])
+  @@map("appointments")
+}
+
+// -------------------------------------------------------------
+// 10. BILLING, GST INVOICES & PAYMENTS
+// -------------------------------------------------------------
+
+model Invoice {
+  id            String        @id @default(uuid()) @db.Uuid
+  invoiceNumber String        @unique @map("invoice_number") @db.VarChar(50) // e.g. SHREE/26-27/0001
+  patientId     String        @map("patient_id") @db.Uuid
+  invoiceDate   DateTime      @default(now()) @map("invoice_date") @db.Date
+  subtotal      Decimal       @db.Decimal(10, 2)
+  discount      Decimal       @default(0.00) @db.Decimal(10, 2)
+  isGstApplied  Boolean       @default(false) @map("is_gst_applied")
+  cgstRate      Decimal       @default(9.00) @map("cgst_rate") @db.Decimal(4, 2)
+  cgstAmount    Decimal       @default(0.00) @map("cgst_amount") @db.Decimal(10, 2)
+  sgstRate      Decimal       @default(9.00) @map("sgst_rate") @db.Decimal(4, 2)
+  sgstAmount    Decimal       @default(0.00) @map("sgst_amount") @db.Decimal(10, 2)
+  totalAmount   Decimal       @map("total_amount") @db.Decimal(10, 2)
+  amountPaid    Decimal       @default(0.00) @map("amount_paid") @db.Decimal(10, 2)
+  balanceDue    Decimal       @map("balance_due") @db.Decimal(10, 2)
+  status        InvoiceStatus @default(UNPAID)
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  patient  Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  items    InvoiceItem[]
+  payments Payment[]
+  sales    HearingAidSale[]
+
+  @@index([invoiceNumber])
+  @@index([patientId])
+  @@index([status])
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  invoiceId   String   @map("invoice_id") @db.Uuid
+  description String   @db.VarChar(255)
+  hsnSac      String?  @map("hsn_sac") @db.VarChar(20)
+  quantity    Int      @default(1)
+  unitPrice   Decimal  @map("unit_price") @db.Decimal(10, 2)
+  totalPrice  Decimal  @map("total_price") @db.Decimal(10, 2)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@map("invoice_items")
+}
+
+model Payment {
+  id                   String      @id @default(uuid()) @db.Uuid
+  invoiceId            String      @map("invoice_id") @db.Uuid
+  patientId            String      @map("patient_id") @db.Uuid
+  paymentDate          DateTime    @default(now()) @map("payment_date")
+  amount               Decimal     @db.Decimal(10, 2)
+  mode                 PaymentMode @default(UPI)
+  transactionReference String?     @map("transaction_reference") @db.VarChar(100)
+  notes                String?     @db.Text
+  createdAt            DateTime    @default(now()) @map("created_at")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@index([patientId])
+  @@map("payments")
+}
+
+// -------------------------------------------------------------
+// 11. REMINDER LOGS & AUDIT LOGS
+// -------------------------------------------------------------
+
+model ReminderLog {
+  id             String          @id @default(uuid()) @db.Uuid
+  appointmentId  String?         @map("appointment_id") @db.Uuid
+  patientId      String?         @map("patient_id") @db.Uuid
+  phone          String          @db.VarChar(20)
+  channel        ReminderChannel @default(WHATSAPP)
+  scheduledFor   DateTime        @map("scheduled_for")
+  sentAt         DateTime?       @map("sent_at")
+  status         ReminderStatus  @default(PENDING)
+  messageContent String          @map("message_content") @db.Text
+  errorDetails   String?         @map("error_details") @db.Text
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+  patient     Patient?     @relation(fields: [patientId], references: [id], onDelete: SetNull)
+
+  @@index([scheduledFor, status])
+  @@map("reminder_logs")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  adminId   String?  @map("admin_id") @db.Uuid
+  action    String   @db.VarChar(80) // VIEW, CREATE, UPDATE, DELETE, EXPORT
+  entity    String   @db.VarChar(80) // Patient, Audiogram, Invoice, etc.
+  entityId  String?  @map("entity_id") @db.VarChar(100)
+  ipAddress String?  @map("ip_address") @db.VarChar(45)
+  userAgent String?  @map("user_agent") @db.VarChar(255)
+  // Strict DPDP compliance: Contains ONLY field names and IDs, NEVER patient names, phones, or clinical text
+  details   Json?    @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at")
+
+  admin Admin? @relation(fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([action, entity])
+  @@map("audit_logs")
+}

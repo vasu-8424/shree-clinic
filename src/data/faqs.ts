@@ -16,7 +16,7 @@ export const faqsData: FAQItem[] = [
     id: "age-groups",
     category: "General",
     question: "What age groups do you treat?",
-    answer: "SHREE is a comprehensive multidisciplinary clinic equipped for patients of every generation: from neonates and toddlers requiring early developmental intervention, to active working adults, and seniors needing balance and mobility rehabilitation."
+    answer: "From a baby's first sounds to a grandparent's recovery, we care for every age: from neonates and toddlers requiring early developmental intervention, to active working adults, and seniors needing balance and mobility rehabilitation."
   },
   {
     id: "treat-children",
@@ -46,7 +46,7 @@ export const faqsData: FAQItem[] = [
     id: "home-visits",
     category: "Physiotherapy",
     question: "Do you provide home visits?",
-    answer: "Yes, home physiotherapy visits are available for patients who are bed-bound, acute post-operative, or have severe mobility limitations, subject to initial clinical evaluation and geographic catchment area availability."
+    answer: "Yes, home visits are available across physiotherapy, speech-language therapy, dysphagia therapy, and hearing aid testing, trials & fittings for patients who are bed-bound, elderly, or have severe mobility limitations, subject to initial clinical evaluation and location availability."
   },
   {
     id: "pre-booking-call",

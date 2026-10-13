@@ -39,7 +39,7 @@ export const clinicData: ClinicInfo = {
     address: "SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203",
     plusCode: "C5QM+PX Mokila, Telangana",
     facility: "Freedom Hospitals, Subishi Town Center",
-    hours: "Facility: Open 24 Hours · Consultations: Mon–Sat 09:00 AM – 07:00 PM · Sunday: By Appointment",
+    hours: "Monday to Saturday: 9:00 AM to 7:00 PM · Sunday: By prior appointment",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=FREEDOM+HOSPITALS+SUBISHI+TOWN+CENTER+Mokila+Hyderabad+Telangana+501203",
     mapEmbedUrl: "https://maps.google.com/maps?q=FREEDOM%20HOSPITALS%2C%20SUBISHI%20TOWN%20CENTER%2C%20Shankarpalli%2C%20Mokila%2C%20Hyderabad%2C%20Telangana%20501203&t=&z=16&ie=UTF8&iwloc=&output=embed"
   }

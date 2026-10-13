@@ -12,7 +12,9 @@ import {
   Calendar,
   ExternalLink,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Paperclip,
+  FileText
 } from 'lucide-react';
 
 // ==========================================
@@ -23,9 +25,9 @@ const HERO_IMAGE = '/images/hero-clinic-room.jpg';
 
 const SECTION2_IMAGE = '/images/clinic-facility-reception.jpg';
 
-const SECTION3_IMG1 = '/images/child_development.jpg';
+const SECTION3_IMG1 = '/images/speech-pediatric-therapy.png';
 
-const SECTION3_IMG2 = '/images/manual-therapy-mobilization.jpg';
+const SECTION3_IMG2 = '/images/physiotherapy-clinic-rehab.jpg';
 
 const SECTION3_BG = '/images/hearing-aid-fitting.jpg';
 
@@ -108,15 +110,15 @@ interface ClinicalDiscipline {
 const clinicalDisciplines: ClinicalDiscipline[] = [
   {
     id: 'audiology',
-    title: 'Audiology Services',
-    tagline: 'Complete Hearing Assessment & Hearing Aid Care',
+    title: 'Audiology',
+    tagline: 'Complete hearing assessment and hearing aid care',
     serviceIdx: 0,
     icon: 'audiology'
   },
   {
     id: 'speech',
     title: 'Speech Therapy',
-    tagline: 'Communication & Swallowing Solutions',
+    tagline: 'Speech language and swallowing care',
     serviceIdx: 1,
     icon: 'speech'
   },
@@ -129,9 +131,57 @@ const clinicalDisciplines: ClinicalDiscipline[] = [
   }
 ];
 
+export const AUDIOLOGY_PROCEDURES = [
+  'General Audiology & Hearing Consultation',
+  'Pure Tone Audiometry (PTA)',
+  'Speech Audiometry',
+  'Hearing Screening',
+  'Tympanometry & Middle Ear Assessment',
+  'Pediatric Hearing Assessment',
+  'Hearing Aid Evaluation & Fitting',
+  'Hearing Aid Counselling',
+  'Auditory Rehabilitation',
+  'Auditory Training',
+  'Tinnitus Counselling',
+  'Hearing Conservation & Occupational Hearing Assessment',
+] as const;
+
+export const SPEECH_THERAPY_PROCEDURES = [
+  'General Speech & Language Consultation',
+  'Speech & Language Therapy',
+  'Pediatric Speech & Language Therapy',
+  'Adult Neuro-Rehabilitation',
+  'Dysphagia & Swallowing Rehabilitation',
+  'VitalStim® Therapy',
+  'Stuttering & Fluency Therapy',
+  'Voice Therapy',
+  'Orofacial & Motor Speech Rehabilitation',
+  'AAC & Communication Support',
+  'Speech, Language & Swallowing Assessment',
+] as const;
+
+export const PHYSIOTHERAPY_PROCEDURES = [
+  'General Physiotherapy Consultation',
+  'Orthopedic Physiotherapy',
+  'Neurological Physiotherapy',
+  'Post-Stroke Rehabilitation',
+  'Post-Surgical Rehabilitation',
+  'Pain Management',
+  'Musculoskeletal Rehabilitation',
+  'Sports Injury Rehabilitation',
+  'Geriatric Physiotherapy',
+  'Pediatric Physiotherapy',
+  'Balance & Mobility Training',
+  'Strength & Functional Rehabilitation',
+  'Posture & Gait Training',
+  'Home-Based Physiotherapy',
+  'Exercise Therapy & Rehabilitation',
+] as const;
+
 export interface ClinicalSubGroup {
   number: number;
   title: string;
+  description?: string;
   image: string;
   imageAlt: string;
   imageBadge: string;
@@ -165,14 +215,14 @@ const detailedClinicServices: DetailedCategory[] = [
     tagline: 'Comprehensive hearing diagnostic assessments, objective infant screenings, and certified multi-brand digital hearing aid trials.',
     subtitle: 'Assessment, Diagnosis and Management for :',
     icon: 'audiology',
-    image: '/images/audiology-diagnostic-booth.jpg',
+    image: '/images/audiology-soundproof-booth.png',
     imageAlt: 'Pure tone audiometry hearing assessment in sound treated booth',
     imageBadge: 'Sound-Treated Audiology Suite',
     groups: [
       {
         number: 1,
         title: 'Diagnostic Hearing Tests',
-        image: '/images/audiology-diagnostic-booth.jpg',
+        image: '/images/audiology-soundproof-booth.png',
         imageAlt: 'Pure Tone Audiometry hearing test inside soundproof acoustic room',
         imageBadge: 'Sound-Treated Audiology Suite',
         items: [
@@ -235,108 +285,158 @@ const detailedClinicServices: DetailedCategory[] = [
     services: [
       { title: 'Pure Tone Audiometry (PTA)' },
       { title: 'Speech Audiometry' },
-      { title: 'Tympanometry (Impedance Audiometry)' },
-      { title: 'OAE Newborn Screening' },
-      { title: 'Hearing Aid Consultation, Trial and Fitting' },
-      { title: 'Tinnitus & Ear Protection Management' }
+      { title: 'Hearing Screening' },
+      { title: 'Tympanometry & Middle Ear Assessment' },
+      { title: 'Pediatric Hearing Assessment' },
+      { title: 'Hearing Aid Evaluation & Fitting' },
+      { title: 'Hearing Aid Counselling' },
+      { title: 'Auditory Rehabilitation' },
+      { title: 'Auditory Training' },
+      { title: 'Tinnitus Counselling' },
+      { title: 'Hearing Conservation & Occupational Hearing Assessment' }
     ]
   },
   {
     id: 'speech',
     name: 'Our Speech Language Pathology Services:',
     shortName: 'Speech Therapy',
-    tagline: 'Evidence-based clinical therapy for speech delays, voice disorders, stuttering, and swallowing rehabilitation across all age groups.',
-    subtitle: 'Assessment, Diagnosis and Therapy for :',
+    tagline: 'Assessment and therapy for speech, language, communication, developmental delays, neuro-rehabilitation, and swallowing difficulties across all ages.',
+    subtitle: 'Clinical Assessment, Diagnosis & Therapy for :',
     icon: 'speech',
-    image: '/images/speech-voice-therapy.jpg',
-    imageAlt: 'Specialized speech language pathology consultation room',
-    imageBadge: 'Specialized Speech & Swallowing Clinic',
+    image: '/images/speech-pediatric-therapy.png',
+    imageAlt: 'Pediatric speech and language therapy session with clinician and flashcards',
+    imageBadge: 'Pediatric Speech & Language Therapy',
     groups: [
       {
         number: 1,
-        title: 'Voice Disorders',
-        image: '/images/speech-voice-therapy.jpg',
-        imageAlt: 'Clinical voice therapy and acoustic assessment consultation',
-        imageBadge: 'Voice Disorders & Acoustic Therapy',
+        title: 'Pediatric Speech & Language Therapy',
+        description: 'Therapy for speech and language delay, articulation difficulties, developmental disorders, autism, and communication difficulties.',
+        image: '/images/speech-pediatric-therapy.png',
+        imageAlt: 'Pediatric speech and language therapy session with clinician and flashcards',
+        imageBadge: 'Pediatric Speech & Language Therapy',
         items: [
-          'Stroboscope Guidance & Voice Assessment',
-          'Puberphonia (High-Pitched Voice in Males)',
-          'Spastic Dysphonia & Vocal Tremors',
-          'Vocal Fold Paralysis & Paresis',
-          'Vocal Cord Nodules',
-          'Vocal Polyps & Chronic Hoarseness'
+          'Speech & Language Delay in Children',
+          'Articulation Difficulties & Sound Pronunciation',
+          'Developmental Disorders & Autism Communication Support',
+          'AAC & Augmentative Alternative Communication Support'
         ]
       },
       {
         number: 2,
-        title: 'Articulation Disorders',
-        image: '/images/speech-articulation.jpg',
-        imageAlt: 'Articulation and pronunciation speech clarity therapy session',
-        imageBadge: 'Articulation & Speech Clarity Clinic',
+        title: 'Adult Neuro-Rehabilitation',
+        description: 'Speech, language, cognitive-communication, and motor speech rehabilitation following stroke, brain injury, Parkinson’s disease, and other neurological conditions.',
+        image: '/images/speech-adult-therapy.png',
+        imageAlt: 'Adult neuro-rehabilitation and speech therapy session',
+        imageBadge: 'Adult Speech Therapy & Neuro-Rehab',
         items: [
-          'Pronunciation Errors & Sound Substitutions',
-          'Lisping & Unclear Speech Production',
-          'Childhood Apraxia of Speech (CAS)'
+          'Post-Stroke Speech & Language Recovery (Aphasia)',
+          'Cognitive-Communication Rehabilitation (Brain Injury & Parkinson’s)',
+          'Orofacial & Motor Speech Rehabilitation',
+          'Dysarthria & Apraxia of Speech Therapy'
         ]
       },
       {
         number: 3,
-        title: 'Fluency Disorders',
-        image: '/images/speech-fluency-stuttering.jpg',
-        imageAlt: 'Fluency and stuttering speech therapy session',
-        imageBadge: 'Fluency & Stuttering Therapy',
+        title: 'Dysphagia & Swallowing Rehabilitation',
+        description: 'Assessment and therapy for swallowing difficulties in children and adults, including neurological, medical, and post-surgical conditions.',
+        image: '/images/speech-adult-therapy.png',
+        imageAlt: 'Clinical dysphagia evaluation and swallowing rehabilitation therapy',
+        imageBadge: 'Adult Speech Therapy & Neuro-Rehab',
         items: [
-          'Stammering / Stuttering Therapy',
-          'Cluttering (Rapid or Irregular Speech)'
+          'Clinical Swallowing Assessment in Children & Adults',
+          'Therapy for Neurological & Medical Dysphagia',
+          'Post-Surgical Swallowing Rehabilitation',
+          'Safe Swallow Protocols & Diet Modification'
         ]
       },
       {
         number: 4,
-        title: 'Language Disorders',
-        image: '/images/speech-child-delays.jpg',
-        imageAlt: 'Pediatric speech and language developmental therapy session',
-        imageBadge: 'Pediatric Language & Communication',
+        title: 'VitalStim® Therapy',
+        description: 'Neuromuscular electrical stimulation-based therapy used as an adjunct to swallowing rehabilitation for selected patients with dysphagia.',
+        image: '/images/vitalstim-swallowing-therapy.png',
+        imageAlt: 'VitalStim Plus Electrotherapy and sEMG Biofeedback System for swallowing rehabilitation',
+        imageBadge: 'VitalStim® NMES Therapy',
         items: [
-          'Specific Language Impairment (SLI)',
-          'Delayed Speech and Language in Children',
-          'Language-Based Learning Disability',
-          'Autism Spectrum Communication Support'
+          'Non-Invasive Neuromuscular Electrical Stimulation (NMES)',
+          'Adjunct Swallowing Rehabilitation for Dysphagia',
+          'Swallowing Muscle Retraining & Biofeedback',
+          'Targeted Pharyngeal Musculature Activation'
         ]
       },
       {
         number: 5,
-        title: 'Neurogenic Disorders',
-        image: '/images/speech-neurogenic.jpg',
-        imageAlt: 'Neurogenic speech and stroke communication recovery therapy',
-        imageBadge: 'Neurogenic & Stroke Recovery',
+        title: 'Stuttering, Fluency & Voice Therapy',
+        description: 'Assessment and therapy for stuttering, fluency difficulties, voice, resonance, and vocal difficulties.',
+        image: '/images/speech-adult-therapy.png',
+        imageAlt: 'Fluency stuttering and voice therapy session',
+        imageBadge: 'Adult Speech Therapy & Neuro-Rehab',
         items: [
-          'Slurred Speech Following Stroke (Dysarthria)',
-          'Aphasia Post-Stroke Rehabilitation',
-          'Cognitive-Communication Therapy'
+          'Stuttering & Stammering Assessment & Therapy',
+          'Cluttering & Speech Flow Regulation',
+          'Clinical Voice Therapy (Nodules, Polyps, Hoarseness, Puberphonia)',
+          'Resonance, Vocal Fatigue & Cord Rehabilitation'
         ]
       },
       {
         number: 6,
-        title: 'VitalStim® Swallowing Therapy (Dysphagia)',
-        image: '/images/vitalstim-swallowing-therapy.jpg',
-        imageAlt: 'VitalStim therapy non-invasive neuromuscular electrical stimulation for swallowing difficulties',
-        imageBadge: 'VitalStim® Therapy System',
+        title: 'Speech, Language & Swallowing Assessment',
+        description: 'Comprehensive assessment to identify speech, language, fluency, voice, communication, and swallowing difficulties.',
+        image: '/images/speech-adult-therapy.png',
+        imageAlt: 'Comprehensive clinical speech, language and swallowing assessment',
+        imageBadge: 'Adult Speech Therapy & Neuro-Rehab',
         items: [
-          'Non-Invasive Neuromuscular Electrical Stimulation (NMES)',
-          'VitalStim® Therapy for Swallowing Muscles',
-          'Clinical Dysphagia Evaluation & Safe Swallow Protocols',
-          'Biofeedback-Guided Swallowing Muscle Retraining',
-          'Stroke, Neurological & Post-Intubation Dysphagia Recovery'
+          'Comprehensive Speech, Language & Communication Assessment',
+          'Clinical Fluency, Stuttering & Voice Diagnostic Evaluation',
+          'Bedside & Clinical Swallowing Diagnostic Evaluation',
+          'Hearing Screening, Audiological Assessment & Auditory Rehabilitation'
         ]
       }
     ],
     services: [
-      { title: 'Voice Disorders (Puberphonia, Nodules, Polyps)' },
-      { title: 'Articulation & Pronunciation Therapy' },
-      { title: 'Stuttering & Fluency Therapy' },
-      { title: 'Delayed Speech & Language Development' },
-      { title: 'Aphasia & Stroke Neurogenic Recovery' },
-      { title: 'VitalStim® Therapy for Swallowing Difficulties (Dysphagia)' }
+      {
+        title: 'Speech & Language Therapy',
+        description: 'Assessment and therapy for speech, language, communication, and developmental difficulties.'
+      },
+      {
+        title: 'Pediatric Speech & Language Therapy',
+        description: 'Therapy for speech and language delay, articulation difficulties, developmental disorders, autism, and communication difficulties.'
+      },
+      {
+        title: 'Adult Neuro-Rehabilitation',
+        description: 'Speech, language, cognitive-communication, and motor speech rehabilitation following stroke, brain injury, Parkinson’s disease, and other neurological conditions.'
+      },
+      {
+        title: 'Dysphagia & Swallowing Rehabilitation',
+        description: 'Assessment and therapy for swallowing difficulties in children and adults, including neurological, medical, and post-surgical conditions.'
+      },
+      {
+        title: 'VitalStim® Therapy',
+        description: 'Neuromuscular electrical stimulation-based therapy used as an adjunct to swallowing rehabilitation for selected patients with dysphagia.'
+      },
+      {
+        title: 'Stuttering & Fluency Therapy',
+        description: 'Assessment and therapy for stuttering and other fluency difficulties.'
+      },
+      {
+        title: 'Voice Therapy',
+        description: 'Assessment and management of voice, resonance, and vocal difficulties.'
+      },
+      {
+        title: 'Orofacial & Motor Speech Rehabilitation',
+        description: 'Therapy for dysarthria, apraxia of speech, oral-motor difficulties, and orofacial rehabilitation.'
+      },
+      {
+        title: 'AAC & Communication Support',
+        description: 'Assessment and support for individuals who require augmentative and alternative communication.'
+      },
+      {
+        title: 'Speech, Language & Swallowing Assessment',
+        description: 'Comprehensive assessment to identify speech, language, fluency, voice, communication, and swallowing difficulties.'
+      },
+      {
+        title: 'Audiology & Hearing Services',
+        description: 'Hearing screening, audiological assessment, hearing-related counselling, and auditory rehabilitation.'
+      }
     ]
   },
   {
@@ -346,16 +446,16 @@ const detailedClinicServices: DetailedCategory[] = [
     tagline: 'Personalized physical rehabilitation, advanced electrotherapy, manual joint mobilization, and stroke motor recovery.',
     subtitle: 'Assessment, Diagnosis and Rehabilitation for :',
     icon: 'physio',
-    image: '/images/physio-ortho-back-pain.jpg',
-    imageAlt: 'Orthopaedic spine, back and joint pain physical therapy',
-    imageBadge: 'Physical Rehabilitation Facility',
+    image: '/images/physiotherapy-clinic-rehab.jpg',
+    imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
+    imageBadge: 'Physical Rehabilitation Studio',
     groups: [
       {
         number: 1,
         title: 'Musculoskeletal & Orthopaedic Conditions',
-        image: '/images/physio-ortho-back-pain.jpg',
-        imageAlt: 'Orthopaedic spine, back and joint pain physical therapy',
-        imageBadge: 'Spine & Orthopaedic Pain Clinic',
+        image: '/images/physiotherapy-clinic-rehab.jpg',
+        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
+        imageBadge: 'Physical Rehabilitation Studio',
         items: [
           'Acute & Chronic Low Back Pain, Sciatica & Disc Bulge',
           'Cervical Spondylosis, Neck Pain & Postural Strain',
@@ -366,9 +466,9 @@ const detailedClinicServices: DetailedCategory[] = [
       {
         number: 2,
         title: 'Neurological Rehabilitation',
-        image: '/images/physio-neuro-rehab.jpg',
-        imageAlt: 'Stroke motor retraining and neurological physical therapy gym',
-        imageBadge: 'Neurological Rehabilitation Studio',
+        image: '/images/physiotherapy-clinic-rehab.jpg',
+        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
+        imageBadge: 'Physical Rehabilitation Studio',
         items: [
           'Stroke Recovery & Hemiplegia Motor Retraining',
           "Parkinson's Movement Therapy & Balance Retraining",
@@ -379,9 +479,9 @@ const detailedClinicServices: DetailedCategory[] = [
       {
         number: 3,
         title: 'Pediatric Physiotherapy',
-        image: '/images/physio-pediatric-motor.jpg',
-        imageAlt: 'Pediatric developmental motor physiotherapy session',
-        imageBadge: 'Pediatric Motor Development',
+        image: '/images/physiotherapy-clinic-rehab.jpg',
+        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
+        imageBadge: 'Physical Rehabilitation Studio',
         items: [
           'Developmental Delay & Motor Milestones',
           'Cerebral Palsy (CP) Rehabilitation & Spasticity Control',
@@ -391,9 +491,9 @@ const detailedClinicServices: DetailedCategory[] = [
       {
         number: 4,
         title: 'Geriatric Mobility & Fall Prevention',
-        image: '/images/physio-geriatric-mobility.jpg',
-        imageAlt: 'Geriatric balance training and physical therapy rehabilitation',
-        imageBadge: 'Geriatric Balance & Mobility',
+        image: '/images/physiotherapy-clinic-rehab.jpg',
+        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
+        imageBadge: 'Physical Rehabilitation Studio',
         items: [
           'Balance, Coordination & Safe Walking Training',
           'Age-Related Joint Mobility & Functional Independence'
@@ -402,9 +502,9 @@ const detailedClinicServices: DetailedCategory[] = [
       {
         number: 5,
         title: 'Electrotherapy & Exercise Modalities',
-        image: '/images/physio-exercise-gym.jpg',
-        imageAlt: 'Targeted therapeutic exercise gym and electrotherapy modalities',
-        imageBadge: 'Therapeutic Exercise & Gym Studio',
+        image: '/images/physiotherapy-clinic-rehab.jpg',
+        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
+        imageBadge: 'Physical Rehabilitation Studio',
         items: [
           'TENS, Ultrasound Therapy & Muscle Stimulation',
           'Targeted Therapeutic Exercises & Core Strengthening',
@@ -413,11 +513,20 @@ const detailedClinicServices: DetailedCategory[] = [
       }
     ],
     services: [
-      { title: 'Orthopaedic & Back Pain Rehabilitation' },
-      { title: 'Stroke & Neurological Motor Therapy' },
-      { title: 'Pediatric Developmental Physiotherapy' },
-      { title: 'Geriatric Mobility & Balance Therapy' },
-      { title: 'Electrotherapy & Therapeutic Exercises' }
+      { title: 'Orthopedic Physiotherapy' },
+      { title: 'Neurological Physiotherapy' },
+      { title: 'Post-Stroke Rehabilitation' },
+      { title: 'Post-Surgical Rehabilitation' },
+      { title: 'Pain Management' },
+      { title: 'Musculoskeletal Rehabilitation' },
+      { title: 'Sports Injury Rehabilitation' },
+      { title: 'Geriatric Physiotherapy' },
+      { title: 'Pediatric Physiotherapy' },
+      { title: 'Balance & Mobility Training' },
+      { title: 'Strength & Functional Rehabilitation' },
+      { title: 'Posture & Gait Training' },
+      { title: 'Home-Based Physiotherapy' },
+      { title: 'Exercise Therapy & Rehabilitation' }
     ]
   }
 ];
@@ -448,8 +557,8 @@ const initialServices: ServiceItem[] = [
     name: 'Speech Therapy\nServices',
     active: false,
     plainEnglishSummary:
-      'Assessment and therapy for communication and swallowing difficulties, from toddlers to older adults.',
-    whoItHelps: 'Late talkers, stuttering/fluency challenges, voice fatigue, and stroke rehabilitation.',
+      'Assessment and therapy for speech, language, communication, neuro-rehab and swallowing difficulties.',
+    whoItHelps: 'Children with delays, stuttering, voice disorders, swallowing difficulties, and adult neuro-rehabilitation.',
     treatmentCount: 9,
     icon: 'speech'
   },
@@ -476,7 +585,7 @@ const faqs = [
   },
   {
     q: 'What age groups do your clinicians treat?',
-    a: 'We treat all ages: infants and young children (pediatric speech delay, newborn hearing checks, motor delays), working adults (hearing health, voice therapy, back pain), and seniors (hearing aids, balance, and post-stroke recovery).'
+    a: "From a baby's first sounds to a grandparent's recovery, we care for every age: infants and young children (pediatric speech delay, newborn hearing checks, motor delays), working adults (hearing health, voice therapy, back pain), and seniors (hearing aids, balance, and post-stroke recovery)."
   },
   {
     q: 'What happens during a hearing test?',
@@ -484,7 +593,7 @@ const faqs = [
   },
   {
     q: 'How does speech therapy help children with speech delay?',
-    a: 'Our speech therapists use engaging, play-based activities to encourage children to imitate sounds, expand vocabulary, and speak in full sentences. Parents are actively included in sessions so you learn simple strategies to practice at home.'
+    a: 'Using evidence-based, play-based therapy, our speech-language pathologists help children imitate sounds, grow their vocabulary and speak in full sentences. Parents are included in every session and learn easy strategies to practice at home.'
   },
   {
     q: 'How many therapy sessions will I need?',
@@ -492,7 +601,7 @@ const faqs = [
   },
   {
     q: 'Do you offer home visits for elderly or bed-bound patients?',
-    a: 'Yes, home physiotherapy visits are available for patients who are unable to travel due to recent surgery, severe pain, or mobility limitations. Availability depends on location; please contact our care desk to confirm.'
+    a: 'Yes, home visits are available for physiotherapy, speech-language therapy, dysphagia therapy, and hearing aid testing, trials & fittings for patients who are unable to travel due to recent surgery, severe pain, or mobility limitations. Availability depends on location; please contact our care desk to confirm.'
   },
   {
     q: 'Can I speak with a clinician before scheduling an appointment?',
@@ -838,7 +947,7 @@ const Navbar: React.FC<NavbarProps> = ({
             onClick={onBookClick}
             className="px-4 sm:px-6 py-2 bg-black rounded-full text-white text-xs sm:text-sm font-semibold hover:bg-neutral-800 transition-all active:scale-95 shadow-sm"
           >
-            Book Appointment
+            Book an Appointment
           </button>
 
           {/* Universal Menu Button (Works for both Desktop & Mobile) */}
@@ -983,24 +1092,63 @@ interface AppointmentModalProps {
 const AppointmentModal: React.FC<AppointmentModalProps> = ({
   isOpen,
   onClose,
-  preselectedService = 'Audiology & Hearing Care'
+  preselectedService = 'Audiology'
 }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [selectedService, setSelectedService] = useState(preselectedService);
+  const [selectedDepartment, setSelectedDepartment] = useState<'Audiology' | 'Speech Therapy' | 'Physiotherapy'>('Audiology');
+  const [selectedProcedure, setSelectedProcedure] = useState<string>('General Audiology & Hearing Consultation');
   const [time, setTime] = useState<'Morning (9:00 AM – 1:00 PM)' | 'Evening (4:00 PM – 8:00 PM)'>('Morning (9:00 AM – 1:00 PM)');
+  const [file, setFile] = useState<File | null>(null);
   const [concern, setConcern] = useState('');
+  const [hp, setHp] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      setSelectedService(preselectedService);
+
+      const s = (preselectedService || '').toLowerCase().trim();
+      const isSpeech =
+        s.includes('speech') ||
+        s.includes('language') ||
+        s.includes('voice') ||
+        s.includes('swallow') ||
+        s.includes('vitalstim') ||
+        s.includes('stutter') ||
+        s.includes('apraxia') ||
+        s.includes('dysarthria') ||
+        SPEECH_THERAPY_PROCEDURES.some((p) => p.toLowerCase() === s);
+
+      const isPhysio =
+        s.includes('physio') ||
+        s.includes('ortho') ||
+        s.includes('stroke') ||
+        s.includes('mobility') ||
+        s.includes('gait') ||
+        s.includes('rehab') ||
+        PHYSIOTHERAPY_PROCEDURES.some((p) => p.toLowerCase() === s);
+
+      if (isSpeech) {
+        setSelectedDepartment('Speech Therapy');
+        const match = SPEECH_THERAPY_PROCEDURES.find((p) => p.toLowerCase() === s);
+        setSelectedProcedure(match || (preselectedService !== 'Speech Therapy' ? preselectedService : 'General Speech & Language Consultation'));
+      } else if (isPhysio) {
+        setSelectedDepartment('Physiotherapy');
+        const match = PHYSIOTHERAPY_PROCEDURES.find((p) => p.toLowerCase() === s);
+        setSelectedProcedure(match || (preselectedService !== 'Physiotherapy' ? preselectedService : 'General Physiotherapy Consultation'));
+      } else {
+        setSelectedDepartment('Audiology');
+        const match = AUDIOLOGY_PROCEDURES.find((p) => p.toLowerCase() === s);
+        setSelectedProcedure(match || (preselectedService !== 'Audiology' ? preselectedService : 'General Audiology & Hearing Consultation'));
+      }
     } else {
       document.body.style.overflow = '';
       setSubmitted(false);
       setErrorMsg('');
+      setHp('');
+      setFile(null);
     }
     return () => {
       document.body.style.overflow = '';
@@ -1009,15 +1157,47 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   if (!isOpen) return null;
 
+  const handleDepartmentChange = (dept: 'Audiology' | 'Speech Therapy' | 'Physiotherapy') => {
+    setSelectedDepartment(dept);
+    if (dept === 'Audiology') {
+      setSelectedProcedure('General Audiology & Hearing Consultation');
+    } else if (dept === 'Speech Therapy') {
+      setSelectedProcedure('General Speech & Language Consultation');
+    } else {
+      setSelectedProcedure('General Physiotherapy Consultation');
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        setErrorMsg('File size must be under 10MB.');
+        return;
+      }
+      setErrorMsg('');
+      setFile(selectedFile);
+    }
+  };
+
+  const currentProcedures =
+    selectedDepartment === 'Audiology'
+      ? AUDIOLOGY_PROCEDURES
+      : selectedDepartment === 'Speech Therapy'
+      ? SPEECH_THERAPY_PROCEDURES
+      : PHYSIOTHERAPY_PROCEDURES;
+
   const getFullEnquiryUrl = () => {
     const message = [
       '*CLINICAL CONSULTATION APPOINTMENT — SHREE CLINIC*',
       '----------------------------------------',
       `• *Patient Name:* ${name.trim() || 'Not specified'}`,
       `• *Contact Number:* ${phone.trim() || 'Not specified'}`,
-      `• *Service Required:* ${selectedService}`,
+      `• *Department:* ${selectedDepartment}`,
+      selectedProcedure ? `• *Service / Procedure:* ${selectedProcedure}` : null,
       `• *Preferred Time:* ${time}`,
-      concern.trim() ? `• *Health Concern:* ${concern.trim()}` : null,
+      file ? `• *Medical Records:* Attached (${file.name}) — ready to share in this chat` : null,
+      concern.trim() ? `• *Health Note:* ${concern.trim()}` : null,
       '----------------------------------------',
       'Sent from Shree Clinic Website'
     ].filter(Boolean).join('\n');
@@ -1038,9 +1218,65 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       return;
     }
 
+    // 1. Immediately open WhatsApp synchronously inside user click event to prevent popup blockers
     const url = getFullEnquiryUrl();
     window.open(url, '_blank');
     setSubmitted(true);
+
+    // 2. Normalize phone to E.164 (+91XXXXXXXXXX) format
+    let normalizedPhone = phone.trim().replace(/[\s\-\.\(\)]/g, '');
+    if (normalizedPhone.startsWith('+91')) {
+      // already normalized
+    } else if (normalizedPhone.startsWith('91') && normalizedPhone.length === 12) {
+      normalizedPhone = `+${normalizedPhone}`;
+    } else if (normalizedPhone.startsWith('0') && normalizedPhone.length === 11) {
+      normalizedPhone = `+91${normalizedPhone.slice(1)}`;
+    } else if (/^\d{10}$/.test(normalizedPhone)) {
+      normalizedPhone = `+91${normalizedPhone}`;
+    }
+
+    // 3. Fire asynchronous background API request with 5s timeout; swallow errors silently
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    const canonicalDepartmentService =
+      selectedDepartment === 'Audiology'
+        ? 'Audiology & Hearing Care'
+        : selectedDepartment === 'Speech Therapy'
+        ? 'Speech & Language Therapy'
+        : 'Physiotherapy & Mobility';
+
+    const combinedConcern = [
+      selectedProcedure && !selectedProcedure.startsWith('General') ? `Procedure: ${selectedProcedure}` : null,
+      file ? `Medical Record: ${file.name}` : null,
+      concern.trim() || null,
+    ].filter(Boolean).join(' | ');
+
+    fetch('/api/v1/public/appointments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name.trim(),
+        phone: normalizedPhone,
+        service: canonicalDepartmentService,
+        timeSlot: time,
+        concern: combinedConcern || undefined,
+        hp: hp.trim() || undefined,
+      }),
+      signal: controller.signal,
+    })
+      .then((res) => {
+        clearTimeout(timeoutId);
+        if (!res.ok) {
+          console.warn('Appointment intake status non-200');
+        }
+      })
+      .catch((_err) => {
+        clearTimeout(timeoutId);
+        console.warn('Appointment intake background dispatch ignored');
+      });
   };
 
   return (
@@ -1059,35 +1295,41 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         {!submitted ? (
           <div>
             {/* Header */}
-            <div className="mb-3.5 pr-8">
-              <span className="text-[10px] font-mono font-bold tracking-wider text-[#053543] uppercase bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full inline-block mb-1.5">
-                Easy Consultation Booking
-              </span>
+            <div className="mb-3 pr-10">
               <h3 className="text-2xl sm:text-3xl font-bold text-black tracking-tight leading-tight">
                 Book an Appointment
               </h3>
-              <p className="text-xs text-neutral-600 mt-1">
-                Simple 1-step form for patients and seniors. We will confirm your visit promptly.
-              </p>
             </div>
 
-            {/* Quick Call Box for Seniors */}
-            <div className="mb-4 p-3 rounded-2xl bg-teal-50/70 border border-teal-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            {/* Quick Direct Contact (Call & WhatsApp Options) */}
+            <div className="mb-4 p-3 rounded-2xl bg-stone-50 border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-full bg-[#053543] text-white flex items-center justify-center shrink-0">
-                  <Phone className="w-3.5 h-3.5" />
+                <div className="w-8 h-8 rounded-full bg-[#053543] text-white flex items-center justify-center shrink-0">
+                  <Phone className="w-4 h-4" />
                 </div>
                 <div className="text-xs text-neutral-800">
                   <span className="font-semibold block text-neutral-900">Prefer to speak directly?</span>
-                  <span>Call our clinic reception desk</span>
+                  <span className="text-neutral-600">Call our reception</span>
                 </div>
               </div>
-              <a
-                href={CLINIC_PHONE_CALL}
-                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 bg-[#053543] text-white text-xs font-bold rounded-full hover:bg-[#0891b2] transition-colors shrink-0 shadow-sm"
-              >
-                <span>Call {CLINIC_PHONE}</span>
-              </a>
+              <div className="flex items-center gap-2 shrink-0">
+                <a
+                  href={CLINIC_PHONE_CALL}
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#053543] text-white text-xs font-bold rounded-full hover:bg-[#0891b2] transition-colors shadow-xs"
+                >
+                  <Phone className="w-3 h-3" />
+                  <span>Call {CLINIC_PHONE}</span>
+                </a>
+                <a
+                  href={`https://wa.me/917995478069?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-xs font-bold rounded-full hover:bg-[#20ba59] transition-colors shadow-xs"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
             </div>
 
             {errorMsg && (
@@ -1123,30 +1365,30 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter 10-digit mobile number"
+                  placeholder="e.g. 98765 43210"
                   className="w-full p-3.5 rounded-xl border-2 border-neutral-300 text-base font-semibold text-neutral-900 placeholder:text-neutral-400 focus:border-[#053543] focus:outline-none transition-colors"
                 />
               </div>
 
-              {/* Field 3: Service Selection (Big Touch-Friendly Cards) */}
+              {/* Field 3: Service Selection */}
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-                  3. Select Service Needed
+                  3. Select a service
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
                   {[
                     {
-                      id: 'Audiology & Hearing Care',
-                      label: 'Hearing Care',
-                      sub: 'Ear & Hearing Aids',
+                      id: 'Audiology',
+                      label: 'Audiology',
+                      sub: 'Hearing Tests & Hearing Aids',
                     },
                     {
-                      id: 'Speech & Language Therapy',
+                      id: 'Speech Therapy',
                       label: 'Speech Therapy',
                       sub: 'Speech, Voice & Swallowing',
                     },
                     {
-                      id: 'Physiotherapy & Mobility',
+                      id: 'Physiotherapy',
                       label: 'Physiotherapy',
                       sub: 'Joint, Back & Stroke Rehab',
                     }
@@ -1154,16 +1396,16 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                     <button
                       key={svc.id}
                       type="button"
-                      onClick={() => setSelectedService(svc.id)}
+                      onClick={() => handleDepartmentChange(svc.id as any)}
                       className={`p-3 rounded-xl border-2 text-left transition-all cursor-pointer ${
-                        selectedService.includes(svc.label) || selectedService === svc.id
+                        selectedDepartment === svc.id
                           ? 'border-neutral-900 bg-neutral-900 text-white shadow-md'
                           : 'border-neutral-200 bg-stone-50 hover:border-neutral-400 text-neutral-800'
                       }`}
                     >
                       <span className="block text-sm font-bold leading-tight">{svc.label}</span>
                       <span className={`block text-[11px] mt-0.5 leading-tight ${
-                        selectedService.includes(svc.label) || selectedService === svc.id
+                        selectedDepartment === svc.id
                           ? 'text-neutral-300'
                           : 'text-neutral-500'
                       }`}>
@@ -1172,12 +1414,30 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                     </button>
                   ))}
                 </div>
+
+                {/* Specific Clinical Service / Treatment Dropdown */}
+                <div className="bg-stone-50 p-2.5 rounded-xl border border-neutral-200">
+                  <label className="block text-[11px] font-bold text-neutral-700 mb-1">
+                    Specific Treatment / Procedure:
+                  </label>
+                  <select
+                    value={selectedProcedure}
+                    onChange={(e) => setSelectedProcedure(e.target.value)}
+                    className="w-full p-2.5 rounded-lg border border-neutral-300 text-xs sm:text-sm font-semibold text-neutral-900 bg-white focus:border-[#053543] focus:outline-none transition-colors cursor-pointer"
+                  >
+                    {currentProcedures.map((proc) => (
+                      <option key={proc} value={proc}>
+                        {proc}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               {/* Field 4: Preferred Timing */}
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-                  4. Preferred Visit Timing
+                  4. Preferred time
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
@@ -1200,7 +1460,51 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 </div>
               </div>
 
-              {/* Field 5: Optional Note */}
+              {/* Field 5: Medical Records File Upload */}
+              <div>
+                <label className="block text-xs sm:text-sm font-bold text-neutral-900 mb-1.5 flex items-center justify-between">
+                  <span>Upload your medical records (Optional)</span>
+                  <span className="text-[11px] font-normal text-neutral-500">PDF, Scans, Images</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    id="medical-records-upload"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  {!file ? (
+                    <label
+                      htmlFor="medical-records-upload"
+                      className="w-full p-3 rounded-xl border-2 border-dashed border-neutral-300 hover:border-[#053543] bg-stone-50 hover:bg-teal-50/40 flex items-center justify-center gap-2 cursor-pointer transition-all text-xs font-semibold text-neutral-700"
+                    >
+                      <Paperclip className="w-4 h-4 text-neutral-500" />
+                      <span>Attach prescriptions, audiograms, scans or MRI reports</span>
+                    </label>
+                  ) : (
+                    <div className="w-full p-3 rounded-xl border-2 border-emerald-300 bg-emerald-50/70 flex items-center justify-between text-xs font-semibold text-emerald-900">
+                      <div className="flex items-center gap-2 truncate">
+                        <FileText className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span className="truncate">{file.name}</span>
+                        <span className="text-neutral-500 text-[10px]">({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setFile(null)}
+                        className="text-red-500 hover:text-red-700 font-bold px-2 py-0.5 text-xs cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <p className="text-[11px] text-neutral-500 mt-1">
+                  {file ? '✓ File attached — ready to share via WhatsApp with the clinic.' : 'Optional: If you have prior doctor notes or audiograms, attach them here.'}
+                </p>
+              </div>
+
+              {/* Field 6: Optional Note */}
               <div>
                 <label className="block text-xs font-semibold text-neutral-600 mb-1">
                   Brief Medical Note (Optional)
@@ -1214,15 +1518,30 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 />
               </div>
 
+              {/* Anti-spam honeypot */}
+              <input
+                type="text"
+                name="website_enquiry_hp"
+                value={hp}
+                onChange={(e) => setHp(e.target.value)}
+                className="opacity-0 absolute -z-10 h-0 w-0 pointer-events-none"
+                tabIndex={-1}
+                aria-hidden="true"
+                autoComplete="off"
+              />
+
               {/* Submit Buttons */}
               <div className="pt-2 flex flex-col gap-2">
                 <button
                   type="submit"
-                  className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold transition-all shadow-lg active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm sm:text-base font-bold transition-all shadow-lg active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <WhatsAppIcon className="w-5 h-5 text-white" />
-                  <span>Send Appointment Request via WhatsApp</span>
+                  <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0" />
+                  <span>Request Appointment on WhatsApp</span>
                 </button>
+                <p className="text-[11px] text-neutral-500 text-center mt-1">
+                  We use these details only to contact you about your appointment.
+                </p>
               </div>
             </form>
           </div>
@@ -1248,9 +1567,21 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 <span className="font-bold text-neutral-900 font-mono">{phone}</span>
               </div>
               <div className="flex justify-between border-b border-neutral-200 pb-1">
-                <span className="text-neutral-500 font-semibold">Service:</span>
-                <span className="font-bold text-neutral-900">{selectedService}</span>
+                <span className="text-neutral-500 font-semibold">Department:</span>
+                <span className="font-bold text-neutral-900">{selectedDepartment}</span>
               </div>
+              {selectedProcedure && (
+                <div className="flex justify-between border-b border-neutral-200 pb-1">
+                  <span className="text-neutral-500 font-semibold">Procedure:</span>
+                  <span className="font-bold text-neutral-900 truncate max-w-[200px] text-right">{selectedProcedure}</span>
+                </div>
+              )}
+              {file && (
+                <div className="flex justify-between border-b border-neutral-200 pb-1">
+                  <span className="text-neutral-500 font-semibold">Records:</span>
+                  <span className="font-bold text-emerald-700 truncate max-w-[200px] text-right">✓ {file.name}</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-neutral-500 font-semibold">Timing:</span>
                 <span className="font-bold text-neutral-900">{time}</span>
@@ -1292,7 +1623,7 @@ export default function App() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [activeServices, setActiveServices] = useState<ServiceItem[]>(initialServices);
   const [selectedCategoryTab, setSelectedCategoryTab] = useState<string>('all');
-  const [bookingService, setBookingService] = useState<string>('Audiology Services');
+  const [bookingService, setBookingService] = useState<string>('Audiology');
   const [activeSubGroup, setActiveSubGroup] = useState<Record<string, number>>({});
 
   const isMobile = useIsMobile();
@@ -1460,20 +1791,10 @@ export default function App() {
           {/* Structured flex content container that prevents any overlapping */}
           <div className="relative z-10 h-full p-5 md:p-8 flex flex-col justify-between">
             {/* Top row */}
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+            <div>
               <p className="text-black text-xs md:text-sm font-semibold leading-relaxed max-w-[300px] md:max-w-md bg-white/85 backdrop-blur-md p-3 rounded-xl border border-neutral-200/60 shadow-sm">
-                Dedicated clinical care for children, adults & seniors
-                combining audiology, speech & physical rehabilitation.
+                Expert Audiology, Speech-Language Therapy and Physiotherapy for every stage of life
               </p>
-              <button
-                type="button"
-                onClick={() => setBookingModalOpen(true)}
-                className="inline-flex items-center gap-2 text-black text-xs font-bold px-4 py-2 rounded-full bg-white/95 hover:bg-black hover:text-white backdrop-blur-md border border-neutral-300 shadow-sm transition-all duration-200 w-fit shrink-0 cursor-pointer active:scale-95 group"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Direct Consultation Intake</span>
-                <ArrowRight className="w-3.5 h-3.5 text-neutral-600 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-              </button>
             </div>
 
             {/* Bottom row */}
@@ -1523,7 +1844,7 @@ export default function App() {
                 Clinical Facilities
               </h2>
               <p className="text-neutral-700 text-xs md:text-sm font-medium leading-relaxed max-w-sm">
-                Soundproof audiometry testing booths & specialized physical rehabilitation studios.
+                Soundproof hearing test rooms, dedicated speech therapy cabins and physiotherapy and rehabilitation spaces.
               </p>
             </div>
           </MaskedCard>
@@ -1547,17 +1868,18 @@ export default function App() {
 
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 p-4 md:p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-neutral-200/90 shadow-xl">
                 <div className="text-neutral-900 text-xs md:text-sm font-semibold leading-relaxed max-w-xs">
-                  Need personalized speech, hearing, or movement therapy?
+                  Need personalized hearing, speech, or movement therapy?
                   <br />
-                  <span className="text-[#0891b2] font-bold">Speak directly with our clinical coordinators.</span>
+                  <span className="text-[#0891b2] font-bold">Speak with our clinical team.</span>
                 </div>
                 <div>
-                  <button
-                    onClick={() => setBookingModalOpen(true)}
-                    className="px-6 py-3.5 bg-[#053543] hover:bg-[#0891b2] rounded-full text-white text-xs md:text-sm font-bold transition-all active:scale-95 shadow-md whitespace-nowrap"
+                  <a
+                    href={CLINIC_PHONE_CALL}
+                    className="px-5 py-3 bg-[#053543] hover:bg-[#0891b2] rounded-full text-white text-xs md:text-sm font-bold transition-all active:scale-95 shadow-md whitespace-nowrap inline-flex items-center gap-2"
                   >
-                    Book Online
-                  </button>
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call {CLINIC_PHONE}</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1620,12 +1942,6 @@ export default function App() {
                   ? 'bg-[#0891b2] text-white shadow-sm'
                   : 'bg-[#65a30d] text-white shadow-sm';
 
-                const badgeStyle = isAudiology
-                  ? 'bg-teal-50 text-[#053543] border border-teal-200 font-bold'
-                  : isSpeech
-                  ? 'bg-cyan-50 text-[#0891b2] border border-cyan-200 font-bold'
-                  : 'bg-lime-50 text-[#4d7c0f] border border-lime-200 font-bold';
-
                 const actionTextColor = isAudiology
                   ? 'text-[#053543]'
                   : isSpeech
@@ -1650,9 +1966,6 @@ export default function App() {
                         {isSpeech && <SpeechMedicalIcon className="w-6 h-6 text-white" />}
                         {isPhysio && <PhysiotherapyMedicalIcon className="w-6 h-6 text-white" />}
                       </div>
-                      <span className={`text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full ${badgeStyle}`}>
-                        {svc.treatmentCount} Treatments
-                      </span>
                     </div>
 
                     <div className="mt-3">
@@ -1746,7 +2059,7 @@ export default function App() {
                 onClick={() => setBookingModalOpen(true)}
                 className="px-5 py-3 md:px-7 md:py-4 bg-white rounded-full text-[#053543] text-sm md:text-base font-bold hover:bg-teal-50 hover:scale-105 transition-all shadow-md active:scale-95"
               >
-                Book Online
+                Book an Appointment
               </button>
             </div>
           </div>
@@ -1766,7 +2079,7 @@ export default function App() {
             <div className="absolute bottom-3 left-3 right-3 md:bottom-5 md:left-5 md:right-5 flex gap-1.5 md:gap-2">
               {/* Overlay Card 1 (White) */}
               <div
-                onClick={() => setBookingModalOpen(true)}
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                 className="flex-1 bg-white/95 backdrop-blur-md rounded-xl md:rounded-2xl p-3.5 md:p-5 flex flex-col justify-between min-h-[130px] md:min-h-[150px] cursor-pointer hover:bg-white transition-colors shadow-lg border border-neutral-200"
               >
                 <h4 className="text-base md:text-xl font-bold text-black leading-snug">
@@ -1797,7 +2110,7 @@ export default function App() {
 
               {/* Overlay Card 2 (Glass) */}
               <div
-                onClick={() => setBookingModalOpen(true)}
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                 className="flex-1 bg-black/60 backdrop-blur-md rounded-xl md:rounded-2xl p-3.5 md:p-5 flex flex-col justify-between min-h-[130px] md:min-h-[150px] cursor-pointer hover:bg-black/75 transition-colors shadow-lg border border-white/20"
               >
                 <h4 className="text-base md:text-xl font-bold text-white leading-snug">
@@ -1946,48 +2259,60 @@ export default function App() {
                               </div>
                               {/* Current Service Indicator on Image */}
                               <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md rounded-xl p-2.5 text-white text-[11px] font-medium flex items-center justify-between shadow-lg">
-                                <span className="truncate font-semibold">{currentGroup.number}. {currentGroup.title}</span>
-                                <span className="shrink-0 text-[10px] font-mono text-neutral-300 uppercase pl-2">
-                                  Image {activeGroupIdx + 1}/{category.groups.length}
+                                <span className="truncate font-semibold">
+                                  {currentGroup.title}
+                                </span>
+                                <span className="shrink-0 text-[10px] font-mono text-cyan-300 uppercase pl-2">
+                                  {isSpeech
+                                    ? activeGroupIdx === 0
+                                      ? 'Pediatric Care'
+                                      : activeGroupIdx === 3
+                                      ? 'VitalStim® NMES'
+                                      : 'Adult Therapy'
+                                    : isPhysio
+                                    ? 'Physical Rehabilitation'
+                                    : `Image ${activeGroupIdx + 1}/${category.groups.length}`}
                                 </span>
                               </div>
                             </div>
 
                             {/* Sub-Service Photo Switcher Strip with Separate Real Photos */}
-                            <div className="bg-stone-50 rounded-2xl p-3 md:p-3.5 border border-neutral-200/80 flex flex-col gap-2">
-                              <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500">
-                                <span>Service Photos ({category.groups.length} Separate Images)</span>
-                                <span className="text-[#053543] font-bold">Click photo to view</span>
+                            {category.id === 'audiology' && (
+                              <div className="bg-stone-50 rounded-2xl p-3 md:p-3.5 border border-neutral-200/80 flex flex-col gap-2">
+                                <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500">
+                                  <span>Service Photos ({category.groups.length} Separate Images)</span>
+                                  <span className="text-[#053543] font-bold">Click photo to view</span>
+                                </div>
+                                <div className="grid grid-cols-5 sm:grid-cols-6 gap-1.5">
+                                  {category.groups.map((grp, gIdx) => {
+                                    const isSelected = activeGroupIdx === gIdx;
+                                    return (
+                                      <button
+                                        key={grp.number}
+                                        type="button"
+                                        onClick={() => setActiveSubGroup((prev) => ({ ...prev, [category.id]: gIdx }))}
+                                        className={`relative rounded-xl overflow-hidden aspect-square border-2 transition-all cursor-pointer ${
+                                          isSelected
+                                            ? `${isAudiology ? 'border-[#053543] ring-2 ring-[#053543]/40' : isSpeech ? 'border-[#0891b2] ring-2 ring-[#0891b2]/40' : 'border-[#65a30d] ring-2 ring-[#65a30d]/40'} scale-105 shadow-md`
+                                            : 'border-neutral-200 opacity-60 hover:opacity-100 hover:border-neutral-400'
+                                        }`}
+                                        title={`${grp.number}. ${grp.title}`}
+                                      >
+                                        <img src={grp.image} alt={grp.title} className="w-full h-full object-cover" />
+                                        <span className="absolute bottom-0.5 right-0.5 bg-black/85 text-white font-mono text-[9px] px-1 rounded font-bold">
+                                          {grp.number}
+                                        </span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
                               </div>
-                              <div className="grid grid-cols-5 sm:grid-cols-6 gap-1.5">
-                                {category.groups.map((grp, gIdx) => {
-                                  const isSelected = activeGroupIdx === gIdx;
-                                  return (
-                                    <button
-                                      key={grp.number}
-                                      type="button"
-                                      onClick={() => setActiveSubGroup((prev) => ({ ...prev, [category.id]: gIdx }))}
-                                      className={`relative rounded-xl overflow-hidden aspect-square border-2 transition-all cursor-pointer ${
-                                        isSelected
-                                          ? `${isAudiology ? 'border-[#053543] ring-2 ring-[#053543]/40' : isSpeech ? 'border-[#0891b2] ring-2 ring-[#0891b2]/40' : 'border-[#65a30d] ring-2 ring-[#65a30d]/40'} scale-105 shadow-md`
-                                          : 'border-neutral-200 opacity-60 hover:opacity-100 hover:border-neutral-400'
-                                      }`}
-                                      title={`${grp.number}. ${grp.title}`}
-                                    >
-                                      <img src={grp.image} alt={grp.title} className="w-full h-full object-cover" />
-                                      <span className="absolute bottom-0.5 right-0.5 bg-black/85 text-white font-mono text-[9px] px-1 rounded font-bold">
-                                        {grp.number}
-                                      </span>
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            </div>
+                            )}
                           </>
                         );
                       })()}
 
-                      <div className="bg-stone-50 rounded-2xl p-4 md:p-5 border border-neutral-200/80 flex flex-col gap-3">
+                      <div className="bg-stone-50 rounded-2xl p-4 md:p-5 border border-neutral-200/80 flex flex-col gap-2.5">
                         <div className="flex items-center justify-between text-xs font-mono text-neutral-500 font-bold uppercase tracking-wider">
                           <span>{category.shortName}</span>
                           <span>{category.groups.reduce((acc, g) => acc + g.items.length, 0)} Conditions Treated</span>
@@ -1995,14 +2320,6 @@ export default function App() {
                         <p className="text-xs text-neutral-600 leading-relaxed font-medium">
                           {category.tagline}
                         </p>
-                        <button
-                          type="button"
-                          onClick={() => handleInquireTreatment(category.shortName)}
-                          className={`w-full py-3 px-5 rounded-full ${btnColor} text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2 active:scale-95`}
-                        >
-                          <span>Book {category.shortName} Consultation</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
                       </div>
                     </div>
 
@@ -2042,14 +2359,21 @@ export default function App() {
                                   <span className="font-bold">{group.number}.</span>
                                   <span>{group.title}</span>
                                 </h5>
-                                <span className={`shrink-0 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase transition-all ${
-                                  isSelected
-                                    ? `${badgeColor} shadow-xs`
-                                    : 'text-neutral-500 bg-neutral-100 hover:bg-neutral-200'
-                                }`}>
-                                  {isSelected ? 'Active Photo' : 'View Photo'}
-                                </span>
+                                {category.id === 'audiology' && (
+                                  <span className={`shrink-0 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase transition-all ${
+                                    isSelected
+                                      ? `${badgeColor} shadow-xs`
+                                      : 'text-neutral-500 bg-neutral-100 hover:bg-neutral-200'
+                                  }`}>
+                                    {isSelected ? 'Active Photo' : 'View Photo'}
+                                  </span>
+                                )}
                               </div>
+                              {group.description && (
+                                <p className="text-xs text-neutral-600 mb-2.5 font-medium leading-relaxed">
+                                  {group.description}
+                                </p>
+                              )}
                               <ul className="space-y-1.5 pl-0.5">
                                 {group.items.map((item) => (
                                   <li
@@ -2088,44 +2412,41 @@ export default function App() {
       {/* SECTION 5 - PATIENT JOURNEY EXPLAINED CLEARLY            */}
       {/* ======================================================== */}
       <section className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100">
-        <div className="mb-12 md:mb-16">
+        <div className="mb-10 md:mb-14">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
             STEP-BY-STEP CLINICAL CARE
           </span>
           <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
             How Your Therapy Works
           </h2>
-          <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl">
-            We guide you through 5 clear stages from your very first conversation to long-term progress.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
           {[
             {
               step: '01',
-              title: 'Listen & Understand',
-              desc: 'We start by sitting down and listening carefully to your symptoms, medical history, and daily challenges without rushing.'
+              title: 'Initial Consultation',
+              desc: 'We listen to your symptoms, medical history and daily challenges, without rushing.'
             },
             {
               step: '02',
               title: 'Objective Testing',
-              desc: 'We perform diagnostic tests—such as audiometry in a sound booth or functional physical mobility tests—to find the exact cause.'
+              desc: 'We run the right assessments for your needs, such as audiometry, speech and language evaluation, or physical mobility tests, to find the exact cause.'
             },
             {
               step: '03',
               title: 'Personalized Plan',
-              desc: 'Your specialist creates a written therapy roadmap explaining what treatments will be done, how often, and expected timeframes.'
+              desc: 'Your specialist creates a written roadmap with goals, treatment types, session frequency and expected timeframes.'
             },
             {
               step: '04',
               title: 'Targeted Therapy',
-              desc: 'You attend structured, one-on-one therapy sessions with compassionate guidance and practical exercises to practice at home.'
+              desc: 'You attend structured one-on-one sessions with compassionate guidance and a home program to practice between visits.'
             },
             {
               step: '05',
               title: 'Measure & Maintain',
-              desc: 'We periodically re-test your hearing, speech, or mobility to measure real improvement and support your long-term independence.'
+              desc: 'We re-test at regular intervals to track real progress and support your long-term independence.'
             }
           ].map((item) => (
             <div
@@ -2146,6 +2467,10 @@ export default function App() {
             </div>
           ))}
         </div>
+
+        <p className="text-center text-xs sm:text-sm font-semibold text-neutral-500 mt-8 tracking-wide">
+          Across Audiology, Speech-Language Therapy and Physiotherapy.
+        </p>
       </section>
 
       {/* ======================================================== */}
@@ -2196,7 +2521,7 @@ export default function App() {
             Come See Us.
           </h2>
           <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl font-medium">
-            Located at Freedom Hospitals in Subishi Town Center, Mokila. Convenient clinical access with 24-hour facility support and dedicated therapy studios.
+            Visit Shree at Freedom Hospitals, Subishi Town Center, Mokila. Convenient access with dedicated therapy studios and the support of a full hospital facility.
           </p>
         </div>
 
@@ -2208,7 +2533,7 @@ export default function App() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-                  Open 24 Hours Facility
+                  Open Monday to Saturday
                 </span>
               </div>
 
@@ -2241,14 +2566,13 @@ export default function App() {
                   <div className="flex items-start gap-2">
                     <Clock className="w-4 h-4 text-black shrink-0 mt-0.5" />
                     <div>
-                      <strong className="block text-black font-bold text-xs uppercase tracking-wider mb-0.5">
+                      <strong className="block text-black font-bold text-xs uppercase tracking-wider mb-1">
                         Operating Hours:
                       </strong>
-                      <p className="text-neutral-700 text-xs leading-relaxed">
-                        <strong className="text-black">Hospital Facility:</strong> Open 24 Hours
-                        <br />
-                        <strong className="text-black">Consultation Windows:</strong> Monday – Saturday: 09:00 AM – 07:00 PM · Sunday: By Prior Appointment
-                      </p>
+                      <div className="text-neutral-700 text-xs leading-relaxed space-y-0.5">
+                        <p>• <strong className="text-black font-semibold">Monday to Saturday:</strong> 9:00 AM to 7:00 PM</p>
+                        <p>• <strong className="text-black font-semibold">Sunday:</strong> By prior appointment</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2256,18 +2580,11 @@ export default function App() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2.5">
-              <button
-                type="button"
-                onClick={() => setBookingModalOpen(true)}
-                className="px-6 py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-all shadow-md active:scale-95"
-              >
-                Book In-Person Consultation →
-              </button>
               <a
                 href={CLINIC_MAP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-5 py-3.5 bg-white text-black border border-neutral-300 rounded-full font-bold text-xs hover:bg-neutral-100 transition-all shadow-sm active:scale-95"
+                className="inline-flex items-center gap-1.5 px-6 py-3.5 bg-black text-white rounded-full font-bold text-xs hover:bg-neutral-800 transition-all shadow-md active:scale-95"
               >
                 <span>Open in Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5" />

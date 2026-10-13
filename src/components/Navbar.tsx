@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               onClick={() => onOpenBooking()}
               className="px-6 py-2.5 sm:px-7 sm:py-3 text-xs sm:text-sm font-bold font-heading text-[#f7f4ec] bg-[#0b3037] hover:bg-[#123f48] active:scale-[0.98] rounded-full transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[#d9ae4a]"
             >
-              Book Appointment
+              Book an Appointment
             </button>
 
             {/* Mobile Hamburger Toggle */}
@@ -158,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               }}
               className="w-full py-4 text-base font-heading font-bold text-center text-[#0b3037] bg-[#f7f4ec] hover:bg-[#eee9dc] rounded-full shadow-xl transition-transform active:scale-98"
             >
-              Book Appointment →
+              Book an Appointment →
             </button>
           </div>
         </div>
