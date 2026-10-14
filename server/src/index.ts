@@ -68,7 +68,35 @@ import imageRoutes from './routes/image.routes.js';
 import { ensureDefaultWebsiteImages } from './utils/seedImages.js';
 app.use('/api/v1/images', imageRoutes);
 
-// 6. Example Protected Route to verify requireAuth middleware
+// 6. Admin Appointments (/api/v1/appointments/*)
+import appointmentAdminRoutes from './routes/appointment-admin.routes.js';
+app.use('/api/v1/appointments', appointmentAdminRoutes);
+
+// 7. Hearing Aid Enquiries & Trials (/api/v1/hearing-aids/*)
+import hearingAidRoutes from './routes/hearing-aid.routes.js';
+app.use('/api/v1/hearing-aids', hearingAidRoutes);
+
+// 8. Hearing Aid Stock & Repairs Inventory (/api/v1/inventory/*)
+import inventoryRoutes from './routes/inventory.routes.js';
+app.use('/api/v1/inventory', inventoryRoutes);
+
+// 9. Billing, GST Invoices & Payments (/api/v1/billing/*)
+import billingRoutes from './routes/billing.routes.js';
+app.use('/api/v1/billing', billingRoutes);
+
+// 10. Reports & Data Exports (/api/v1/reports/*)
+import reportRoutes from './routes/report.routes.js';
+app.use('/api/v1/reports', reportRoutes);
+
+// 11. DPDP Audit Logs (/api/v1/audit-logs/*)
+import auditRoutes from './routes/audit.routes.js';
+app.use('/api/v1/audit-logs', auditRoutes);
+
+// 12. Clinic Settings & Password Management (/api/v1/settings/*)
+import settingsRoutes from './routes/settings.routes.js';
+app.use('/api/v1/settings', settingsRoutes);
+
+// 13. Example Protected Route to verify requireAuth middleware
 app.get('/api/v1/admin/ping', requireAuth, (req: AuthenticatedRequest, res) => {
   res.status(200).json({
     message: 'Authorized access to admin API.',

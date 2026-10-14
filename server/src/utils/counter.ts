@@ -23,7 +23,7 @@ export function getCurrentFinancialYear(): string {
 /**
  * Atomically increments a counter key and returns the padded sequence.
  */
-async function getNextSequence(tx: TransactionClient, key: string): Promise<number> {
+async function getNextSequence(tx: any, key: string): Promise<number> {
   const counter = await tx.counter.upsert({
     where: { key },
     update: { value: { increment: 1 } },
@@ -37,7 +37,7 @@ async function getNextSequence(tx: TransactionClient, key: string): Promise<numb
  * Generates the next Patient UHID: SHREE-YYYY-XXXX (e.g. SHREE-2026-0001)
  * Must be executed within a Prisma $transaction.
  */
-export async function generateNextUHID(tx: TransactionClient): Promise<string> {
+export async function generateNextUHID(tx: any): Promise<string> {
   const currentYear = new Date().getFullYear();
   const key = `patient_uhid_${currentYear}`;
   const seq = await getNextSequence(tx, key);
@@ -51,7 +51,7 @@ export async function generateNextUHID(tx: TransactionClient): Promise<string> {
  * Automatically handles financial-year reset based on the current financial year.
  * Must be executed within a Prisma $transaction.
  */
-export async function generateNextInvoiceNumber(tx: TransactionClient): Promise<string> {
+export async function generateNextInvoiceNumber(tx: any): Promise<string> {
   const fy = getCurrentFinancialYear();
   const prefix = env.INVOICE_PREFIX.replace(/\d{2}-\d{2}/, fy); // Ensures prefix matches active FY
   const key = `invoice_${fy}`;

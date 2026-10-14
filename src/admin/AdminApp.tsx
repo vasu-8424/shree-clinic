@@ -7,15 +7,13 @@ import { AdminLayout } from './layouts/AdminLayout';
 import { DashboardPage } from './pages/DashboardPage';
 import { PatientsPage } from './pages/PatientsPage';
 import { PatientDetailPage } from './pages/PatientDetailPage';
-import {
-  AppointmentsPage,
-  HearingAidsPage,
-  InventoryPage,
-  BillingPage,
-  ReportsPage,
-  AuditLogPage,
-  SettingsPage,
-} from './pages/PlaceholderPages';
+import { AppointmentsPage } from './pages/AppointmentsPage';
+import { HearingAidsPage } from './pages/HearingAidsPage';
+import { InventoryPage } from './pages/InventoryPage';
+import { BillingPage } from './pages/BillingPage';
+import { ReportsPage } from './pages/ReportsPage';
+import { AuditLogPage } from './pages/AuditLogPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 export const AdminApp: React.FC = () => {
   return (
