@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import argon2 from 'argon2';
 import fs from 'fs';
+import { DepartmentType } from '@prisma/client';
 import { prisma } from '../config/prisma.js';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware.js';
 import { normalizePhoneNumber } from '../utils/phone.js';
@@ -311,18 +312,26 @@ router.get('/:id', async (req: AuthenticatedRequest, res: Response): Promise<voi
           orderBy: { createdAt: 'desc' },
         },
         visits: {
-          take: 5,
           orderBy: { visitDate: 'desc' },
-          select: {
-            id: true,
-            visitDate: true,
-            visitType: true,
-            diagnosis: true,
-            plan: true,
+        },
+        audiograms: {
+          orderBy: { testDate: 'desc' },
+        },
+        hearingAidTrials: {
+          orderBy: { trialStartDate: 'desc' },
+          include: { inventory: true },
+        },
+        therapyPlans: {
+          orderBy: { createdAt: 'desc' },
+          include: {
+            sessions: { orderBy: { sessionNumber: 'asc' } },
           },
         },
+        invoices: {
+          orderBy: { createdAt: 'desc' },
+          include: { items: true, payments: true },
+        },
         appointments: {
-          take: 5,
           orderBy: { createdAt: 'desc' },
         },
       },
@@ -335,6 +344,20 @@ router.get('/:id', async (req: AuthenticatedRequest, res: Response): Promise<voi
 
     // Decrypt caseHistory here only
     const decryptedCaseHistory = decryptField(patient.caseHistory);
+
+    const decryptedVisits = patient.visits.map((v) => ({
+      ...v,
+      notes: decryptField(v.notes),
+    }));
+
+    const decryptedTherapyPlans = patient.therapyPlans.map((tp) => ({
+      ...tp,
+      sessions: tp.sessions.map((s) => ({
+        ...s,
+        subjective: decryptField(s.subjective),
+        objective: decryptField(s.objective),
+      })),
+    }));
 
     const latestConsent = patient.consentRecords[0];
     const hasActiveConsent = !!latestConsent && latestConsent.consentGiven && !latestConsent.withdrawn;
@@ -354,6 +377,8 @@ router.get('/:id', async (req: AuthenticatedRequest, res: Response): Promise<voi
       data: {
         ...patient,
         caseHistory: decryptedCaseHistory,
+        visits: decryptedVisits,
+        therapyPlans: decryptedTherapyPlans,
         hasActiveConsent,
         consentStatus: hasActiveConsent ? 'ACTIVE' : 'WITHDRAWN',
       },
@@ -810,6 +835,272 @@ router.get('/:id/data-export', async (req: AuthenticatedRequest, res: Response):
   } catch (error: any) {
     console.error('Data export failed:', error);
     res.status(500).json({ error: 'Failed to export patient data.', message: error.message });
+  }
+});
+
+// -------------------------------------------------------------
+// 10. POST /api/v1/patients/:id/visits - Add Clinical Visit
+// -------------------------------------------------------------
+const createVisitSchema = z.object({
+  visitType: z.nativeEnum(DepartmentType),
+  visitDate: z.string().optional(),
+  diagnosis: z.string().trim().optional().nullable(),
+  notes: z.string().trim().optional().nullable(),
+  plan: z.string().trim().optional().nullable(),
+  nextAppointmentDate: z.string().optional().nullable(),
+});
+
+router.post('/:id/visits', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    await requireActiveConsent(id);
+
+    const parse = createVisitSchema.safeParse(req.body);
+    if (!parse.success) {
+      res.status(400).json({ error: parse.error.issues[0]?.message || 'Invalid visit data' });
+      return;
+    }
+
+    const { visitType, visitDate, diagnosis, notes, plan, nextAppointmentDate } = parse.data;
+
+    const encryptedNotes = notes ? encryptField(notes) : null;
+    const vDate = visitDate ? new Date(visitDate) : new Date();
+    const nextDate = nextAppointmentDate ? new Date(nextAppointmentDate) : null;
+
+    const visit = await prisma.visit.create({
+      data: {
+        patientId: id,
+        visitType,
+        visitDate: vDate,
+        diagnosis: diagnosis || null,
+        notes: encryptedNotes,
+        plan: plan || null,
+        nextAppointmentDate: nextDate,
+      },
+    });
+
+    await createAuditLog({
+      adminId: req.admin?.id,
+      action: 'CREATE',
+      entity: 'Visit',
+      entityId: visit.id,
+      ipAddress: (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || null,
+      userAgent: req.headers['user-agent'] || null,
+      details: { visitType },
+    });
+
+    res.status(201).json({
+      success: true,
+      visit: {
+        ...visit,
+        notes: notes || null,
+      },
+    });
+  } catch (error: any) {
+    if (error instanceof ConsentError) {
+      res.status(403).json({ error: error.message, code: error.code });
+      return;
+    }
+    console.error('Create visit failed:', error);
+    res.status(500).json({ error: 'Failed to record clinical visit' });
+  }
+});
+
+// -------------------------------------------------------------
+// 11. DELETE /api/v1/patients/:id/visits/:visitId - Delete Visit
+// -------------------------------------------------------------
+router.delete('/:id/visits/:visitId', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { visitId } = req.params;
+    await prisma.visit.delete({ where: { id: visitId } });
+    res.status(200).json({ success: true, message: 'Visit deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete visit' });
+  }
+});
+
+// -------------------------------------------------------------
+// 12. POST /api/v1/patients/:id/audiograms - Add Audiogram Assessment
+// -------------------------------------------------------------
+const createAudiogramSchema = z.object({
+  testDate: z.string().optional(),
+  testType: z.string().default('Pure Tone Audiometry (PTA)'),
+  frequencies: z.record(z.any()),
+  tympanometryLeft: z.string().optional().nullable(),
+  tympanometryRight: z.string().optional().nullable(),
+  interpretation: z.string().optional().nullable(),
+});
+
+router.post('/:id/audiograms', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    await requireActiveConsent(id);
+
+    const parse = createAudiogramSchema.safeParse(req.body);
+    if (!parse.success) {
+      res.status(400).json({ error: parse.error.issues[0]?.message || 'Invalid audiogram data' });
+      return;
+    }
+
+    const { testDate, testType, frequencies, tympanometryLeft, tympanometryRight, interpretation } = parse.data;
+
+    const audiogram = await prisma.audiogram.create({
+      data: {
+        patientId: id,
+        testDate: testDate ? new Date(testDate) : new Date(),
+        testType,
+        frequencies,
+        tympanometryLeft: tympanometryLeft || null,
+        tympanometryRight: tympanometryRight || null,
+        interpretation: interpretation || null,
+      },
+    });
+
+    await createAuditLog({
+      adminId: req.admin?.id,
+      action: 'CREATE',
+      entity: 'Audiogram',
+      entityId: audiogram.id,
+      ipAddress: (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.ip || null,
+      userAgent: req.headers['user-agent'] || null,
+      details: { testType },
+    });
+
+    res.status(201).json({ success: true, audiogram });
+  } catch (error: any) {
+    if (error instanceof ConsentError) {
+      res.status(403).json({ error: error.message, code: error.code });
+      return;
+    }
+    console.error('Create audiogram failed:', error);
+    res.status(500).json({ error: 'Failed to record audiogram assessment' });
+  }
+});
+
+// -------------------------------------------------------------
+// 13. DELETE /api/v1/patients/:id/audiograms/:audiogramId - Delete Audiogram
+// -------------------------------------------------------------
+router.delete('/:id/audiograms/:audiogramId', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { audiogramId } = req.params;
+    await prisma.audiogram.delete({ where: { id: audiogramId } });
+    res.status(200).json({ success: true, message: 'Audiogram deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete audiogram' });
+  }
+});
+
+// -------------------------------------------------------------
+// 14. POST /api/v1/patients/:id/therapy-plans - Create Therapy Plan
+// -------------------------------------------------------------
+const createTherapyPlanSchema = z.object({
+  department: z.nativeEnum(DepartmentType),
+  title: z.string().trim().min(2, 'Title required'),
+  goals: z.string().trim().min(2, 'Goals required'),
+  homeProgram: z.string().trim().optional().nullable(),
+  targetDate: z.string().optional().nullable(),
+});
+
+router.post('/:id/therapy-plans', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    await requireActiveConsent(id);
+
+    const parse = createTherapyPlanSchema.safeParse(req.body);
+    if (!parse.success) {
+      res.status(400).json({ error: parse.error.issues[0]?.message || 'Invalid plan data' });
+      return;
+    }
+
+    const { department, title, goals, homeProgram, targetDate } = parse.data;
+
+    const plan = await prisma.therapyPlan.create({
+      data: {
+        patientId: id,
+        department,
+        title,
+        goals,
+        homeProgram: homeProgram || null,
+        startDate: new Date(),
+        targetDate: targetDate ? new Date(targetDate) : null,
+        isActive: true,
+      },
+      include: { sessions: true },
+    });
+
+    res.status(201).json({ success: true, plan });
+  } catch (error: any) {
+    if (error instanceof ConsentError) {
+      res.status(403).json({ error: error.message, code: error.code });
+      return;
+    }
+    console.error('Create therapy plan failed:', error);
+    res.status(500).json({ error: 'Failed to create therapy plan' });
+  }
+});
+
+// -------------------------------------------------------------
+// 15. POST /api/v1/patients/:id/therapy-plans/:planId/sessions - Add SOAP Session
+// -------------------------------------------------------------
+const createSessionSchema = z.object({
+  department: z.nativeEnum(DepartmentType),
+  subjective: z.string().optional().nullable(),
+  objective: z.string().optional().nullable(),
+  assessment: z.string().optional().nullable(),
+  planNext: z.string().optional().nullable(),
+  vitalstimUsed: z.boolean().default(false),
+  homeProgramAssigned: z.string().optional().nullable(),
+  sessionDate: z.string().optional(),
+});
+
+router.post('/:id/therapy-plans/:planId/sessions', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const { id, planId } = req.params;
+    await requireActiveConsent(id);
+
+    const parse = createSessionSchema.safeParse(req.body);
+    if (!parse.success) {
+      res.status(400).json({ error: parse.error.issues[0]?.message || 'Invalid session data' });
+      return;
+    }
+
+    const data = parse.data;
+
+    // Count existing sessions in this plan
+    const count = await prisma.therapySession.count({ where: { planId } });
+    const sessionNumber = count + 1;
+
+    const session = await prisma.therapySession.create({
+      data: {
+        planId,
+        patientId: id,
+        department: data.department,
+        sessionNumber,
+        sessionDate: data.sessionDate ? new Date(data.sessionDate) : new Date(),
+        subjective: data.subjective ? encryptField(data.subjective) : null,
+        objective: data.objective ? encryptField(data.objective) : null,
+        assessment: data.assessment || null,
+        planNext: data.planNext || null,
+        vitalstimUsed: data.vitalstimUsed,
+        homeProgramAssigned: data.homeProgramAssigned || null,
+      },
+    });
+
+    res.status(201).json({
+      success: true,
+      session: {
+        ...session,
+        subjective: data.subjective || null,
+        objective: data.objective || null,
+      },
+    });
+  } catch (error: any) {
+    if (error instanceof ConsentError) {
+      res.status(403).json({ error: error.message, code: error.code });
+      return;
+    }
+    console.error('Record therapy session failed:', error);
+    res.status(500).json({ error: 'Failed to record session note' });
   }
 });
 
