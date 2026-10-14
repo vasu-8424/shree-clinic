@@ -32,16 +32,15 @@ export const BillingPage: React.FC = () => {
   const [patientsList, setPatientsList] = useState<any[]>([]);
   const [patientId, setPatientId] = useState('');
   const [isGstApplied, setIsGstApplied] = useState(false);
-  const [discount, setDiscount] = useState('0');
+  const [discountPercent, setDiscountPercent] = useState('0');
   const [notes, setNotes] = useState('');
   const [items, setItems] = useState<Array<{ description: string; hsnSac: string; quantity: number; unitPrice: number }>>([
     { description: 'Comprehensive Audiological Evaluation (PTA + Impedance)', hsnSac: '999312', quantity: 1, unitPrice: 1500 },
   ]);
-  const [initialPayment, setInitialPayment] = useState({
-    amount: '',
-    mode: 'UPI',
-    transactionReference: '',
-  });
+  const [paymentStatus, setPaymentStatus] = useState<'PAID' | 'UNPAID' | 'PARTIALLY_PAID'>('PAID');
+  const [paymentMethod, setPaymentMethod] = useState('UPI');
+  const [paymentRef, setPaymentRef] = useState('');
+  const [partialAmount, setPartialAmount] = useState('');
 
   // Record payment modal
   const [paymentModal, setPaymentModal] = useState<{ open: boolean; invoice: any | null }>({
@@ -50,7 +49,7 @@ export const BillingPage: React.FC = () => {
   });
   const [paymentAmount, setPaymentAmount] = useState('');
   const [paymentMode, setPaymentMode] = useState('UPI');
-  const [paymentRef, setPaymentRef] = useState('');
+  const [quickPaymentRef, setQuickPaymentRef] = useState('');
 
   // Printable invoice modal
   const [printableInvoice, setPrintableInvoice] = useState<any | null>(null);
@@ -117,12 +116,13 @@ export const BillingPage: React.FC = () => {
     setItems(updated);
   };
 
-  // Calculations
+  // Calculations: Subtotal (MRP), Discount (%), Taxable, 18% GST, Net Total
   const subtotal = items.reduce((sum, item) => sum + (Number(item.quantity) || 0) * (Number(item.unitPrice) || 0), 0);
-  const numDiscount = Math.min(subtotal, parseFloat(discount) || 0);
+  const parsedDiscountPercent = Math.min(100, Math.max(0, parseFloat(discountPercent) || 0));
+  const numDiscount = Math.round(((subtotal * parsedDiscountPercent) / 100) * 100) / 100;
   const taxable = subtotal - numDiscount;
-  const gstAmount = isGstApplied ? taxable * 0.18 : 0;
-  const totalAmount = taxable + gstAmount;
+  const gstAmount = isGstApplied ? Math.round(taxable * 0.18 * 100) / 100 : 0;
+  const totalAmount = Math.round((taxable + gstAmount) * 100) / 100;
 
   const handleCreateInvoice = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,6 +132,15 @@ export const BillingPage: React.FC = () => {
     }
     try {
       setSubmitting(true);
+      let paidVal = 0;
+      if (paymentStatus === 'PAID') {
+        paidVal = totalAmount;
+      } else if (paymentStatus === 'PARTIALLY_PAID') {
+        paidVal = Math.min(totalAmount, Math.max(0, parseFloat(partialAmount) || 0));
+      } else {
+        paidVal = 0;
+      }
+
       const payload: any = {
         patientId,
         items,
@@ -140,12 +149,11 @@ export const BillingPage: React.FC = () => {
         notes,
       };
 
-      const paidVal = parseFloat(initialPayment.amount) || 0;
       if (paidVal > 0) {
         payload.initialPayment = {
           amount: paidVal,
-          mode: initialPayment.mode,
-          transactionReference: initialPayment.transactionReference || null,
+          mode: paymentMethod,
+          transactionReference: paymentRef.trim() || null,
         };
       }
 
@@ -158,9 +166,12 @@ export const BillingPage: React.FC = () => {
         setIsInvoiceModalOpen(false);
         setPatientId('');
         setNotes('');
-        setDiscount('0');
+        setDiscountPercent('0');
+        setPaymentStatus('PAID');
+        setPaymentMethod('UPI');
+        setPaymentRef('');
+        setPartialAmount('');
         setItems([{ description: 'Comprehensive Consultation & Diagnostics', hsnSac: '999312', quantity: 1, unitPrice: 1500 }]);
-        setInitialPayment({ amount: '', mode: 'UPI', transactionReference: '' });
         loadBillingData();
       } else {
         const err = await res.json();
@@ -183,14 +194,14 @@ export const BillingPage: React.FC = () => {
         body: JSON.stringify({
           amount: parseFloat(paymentAmount),
           mode: paymentMode,
-          transactionReference: paymentRef || null,
+          transactionReference: quickPaymentRef.trim() || null,
         }),
       });
 
       if (res.ok) {
         setPaymentModal({ open: false, invoice: null });
         setPaymentAmount('');
-        setPaymentRef('');
+        setQuickPaymentRef('');
         loadBillingData();
       } else {
         const err = await res.json();
@@ -508,7 +519,7 @@ export const BillingPage: React.FC = () => {
               </div>
 
               {/* Tax & Discount calculation */}
-              <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 items-center">
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -522,89 +533,212 @@ export const BillingPage: React.FC = () => {
                   </label>
                 </div>
 
-                <div className="flex items-center gap-2 justify-end">
-                  <span className="font-semibold text-stone-700">Discount (₹):</span>
-                  <input
-                    type="number"
-                    min={0}
-                    value={discount}
-                    onChange={(e) => setDiscount(e.target.value)}
-                    className="w-28 px-2.5 py-1 border border-stone-200 rounded-lg text-right font-mono"
-                  />
+                <div className="flex items-center gap-2 justify-start sm:justify-end">
+                  <span className="font-semibold text-stone-700">Discount (%):</span>
+                  <div className="relative w-32">
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      step="0.5"
+                      value={discountPercent}
+                      onChange={(e) => setDiscountPercent(e.target.value)}
+                      placeholder="0"
+                      className="w-full px-2.5 py-1.5 pr-7 border border-stone-200 rounded-lg text-right font-mono font-semibold"
+                    />
+                    <span className="absolute right-2.5 top-1.5 text-stone-400 font-bold">%</span>
+                  </div>
                 </div>
               </div>
 
               {/* Totals Summary Banner */}
-              <div className="bg-[#0b3037]/5 p-3.5 rounded-xl border border-[#0b3037]/15 flex items-center justify-between text-xs sm:text-sm">
-                <div>
-                  <span className="text-stone-500">Subtotal:</span>{' '}
+              <div className="bg-[#0b3037]/5 p-3.5 rounded-xl border border-[#0b3037]/15 text-xs sm:text-sm space-y-1.5">
+                <div className="flex items-center justify-between text-stone-600">
+                  <span>Gross Subtotal / MRP:</span>
                   <span className="font-mono font-semibold">₹{subtotal.toLocaleString('en-IN')}</span>
-                  {isGstApplied && (
-                    <span className="ml-3 text-stone-500">
-                      GST (18%):{' '}
-                      <span className="font-mono font-semibold">
-                        ₹{gstAmount.toLocaleString('en-IN')}
-                      </span>
-                    </span>
-                  )}
                 </div>
-                <div className="text-right">
-                  <span className="text-stone-600 font-bold mr-2">Net Payable:</span>
+                {parsedDiscountPercent > 0 && (
+                  <div className="flex items-center justify-between text-emerald-700 font-medium">
+                    <span>Discount ({parsedDiscountPercent}%):</span>
+                    <span className="font-mono font-semibold">-₹{numDiscount.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+                {isGstApplied && (
+                  <div className="flex items-center justify-between text-stone-600">
+                    <span>Taxable Base Value:</span>
+                    <span className="font-mono font-semibold">₹{taxable.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+                {isGstApplied && (
+                  <div className="flex items-center justify-between text-stone-600">
+                    <span>GST (18% — CGST 9% + SGST 9%):</span>
+                    <span className="font-mono font-semibold">+₹{gstAmount.toLocaleString('en-IN')}</span>
+                  </div>
+                )}
+                <div className="flex items-center justify-between pt-1.5 border-t border-[#0b3037]/15">
+                  <span className="text-[#0b3037] font-bold text-sm">Net Payable Total:</span>
                   <span className="font-serif text-lg font-bold text-[#0b3037] font-mono">
                     ₹{totalAmount.toLocaleString('en-IN')}
                   </span>
                 </div>
               </div>
 
-              {/* Initial Payment */}
-              <div className="border-t border-stone-200 pt-3">
-                <label className="block font-semibold text-stone-700 mb-2">
-                  Initial Payment Received Now (Optional)
-                </label>
-                <div className="grid grid-cols-3 gap-3">
-                  <div>
-                    <input
-                      type="number"
-                      min={0}
-                      max={totalAmount}
-                      placeholder="Amount (₹)"
-                      value={initialPayment.amount}
-                      onChange={(e) =>
-                        setInitialPayment({ ...initialPayment, amount: e.target.value })
-                      }
-                      className="w-full px-3 py-1.5 border border-stone-200 rounded-xl font-mono"
-                    />
-                  </div>
-                  <div>
-                    <select
-                      value={initialPayment.mode}
-                      onChange={(e) =>
-                        setInitialPayment({ ...initialPayment, mode: e.target.value })
-                      }
-                      className="w-full px-3 py-1.5 border border-stone-200 rounded-xl"
+              {/* Payment Status Option (PAID vs UNPAID) */}
+              <div className="border-t border-stone-200 pt-3 space-y-3">
+                <div>
+                  <label className="block font-semibold text-stone-700 mb-1.5">
+                    Payment Status <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentStatus('PAID')}
+                      className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        paymentStatus === 'PAID'
+                          ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                          : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                      }`}
                     >
-                      <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
-                      <option value="CASH">Cash</option>
-                      <option value="CREDIT_CARD">Credit Card</option>
-                      <option value="DEBIT_CARD">Debit Card</option>
-                      <option value="BANK_TRANSFER">Bank Transfer / NEFT</option>
-                    </select>
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Txn Ref # / UTR"
-                      value={initialPayment.transactionReference}
-                      onChange={(e) =>
-                        setInitialPayment({
-                          ...initialPayment,
-                          transactionReference: e.target.value,
-                        })
-                      }
-                      className="w-full px-3 py-1.5 border border-stone-200 rounded-xl font-mono text-xs"
-                    />
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      PAID (Full)
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setPaymentStatus('UNPAID')}
+                      className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        paymentStatus === 'UNPAID'
+                          ? 'bg-rose-600 text-white border-rose-600 shadow-xs'
+                          : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                      }`}
+                    >
+                      <Clock className="w-3.5 h-3.5" />
+                      UNPAID (Pending)
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setPaymentStatus('PARTIALLY_PAID')}
+                      className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        paymentStatus === 'PARTIALLY_PAID'
+                          ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+                          : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                      }`}
+                    >
+                      <CreditCard className="w-3.5 h-3.5" />
+                      Partially Paid
+                    </button>
                   </div>
                 </div>
+
+                {paymentStatus === 'PAID' && (
+                  <div className="bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200/80 space-y-3">
+                    <div className="flex items-center justify-between text-xs text-emerald-900 font-medium">
+                      <span>Payment Amount Collected:</span>
+                      <span className="font-mono font-bold text-sm">₹{totalAmount.toLocaleString('en-IN')} (Full Settle)</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-emerald-950 mb-1">
+                          Payment Method <span className="text-rose-500">*</span>
+                        </label>
+                        <select
+                          value={paymentMethod}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="w-full px-3 py-1.5 text-xs bg-white border border-emerald-300 rounded-xl font-medium"
+                        >
+                          <option value="UPI">UPI (GPay / PhonePe / Paytm / QR)</option>
+                          <option value="CASH">Cash</option>
+                          <option value="CREDIT_CARD">Credit Card (POS Swipe)</option>
+                          <option value="DEBIT_CARD">Debit Card</option>
+                          <option value="BANK_TRANSFER">Bank Transfer (NEFT / IMPS)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-emerald-950 mb-1">
+                          Transaction Ref / UTR # (Optional)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. UPI-983271 / Receipt #"
+                          value={paymentRef}
+                          onChange={(e) => setPaymentRef(e.target.value)}
+                          className="w-full px-3 py-1.5 text-xs bg-white border border-emerald-300 rounded-xl font-mono"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {paymentStatus === 'PARTIALLY_PAID' && (
+                  <div className="bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200 space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <label className="block text-xs font-semibold text-amber-950 mb-1">
+                          Amount Paid (₹) <span className="text-rose-500">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          min={1}
+                          max={totalAmount}
+                          placeholder="Amount"
+                          value={partialAmount}
+                          onChange={(e) => setPartialAmount(e.target.value)}
+                          className="w-full px-3 py-1.5 text-xs bg-white border border-amber-300 rounded-xl font-mono"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-amber-950 mb-1">
+                          Payment Method <span className="text-rose-500">*</span>
+                        </label>
+                        <select
+                          value={paymentMethod}
+                          onChange={(e) => setPaymentMethod(e.target.value)}
+                          className="w-full px-3 py-1.5 text-xs bg-white border border-amber-300 rounded-xl font-medium"
+                        >
+                          <option value="UPI">UPI (GPay / PhonePe / Paytm / QR)</option>
+                          <option value="CASH">Cash</option>
+                          <option value="CREDIT_CARD">Credit Card</option>
+                          <option value="DEBIT_CARD">Debit Card</option>
+                          <option value="BANK_TRANSFER">Bank Transfer</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-amber-950 mb-1">
+                          Txn Ref / UTR #
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. UTR-49102"
+                          value={paymentRef}
+                          onChange={(e) => setPaymentRef(e.target.value)}
+                          className="w-full px-3 py-1.5 text-xs bg-white border border-amber-300 rounded-xl font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs text-amber-900 pt-1 border-t border-amber-200/60">
+                      <span>Remaining Balance Due:</span>
+                      <span className="font-mono font-bold text-rose-700">
+                        ₹{Math.max(0, totalAmount - (parseFloat(partialAmount) || 0)).toLocaleString('en-IN')}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {paymentStatus === 'UNPAID' && (
+                  <div className="bg-rose-50/70 p-3 rounded-2xl border border-rose-200 flex items-center justify-between text-xs text-rose-900">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-rose-600 shrink-0" />
+                      <span>Invoice will be registered as <strong>UNPAID</strong>. Total due: <strong>₹{totalAmount.toLocaleString('en-IN')}</strong></span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end gap-3 pt-3">

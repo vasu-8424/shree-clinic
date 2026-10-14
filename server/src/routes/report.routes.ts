@@ -11,9 +11,17 @@ router.use(requireAuth);
 // -------------------------------------------------------------
 router.get('/summary', async (_req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
-    const [patientCount, appointmentCount, stockCount, invoiceAggregate, trialCount] = await Promise.all([
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
+
+    const [patientCount, appointmentCount, todaysVisits, stockCount, invoiceAggregate, trialCount] = await Promise.all([
       prisma.patient.count({ where: { isDeleted: false } }),
       prisma.appointment.count(),
+      prisma.visit.count({
+        where: { visitDate: { gte: startOfToday, lte: endOfToday } },
+      }),
       prisma.hearingAidInventory.count({ where: { status: 'IN_STOCK' } }),
       prisma.invoice.aggregate({
         _sum: { totalAmount: true, amountPaid: true, balanceDue: true },
@@ -27,6 +35,7 @@ router.get('/summary', async (_req: AuthenticatedRequest, res: Response): Promis
       summary: {
         totalPatients: patientCount,
         totalAppointments: appointmentCount,
+        todaysVisits: todaysVisits,
         devicesInStock: stockCount,
         activeTrials: trialCount,
         totalBilled: Number(invoiceAggregate._sum.totalAmount || 0),
