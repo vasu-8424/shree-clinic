@@ -40,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
         {/* Logo / Header */}
         <div className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center justify-between bg-[#0a0f18]/60">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-white p-1.5 flex items-center justify-center shrink-0 shadow-md ring-2 ring-emerald-500/20">
+            <div className="w-14 h-14 rounded-2xl bg-white p-1.5 flex items-center justify-center shrink-0 shadow-lg shadow-black/40 ring-2 ring-emerald-500/20 transition-transform hover:scale-105">
               <img
                 src="/shree-logo-transparent.png"
                 alt="Shree Clinic"
@@ -48,10 +48,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-black font-mono tracking-wider text-amber-400 uppercase leading-none">
+              <span className="text-sm font-black font-mono tracking-wider text-amber-400 uppercase leading-tight">
                 SHREE CLINIC
               </span>
-              <span className="text-xs text-slate-400 font-medium mt-1 tracking-wide">
+              <span className="text-xs text-slate-400 font-medium tracking-wide">
                 Admin PMS Portal
               </span>
             </div>

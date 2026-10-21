@@ -54,10 +54,10 @@ export const LoginPage: React.FC = () => {
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-[#123f48]/15 overflow-hidden relative z-10">
         {/* Brand Header */}
         <div className="bg-[#0b3037] p-8 text-center text-white relative">
-          <div className="w-16 h-16 rounded-2xl bg-white p-2 mx-auto mb-4 flex items-center justify-center shadow-md">
+          <div className="w-24 h-24 rounded-3xl bg-white p-2.5 mx-auto mb-4 flex items-center justify-center shadow-xl shadow-black/20 ring-4 ring-white/10 transition-transform duration-300 hover:scale-105">
             <img
               src="/shree-logo-transparent.png"
-              alt="SHREE Clinic"
+              alt="SHREE Clinic Logo"
               className="w-full h-full object-contain"
             />
           </div>
