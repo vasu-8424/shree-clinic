@@ -34,17 +34,17 @@ export default defineConfig(() => {
       chunkSizeWarningLimit: 600,
       rollupOptions: {
         output: {
-          // Manual chunking: split vendor libs from app code for better caching
-          manualChunks: {
-            // React runtime — changes rarely, cached long-term by browsers
-            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-            // UI Icons library
-            'vendor-icons': ['lucide-react'],
+          // Vite 8 (rolldown) requires manualChunks as a FUNCTION, not an object
+          manualChunks: (id: string) => {
+            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router-dom')) {
+              return 'vendor-react';
+            }
+            if (id.includes('node_modules/lucide-react')) {
+              return 'vendor-icons';
+            }
           },
         },
       },
-      // Enable source maps only in development
-      sourcemap: process.env.NODE_ENV !== 'production',
       // Minify for smallest possible production output
       minify: 'esbuild' as const,
     },
