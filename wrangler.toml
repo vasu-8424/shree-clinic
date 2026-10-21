@@ -1,10 +1,7 @@
-# Cloudflare Pages — Build Configuration
-# Framework: Vite (React SPA)
-# This file is picked up automatically by Cloudflare Pages
+name = "shree-clinic"
+compatibility_date = "2026-10-21"
 
-[build]
-  command = "npm run build"
-  destination = "dist"
-
-[build.environment]
-  NODE_VERSION = "20"
+# Cloudflare Pages — Static Assets
+# Tells wrangler the build output directory for the SPA
+[assets]
+directory = "./dist"
