@@ -1,0 +1,10 @@
+# Cloudflare Pages — Build Configuration
+# Framework: Vite (React SPA)
+# This file is picked up automatically by Cloudflare Pages
+
+[build]
+  command = "npm run build"
+  destination = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"

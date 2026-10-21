@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiUrl } from '../utils/publicApi';
 
 // Default initial fallbacks
 export const DEFAULT_WEBSITE_IMAGES: Record<string, string> = {
@@ -77,7 +78,7 @@ export const ImageProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const fetchImagesFromApi = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/v1/images');
+      const res = await fetch(apiUrl('/api/v1/images'));
       if (res.ok) {
         const data = await res.json();
         if (data.map && typeof data.map === 'object') {

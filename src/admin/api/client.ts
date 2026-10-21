@@ -1,6 +1,13 @@
 /**
  * In-Memory Access Token Store & Auto-Refreshing Fetch Client
+ *
+ * In production (Cloudflare Pages), API calls are proxied via VITE_API_BASE_URL
+ * to the Render.com backend. In development, Vite proxy handles /api → localhost:5000.
  */
+
+// In production, VITE_API_BASE_URL points to the Render backend (e.g. https://shree-clinic-api.onrender.com)
+// In development, Vite proxy handles /api → localhost:5000, so BASE is empty string.
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
 
 let memoryAccessToken: string | null = null;
 let isRefreshing = false;
@@ -29,12 +36,26 @@ const processQueue = (error: any, token: string | null = null) => {
 };
 
 /**
- * Enhanced fetch client with automatic JWT bearer inclusion and silent 401 refresh retry.
+ * Resolve a relative /api/... path to the full backend URL in production.
+ */
+function resolveUrl(endpoint: string): string {
+  if (API_BASE && endpoint.startsWith('/api')) {
+    return `${API_BASE}${endpoint}`;
+  }
+  return endpoint;
+}
+
+/**
+ * Enhanced fetch client with:
+ * - Automatic JWT bearer inclusion
+ * - Silent 401 refresh retry
+ * - Full backend URL resolution in production (Cloudflare Pages → Render)
  */
 export async function apiFetch(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<Response> {
+  const url = resolveUrl(endpoint);
   const headers = new Headers(options.headers || {});
 
   // Attach access token if present
@@ -53,7 +74,7 @@ export async function apiFetch(
     credentials: 'include', // Ensures httpOnly cookies (refreshToken) are sent
   };
 
-  const response = await fetch(endpoint, config);
+  const response = await fetch(url, config);
 
   // If 401 Unauthorized and not on an auth endpoint, attempt silent token refresh once
   if (
@@ -67,7 +88,7 @@ export async function apiFetch(
         failedQueue.push({
           resolve: async (newToken: string) => {
             headers.set('Authorization', `Bearer ${newToken}`);
-            resolve(fetch(endpoint, { ...config, headers }));
+            resolve(fetch(url, { ...config, headers }));
           },
           reject: (err: any) => reject(err),
         });
@@ -77,7 +98,8 @@ export async function apiFetch(
     isRefreshing = true;
 
     try {
-      const refreshResponse = await fetch('/api/v1/auth/refresh', {
+      const refreshUrl = resolveUrl('/api/v1/auth/refresh');
+      const refreshResponse = await fetch(refreshUrl, {
         method: 'POST',
         credentials: 'include',
       });
@@ -89,7 +111,7 @@ export async function apiFetch(
 
         // Retry original request with new token
         headers.set('Authorization', `Bearer ${data.accessToken}`);
-        return fetch(endpoint, { ...config, headers });
+        return fetch(url, { ...config, headers });
       } else {
         // Refresh token invalid or expired
         setAccessToken(null);

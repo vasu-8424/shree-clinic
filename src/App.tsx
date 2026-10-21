@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiUrl } from './utils/publicApi';
 import {
   Phone,
   MessageCircle,
@@ -1255,7 +1256,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       concern.trim() || null,
     ].filter(Boolean).join(' | ');
 
-    fetch('/api/v1/public/appointments', {
+    fetch(apiUrl('/api/v1/public/appointments'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

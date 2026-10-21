@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { apiFetch, setAccessToken, getAccessToken } from '../api/client';
+import { apiUrl } from '../../utils/publicApi';
 
 export interface AdminUser {
   id: string;
@@ -32,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     async function checkSession() {
       try {
-        const res = await fetch('/api/v1/auth/refresh', {
+        const res = await fetch(apiUrl('/api/v1/auth/refresh'), {
           method: 'POST',
           credentials: 'include',
         });
@@ -72,7 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await fetch('/api/v1/auth/login', {
+      const res = await fetch(apiUrl('/api/v1/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

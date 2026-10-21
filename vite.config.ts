@@ -46,7 +46,7 @@ export default defineConfig(() => {
       // Enable source maps only in development
       sourcemap: process.env.NODE_ENV !== 'production',
       // Minify for smallest possible production output
-      minify: 'esbuild',
+      minify: 'esbuild' as const,
     },
 
     // Optimize deps for faster dev startup
