@@ -1,7 +1,9 @@
 name = "shree-clinic"
 compatibility_date = "2026-10-21"
 
-# Cloudflare Pages — Static Assets
-# Tells wrangler the build output directory for the SPA
+# Cloudflare Pages/Workers — Static Assets
 [assets]
 directory = "./dist"
+# This replaces the _redirects file — serves index.html for all unknown routes
+# so React Router handles navigation client-side (SPA mode)
+not_found_handling = "single-page-application"

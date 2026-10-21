@@ -1,4 +1,0 @@
-# Cloudflare Pages — SPA Routing Fix
-# All routes return index.html so React Router handles navigation client-side.
-# Without this, refreshing any page like /admin or /admin/patients gives a 404.
-/*    /index.html   200
