@@ -5,7 +5,7 @@
  * - XSS (Cross-Site Scripting) via recursive HTML stripping
  * - HTTP Parameter Pollution (HPP)
  * - Oversized payloads
- * - Suspicious injection patterns in body/query/params
+ * - Suspicious SQL injection patterns in body/query/params
  */
 
 import { Request, Response, NextFunction } from 'express';
@@ -39,7 +39,7 @@ function sanitizeValue(value: unknown): unknown {
   if (value !== null && typeof value === 'object') {
     const sanitized: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      // Also sanitize the key itself to prevent prototype pollution
+      // Sanitize the key itself to prevent prototype pollution
       const safeKey = k.replace(/^__proto__|^constructor|^prototype/, '');
       if (safeKey) {
         sanitized[safeKey] = sanitizeValue(v);
@@ -69,16 +69,32 @@ export function sanitizeInputs(req: Request, _res: Response, next: NextFunction)
 
 // ─── SQL Injection Pattern Detection ─────────────────────────────────────────
 
-const SQL_INJECTION_PATTERNS = [
-  /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE|EXEC|EXECUTE|UNION|CAST|CONVERT|DECLARE|CURSOR|FETCH|KILL|OPEN|CLOSE)\b)/i,
-  /(--|;--|\/\*|\*\/|@@|@\w)/,
-  /('\s*(OR|AND)\s*'?\d*\s*[=<>])/i,
-  /(WAITFOR\s+DELAY|SLEEP\s*\()/i,
-  /xp_cmdshell/i,
-];
+/**
+ * IMPORTANT — False-positive-safe patterns:
+ *
+ * ❌ Do NOT use @\w  — it matches email addresses (admin@shreeclinic.com)
+ * ❌ Do NOT use \bEXEC\b alone — matches normal words in patient notes
+ * ✅ Use @@ only (SQL Server double-@ variables like @@version)
+ * ✅ Require surrounding whitespace for dangerous keywords
+ */
 
 function containsSQLInjection(value: string): boolean {
-  return SQL_INJECTION_PATTERNS.some((p) => p.test(value));
+  // 1. SQL comment sequences — never valid in any user form field
+  if (/--|\/\*|\*\//.test(value)) return true;
+
+  // 2. SQL Server double-@@ system variables (@@version, @@servername)
+  //    Single @word intentionally NOT flagged — normal in email addresses!
+  if (/@@\w/.test(value)) return true;
+
+  // 3. Classic quote-based SQLi: ' OR '1'='1  or  ' AND 'x'='x
+  if (/'(\s)*(OR|AND)(\s)+['"0-9]/i.test(value)) return true;
+
+  // 4. Dangerous SQL keywords — only when flanked by spaces/start/end,
+  //    so patient notes or names don't accidentally trigger this
+  const dangerousKeywords = /(\s|^)(DROP TABLE|DROP DATABASE|TRUNCATE TABLE|UNION SELECT|UNION ALL SELECT|INSERT INTO|DELETE FROM|UPDATE .+ SET|EXEC\(|EXECUTE\(|WAITFOR DELAY|xp_cmdshell)(\s|$|;|\()/i;
+  if (dangerousKeywords.test(value)) return true;
+
+  return false;
 }
 
 function checkForSQLInjection(obj: unknown, depth = 0): boolean {
