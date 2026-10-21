@@ -679,26 +679,26 @@ export const PatientDetailPage: React.FC = () => {
         <div className="flex items-center flex-wrap gap-2 shrink-0">
           <button
             onClick={handleExportData}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 hover:text-stone-900 transition-all cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-stone-800 border border-stone-700 text-stone-200 hover:bg-stone-700 hover:text-white transition-all cursor-pointer shadow-xs"
             title="Download DPDP Section 11 Data Portability Export"
           >
-            <Download className="w-3.5 h-3.5 text-stone-500" />
+            <Download className="w-3.5 h-3.5 text-stone-400" />
             <span>Export JSON</span>
           </button>
 
           <button
             onClick={handleOpenEdit}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 hover:text-stone-900 transition-all cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-stone-800 border border-stone-700 text-stone-200 hover:bg-stone-700 hover:text-white transition-all cursor-pointer shadow-xs"
           >
-            <Edit className="w-3.5 h-3.5 text-stone-500" />
+            <Edit className="w-3.5 h-3.5 text-stone-400" />
             <span>Edit Profile</span>
           </button>
 
           <button
             onClick={() => setIsDeleteModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-white border border-stone-200 text-amber-700 hover:bg-amber-50 transition-all cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-amber-950/40 border border-amber-500/40 text-amber-300 hover:bg-amber-900/50 transition-all cursor-pointer shadow-xs"
           >
-            <Trash2 className="w-3.5 h-3.5 text-amber-600" />
+            <Trash2 className="w-3.5 h-3.5 text-amber-400" />
             <span>Archive</span>
           </button>
 
@@ -709,10 +709,10 @@ export const PatientDetailPage: React.FC = () => {
               setEraseError('');
               setIsEraseModalOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-700 hover:bg-rose-100 transition-all cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-rose-950/40 border border-rose-500/40 text-rose-300 hover:bg-rose-900/50 transition-all cursor-pointer shadow-xs"
             title="Permanent erasure under DPDP Section 12"
           >
-            <Lock className="w-3.5 h-3.5 text-rose-600" />
+            <Lock className="w-3.5 h-3.5 text-rose-400" />
             <span>DPDP Permanent Erase</span>
           </button>
         </div>
@@ -722,22 +722,22 @@ export const PatientDetailPage: React.FC = () => {
       <div
         className={`p-4 rounded-2xl border transition-all ${
           data.hasActiveConsent
-            ? 'bg-emerald-50/70 border-emerald-200 text-emerald-950'
-            : 'bg-amber-50 border-amber-300 text-amber-950'
+            ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-200'
+            : 'bg-amber-950/40 border-amber-500/40 text-amber-200'
         }`}
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-start gap-3">
             {data.hasActiveConsent ? (
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             ) : (
-              <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
             )}
             <div>
-              <div className="font-bold text-xs uppercase tracking-wider flex items-center gap-2">
+              <div className="font-bold text-xs uppercase tracking-wider flex items-center gap-2 text-emerald-300">
                 <span>DPDP Act 2023: {data.hasActiveConsent ? 'Active Patient Consent' : 'Consent Withdrawn'}</span>
               </div>
-              <p className="text-xs text-stone-600 mt-0.5">
+              <p className="text-xs text-stone-300 mt-0.5">
                 {data.hasActiveConsent
                   ? 'Valid informed consent is in effect for diagnosis, clinical therapy notes, and medical record keeping.'
                   : 'Patient consent has been withdrawn. Creating new clinical notes is blocked under Section 6 of DPDP Act 2023.'}
@@ -748,14 +748,14 @@ export const PatientDetailPage: React.FC = () => {
           {data.hasActiveConsent ? (
             <button
               onClick={() => setIsWithdrawModalOpen(true)}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-amber-800 border border-amber-300 hover:bg-amber-100/50 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-stone-900 text-amber-300 border border-amber-500/50 hover:bg-amber-950/50 transition-all cursor-pointer"
             >
               Withdraw Consent
             </button>
           ) : (
             <button
               onClick={() => setIsRenewModalOpen(true)}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0b3037] text-white hover:bg-[#124b55] transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-500 transition-all cursor-pointer shadow-xs"
             >
               Re-establish Consent
             </button>
@@ -764,7 +764,7 @@ export const PatientDetailPage: React.FC = () => {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="flex items-center gap-2 border-b border-stone-200 overflow-x-auto pb-px">
+      <div className="flex items-center gap-2 border-b border-stone-800 overflow-x-auto pb-px">
         {[
           { key: 'overview', label: 'Overview & Profile', icon: User, count: null },
           { key: 'visits', label: 'Clinical Visits', icon: FileText, count: data.visits?.length },
@@ -779,16 +779,22 @@ export const PatientDetailPage: React.FC = () => {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as any)}
-              className={`flex items-center gap-2 px-4 py-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap border-b-2 transition-all cursor-pointer ${
                 isActive
-                  ? 'border-[#0b3037] text-[#0b3037]'
-                  : 'border-transparent text-stone-500 hover:text-stone-800 hover:border-stone-300'
+                  ? 'border-emerald-400 text-emerald-400'
+                  : 'border-transparent text-stone-400 hover:text-stone-200 hover:border-stone-700'
               }`}
             >
-              <Icon className="w-3.5 h-3.5" />
+              <Icon className="w-4 h-4" />
               <span>{tab.label}</span>
               {typeof tab.count === 'number' && (
-                <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${isActive ? 'bg-[#0b3037] text-white' : 'bg-stone-200 text-stone-700'}`}>
+                <span
+                  className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-bold ${
+                    isActive
+                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                      : 'bg-stone-800 text-stone-300 border border-stone-700'
+                  }`}
+                >
                   {tab.count}
                 </span>
               )}
@@ -801,19 +807,19 @@ export const PatientDetailPage: React.FC = () => {
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="space-y-6 lg:col-span-1">
-            <div className="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs space-y-4">
-              <h3 className="text-sm font-serif font-bold text-[#0b3037] uppercase tracking-wider border-b border-stone-100 pb-2">
+            <div className="bg-white rounded-2xl p-5 border border-stone-800 shadow-xs space-y-4">
+              <h3 className="text-sm font-serif font-bold text-emerald-400 uppercase tracking-wider border-b border-stone-800 pb-2">
                 Patient Information
               </h3>
 
-              <div className="space-y-3 text-xs text-stone-700">
+              <div className="space-y-3.5 text-xs text-stone-200">
                 <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-stone-400 shrink-0" />
+                  <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                   <div>
-                    <span className="block text-stone-400 text-[10px] uppercase font-semibold">
+                    <span className="block text-stone-400 text-[10px] uppercase font-bold tracking-wider">
                       Primary Phone
                     </span>
-                    <span className="font-medium text-stone-900">{data.phone}</span>
+                    <span className="font-semibold text-white text-sm">{data.phone}</span>
                   </div>
                 </div>
 
@@ -821,10 +827,10 @@ export const PatientDetailPage: React.FC = () => {
                   <div className="flex items-center gap-2.5">
                     <Phone className="w-4 h-4 text-stone-400 shrink-0" />
                     <div>
-                      <span className="block text-stone-400 text-[10px] uppercase font-semibold">
+                      <span className="block text-stone-400 text-[10px] uppercase font-bold tracking-wider">
                         Alternate / Guardian
                       </span>
-                      <span>{data.alternatePhone}</span>
+                      <span className="font-medium text-stone-300">{data.alternatePhone}</span>
                     </div>
                   </div>
                 )}
@@ -832,20 +838,20 @@ export const PatientDetailPage: React.FC = () => {
                 <div className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-stone-400 shrink-0" />
                   <div>
-                    <span className="block text-stone-400 text-[10px] uppercase font-semibold">
+                    <span className="block text-stone-400 text-[10px] uppercase font-bold tracking-wider">
                       Email Address
                     </span>
-                    <span>{data.email || '—'}</span>
+                    <span className="font-medium text-stone-300">{data.email || '—'}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2.5">
                   <Calendar className="w-4 h-4 text-stone-400 shrink-0" />
                   <div>
-                    <span className="block text-stone-400 text-[10px] uppercase font-semibold">
+                    <span className="block text-stone-400 text-[10px] uppercase font-bold tracking-wider">
                       Age & Gender
                     </span>
-                    <span>
+                    <span className="font-medium text-stone-200">
                       {data.age ? `${data.age} years old` : 'Age not recorded'}
                       {data.gender ? ` • ${data.gender}` : ''}
                     </span>
@@ -855,48 +861,48 @@ export const PatientDetailPage: React.FC = () => {
                 <div className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-stone-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-stone-400 text-[10px] uppercase font-semibold">
+                    <span className="block text-stone-400 text-[10px] uppercase font-bold tracking-wider">
                       Address
                     </span>
-                    <span>{data.address || '—'}</span>
+                    <span className="font-medium text-stone-200">{data.address || '—'}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 pt-2 border-t border-stone-100">
+                <div className="flex items-center gap-2.5 pt-2 border-t border-stone-800">
                   <User className="w-4 h-4 text-stone-400 shrink-0" />
                   <div>
-                    <span className="block text-stone-400 text-[10px] uppercase font-semibold">
+                    <span className="block text-stone-400 text-[10px] uppercase font-bold tracking-wider">
                       Referral Source
                     </span>
-                    <span>{data.referralSource || 'Direct Walk-in'}</span>
+                    <span className="font-medium text-stone-200">{data.referralSource || 'Direct Walk-in'}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Consent History Card */}
-            <div className="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs space-y-3">
-              <h3 className="text-sm font-serif font-bold text-[#0b3037] uppercase tracking-wider border-b border-stone-100 pb-2">
+            <div className="bg-white rounded-2xl p-5 border border-stone-800 shadow-xs space-y-3">
+              <h3 className="text-sm font-serif font-bold text-emerald-400 uppercase tracking-wider border-b border-stone-800 pb-2">
                 DPDP Consent Audit History
               </h3>
               <div className="space-y-3 max-h-60 overflow-y-auto">
                 {data.consentRecords?.map((record: any) => (
-                  <div key={record.id} className="p-3 rounded-xl bg-stone-50 border border-stone-200 space-y-1">
+                  <div key={record.id} className="p-3 rounded-xl bg-stone-900 border border-stone-800 space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-stone-800">
+                      <span className="text-xs font-semibold text-stone-200">
                         Version {record.consentVersion}
                       </span>
                       {record.withdrawn ? (
-                        <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] font-bold text-amber-300 bg-amber-950/60 border border-amber-500/40 px-2 py-0.5 rounded-md">
                           Withdrawn
                         </span>
                       ) : (
-                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded-md">
                           Granted
                         </span>
                       )}
                     </div>
-                    <div className="text-[11px] text-stone-500">
+                    <div className="text-[11px] text-stone-400">
                       Date: {new Date(record.consentDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </div>
                   </div>
@@ -907,30 +913,30 @@ export const PatientDetailPage: React.FC = () => {
 
           {/* Right Column: Clinical Case History */}
           <div className="space-y-6 lg:col-span-2">
-            <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-xs space-y-3">
-              <h3 className="text-sm font-serif font-bold text-[#0b3037] uppercase tracking-wider border-b border-stone-100 pb-2">
+            <div className="bg-white rounded-2xl p-6 border border-stone-800 shadow-xs space-y-3">
+              <h3 className="text-sm font-serif font-bold text-emerald-400 uppercase tracking-wider border-b border-stone-800 pb-2">
                 Chief Complaint / Presenting Concern
               </h3>
-              <p className="text-sm text-stone-800 leading-relaxed font-medium">
+              <p className="text-sm text-stone-200 leading-relaxed font-medium">
                 {data.chiefComplaint}
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 border border-stone-200 shadow-xs space-y-3">
-              <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-                <h3 className="text-sm font-serif font-bold text-[#0b3037] uppercase tracking-wider">
+            <div className="bg-white rounded-2xl p-6 border border-stone-800 shadow-xs space-y-3">
+              <div className="flex items-center justify-between border-b border-stone-800 pb-2">
+                <h3 className="text-sm font-serif font-bold text-emerald-400 uppercase tracking-wider">
                   Detailed Clinical Case History
                 </h3>
-                <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3" /> Decrypted for Doctor View
+                <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" /> Decrypted for Doctor View
                 </span>
               </div>
               {data.caseHistory ? (
-                <p className="text-sm text-stone-700 whitespace-pre-line leading-relaxed">
+                <p className="text-sm text-stone-200 whitespace-pre-line leading-relaxed">
                   {data.caseHistory}
                 </p>
               ) : (
-                <p className="text-xs text-stone-400 italic">
+                <p className="text-xs text-stone-500 italic">
                   No extended clinical case history recorded. Click "Edit Profile" to add history.
                 </p>
               )}

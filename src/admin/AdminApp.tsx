@@ -9,6 +9,8 @@ import { PatientsPage } from './pages/PatientsPage';
 import { PatientDetailPage } from './pages/PatientDetailPage';
 import { AppointmentsPage } from './pages/AppointmentsPage';
 import { HearingAidsPage } from './pages/HearingAidsPage';
+import { SpeechTherapyPage } from './pages/SpeechTherapyPage';
+import { PhysiotherapyPage } from './pages/PhysiotherapyPage';
 import { InventoryPage } from './pages/InventoryPage';
 import { BillingPage } from './pages/BillingPage';
 import { ReportsPage } from './pages/ReportsPage';
@@ -36,6 +38,8 @@ export const AdminApp: React.FC = () => {
           <Route path="patients/:id" element={<PatientDetailPage />} />
           <Route path="appointments" element={<AppointmentsPage />} />
           <Route path="hearing-aids" element={<HearingAidsPage />} />
+          <Route path="speech-therapy" element={<SpeechTherapyPage />} />
+          <Route path="physiotherapy" element={<PhysiotherapyPage />} />
           <Route path="inventory" element={<InventoryPage />} />
           <Route path="billing" element={<BillingPage />} />
           <Route path="reports" element={<ReportsPage />} />

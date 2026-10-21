@@ -17,6 +17,7 @@ import {
   FileText
 } from 'lucide-react';
 import { useWebsiteImages } from './context/ImageContext';
+import { WhenToConsultSection } from './components/WhenToConsultSection';
 
 // ==========================================
 // REAL HEALTHCARE PHOTOGRAPHY (from internet)
@@ -216,14 +217,14 @@ const detailedClinicServices: DetailedCategory[] = [
     tagline: 'Comprehensive hearing diagnostic assessments, objective infant screenings, and certified multi-brand digital hearing aid trials.',
     subtitle: 'Assessment, Diagnosis and Management for :',
     icon: 'audiology',
-    image: '/images/audiology-soundproof-booth.png',
+    image: '/images/audiology-diagnostic-tests.jpg',
     imageAlt: 'Pure tone audiometry hearing assessment in sound treated booth',
     imageBadge: 'Sound-Treated Audiology Suite',
     groups: [
       {
         number: 1,
         title: 'Diagnostic Hearing Tests',
-        image: '/images/audiology-soundproof-booth.png',
+        image: '/images/audiology-diagnostic-tests.jpg',
         imageAlt: 'Pure Tone Audiometry hearing test inside soundproof acoustic room',
         imageBadge: 'Sound-Treated Audiology Suite',
         items: [
@@ -236,8 +237,8 @@ const detailedClinicServices: DetailedCategory[] = [
       {
         number: 2,
         title: 'Middle Ear & Impedance Tests',
-        image: '/images/audiology-middle-ear-exam.jpg',
-        imageAlt: 'Middle ear tympanometry and acoustic reflex examination',
+        image: '/images/audiology-middle-ear-model.png',
+        imageAlt: 'Middle ear tympanometry and acoustic reflex anatomical examination',
         imageBadge: 'Tympanometry & Middle Ear Diagnostic',
         items: [
           'Tympanometry (Middle Ear Pressure & Eardrum Mobility)',
@@ -248,8 +249,8 @@ const detailedClinicServices: DetailedCategory[] = [
       {
         number: 3,
         title: 'Pediatric Hearing Screenings',
-        image: '/images/audiology-pediatric-screening.jpg',
-        imageAlt: 'Pediatric hearing screening and newborn audiological evaluation',
+        image: '/images/audiology-discreet-hearing-aid.jpg',
+        imageAlt: 'Pediatric and young adult hearing screening evaluation',
         imageBadge: 'Pediatric Hearing Screening',
         items: [
           'Otoacoustic Emissions (OAE) Newborn Screening',
@@ -259,23 +260,23 @@ const detailedClinicServices: DetailedCategory[] = [
       },
       {
         number: 4,
-        title: 'Digital Hearing Aid Solutions',
-        image: '/images/audiology-digital-hearing-aids.jpg',
-        imageAlt: 'Multi-brand digital hearing aid trial and smartphone programming',
-        imageBadge: 'Digital Hearing Aid Solutions',
+        title: 'Multi-Brand Hearing Aid Fitting & Sales',
+        image: '/images/audiology-multibrand-hearing-aids.png',
+        imageAlt: 'Multi-brand digital hearing aid trial, fitting, sales and smartphone programming',
+        imageBadge: 'Multi-Brand Hearing Aid Fitting & Sales',
         items: [
-          'Multi-Brand Digital Hearing Aid Consultation',
+          'Multi-Brand Digital Hearing Aid Consultation & Selection',
           'Live Speech Hearing Aid Trial & Demonstration',
           'Computerized Programming, Fine-Tuning & Custom Earmolds',
-          'Hearing Aid Servicing, Cleaning & Walk-in Care'
+          'Hearing Aid Dispensing, Sales, Warranty & Servicing Care'
         ]
       },
       {
         number: 5,
         title: 'Auditory & Tinnitus Care',
-        image: '/images/audiology-tinnitus-consultation.jpg',
-        imageAlt: 'Clinical tinnitus assessment and specialist counseling',
-        imageBadge: 'Tinnitus & Ear Care Consultation',
+        image: '/images/audiology-hearing-aid-fitting.jpg',
+        imageAlt: 'Clinical hearing aid fitting and age-related hearing care counseling',
+        imageBadge: 'Hearing Aid Fitting & Ear Care',
         items: [
           'Tinnitus (Ear Ringing) Assessment & Relief Counseling',
           'Age-Related Hearing Loss (Presbycusis) Guidance',
@@ -289,7 +290,7 @@ const detailedClinicServices: DetailedCategory[] = [
       { title: 'Hearing Screening' },
       { title: 'Tympanometry & Middle Ear Assessment' },
       { title: 'Pediatric Hearing Assessment' },
-      { title: 'Hearing Aid Evaluation & Fitting' },
+      { title: 'Multi-Brand Hearing Aid Fitting & Sales' },
       { title: 'Hearing Aid Counselling' },
       { title: 'Auditory Rehabilitation' },
       { title: 'Auditory Training' },
@@ -327,8 +328,8 @@ const detailedClinicServices: DetailedCategory[] = [
         title: 'Adult Neuro-Rehabilitation',
         description: 'Speech, language, cognitive-communication, and motor speech rehabilitation following stroke, brain injury, Parkinson’s disease, and other neurological conditions.',
         image: '/images/speech-adult-therapy.png',
-        imageAlt: 'Adult neuro-rehabilitation and speech therapy session',
-        imageBadge: 'Adult Speech Therapy & Neuro-Rehab',
+        imageAlt: 'Adult speech pathology and SPEAK OUT! oral motor therapy session',
+        imageBadge: 'SPEAK OUT! Adult Speech Therapy',
         items: [
           'Post-Stroke Speech & Language Recovery (Aphasia)',
           'Cognitive-Communication Rehabilitation (Brain Injury & Parkinson’s)',
@@ -340,9 +341,9 @@ const detailedClinicServices: DetailedCategory[] = [
         number: 3,
         title: 'Dysphagia & Swallowing Rehabilitation',
         description: 'Assessment and therapy for swallowing difficulties in children and adults, including neurological, medical, and post-surgical conditions.',
-        image: '/images/speech-adult-therapy.png',
-        imageAlt: 'Clinical dysphagia evaluation and swallowing rehabilitation therapy',
-        imageBadge: 'Adult Speech Therapy & Neuro-Rehab',
+        image: '/images/vitalstim-swallowing-therapy.png',
+        imageAlt: 'VitalStim Plus electrotherapy and biofeedback for clinical dysphagia swallowing rehabilitation',
+        imageBadge: 'VitalStim® Swallowing Therapy',
         items: [
           'Clinical Swallowing Assessment in Children & Adults',
           'Therapy for Neurological & Medical Dysphagia',
@@ -894,6 +895,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const navLinks = [
     { label: 'Home', href: '#home' },
     { label: 'Disciplines', href: '#services' },
+    { label: 'When to Consult', href: '#when-to-consult' },
     { label: 'Rehabilitation', href: '#rehabilitation' },
     { label: 'All Services', href: '#procedures' },
     { label: 'FAQs', href: '#faqs' },
@@ -2293,16 +2295,16 @@ export default function App() {
                                       : 'Adult Therapy'
                                     : isPhysio
                                     ? 'Physical Rehabilitation'
-                                    : `Image ${activeGroupIdx + 1}/${category.groups.length}`}
+                                    : 'Clinical Audiology'}
                                 </span>
                               </div>
                             </div>
 
-                            {/* Sub-Service Photo Switcher Strip with Separate Real Photos */}
+                            {/* Sub-Service Photo Switcher Strip with Separate Real Photos for Audiology */}
                             {category.id === 'audiology' && (
                               <div className="bg-stone-50 rounded-2xl p-3 md:p-3.5 border border-neutral-200/80 flex flex-col gap-2">
                                 <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500">
-                                  <span>Service Photos ({category.groups.length} Separate Images)</span>
+                                  <span>Service Photos</span>
                                   <span className="text-[#053543] font-bold">Click photo to view</span>
                                 </div>
                                 <div className="grid grid-cols-5 sm:grid-cols-6 gap-1.5">
@@ -2315,7 +2317,7 @@ export default function App() {
                                         onClick={() => setActiveSubGroup((prev) => ({ ...prev, [category.id]: gIdx }))}
                                         className={`relative rounded-xl overflow-hidden aspect-square border-2 transition-all cursor-pointer ${
                                           isSelected
-                                            ? `${isAudiology ? 'border-[#053543] ring-2 ring-[#053543]/40' : isSpeech ? 'border-[#0891b2] ring-2 ring-[#0891b2]/40' : 'border-[#65a30d] ring-2 ring-[#65a30d]/40'} scale-105 shadow-md`
+                                            ? 'border-[#053543] ring-2 ring-[#053543]/40 scale-105 shadow-md'
                                             : 'border-neutral-200 opacity-60 hover:opacity-100 hover:border-neutral-400'
                                         }`}
                                         title={`${grp.number}. ${grp.title}`}
@@ -2337,19 +2339,53 @@ export default function App() {
                                 </div>
                               </div>
                             )}
+
+                            {/* Sub-Service Photo Switcher Strip with Real Photos for Speech Therapy */}
+                            {category.id === 'speech' && (
+                              <div className="bg-stone-50 rounded-2xl p-3 md:p-3.5 border border-neutral-200/80 flex flex-col gap-2">
+                                <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-500">
+                                  <span>Service Photos</span>
+                                  <span className="text-[#0891b2] font-bold">Click photo to view</span>
+                                </div>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {[
+                                    { groupIndex: 0, label: 'Pediatric Speech Therapy', image: '/images/speech-pediatric-therapy.png' },
+                                    { groupIndex: 1, label: 'Adult SPEAK OUT! Therapy', image: '/images/speech-adult-therapy.png' },
+                                    { groupIndex: 3, label: 'VitalStim® NMES Therapy', image: '/images/vitalstim-swallowing-therapy.png' }
+                                  ].map((p, pIdx) => {
+                                    const isSelected = activeGroupIdx === p.groupIndex || (p.groupIndex === 1 && (activeGroupIdx === 4 || activeGroupIdx === 5)) || (p.groupIndex === 3 && activeGroupIdx === 2);
+                                    return (
+                                      <button
+                                        key={p.label}
+                                        type="button"
+                                        onClick={() => setActiveSubGroup((prev) => ({ ...prev, [category.id]: p.groupIndex }))}
+                                        className={`relative rounded-xl overflow-hidden aspect-square border-2 transition-all cursor-pointer ${
+                                          isSelected
+                                            ? 'border-[#0891b2] ring-2 ring-[#0891b2]/40 scale-105 shadow-md'
+                                            : 'border-neutral-200 opacity-60 hover:opacity-100 hover:border-neutral-400'
+                                        }`}
+                                        title={p.label}
+                                      >
+                                        <img
+                                          src={resolveImageUrl(p.image)}
+                                          alt={p.label}
+                                          className="w-full h-full object-cover"
+                                          onError={(e) => {
+                                            (e.target as HTMLImageElement).src = p.image;
+                                          }}
+                                        />
+                                        <span className="absolute bottom-0.5 right-0.5 bg-black/85 text-white font-mono text-[9px] px-1 rounded font-bold">
+                                          {pIdx + 1}
+                                        </span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
                           </>
                         );
                       })()}
-
-                      <div className="bg-stone-50 rounded-2xl p-4 md:p-5 border border-neutral-200/80 flex flex-col gap-2.5">
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500 font-bold uppercase tracking-wider">
-                          <span>{category.shortName}</span>
-                          <span>{category.groups.reduce((acc, g) => acc + g.items.length, 0)} Conditions Treated</span>
-                        </div>
-                        <p className="text-xs text-neutral-600 leading-relaxed font-medium">
-                          {category.tagline}
-                        </p>
-                      </div>
                     </div>
 
                     {/* RIGHT: Structured Sub-Services matching Reference Image */}
@@ -2388,7 +2424,7 @@ export default function App() {
                                   <span className="font-bold">{group.number}.</span>
                                   <span>{group.title}</span>
                                 </h5>
-                                {category.id === 'audiology' && (
+                                {(category.id === 'audiology' || category.id === 'speech') && (
                                   <span className={`shrink-0 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase transition-all ${
                                     isSelected
                                       ? `${badgeColor} shadow-xs`
@@ -2436,6 +2472,20 @@ export default function App() {
             })}
         </div>
       </section>
+
+      {/* ======================================================== */}
+      {/* SECTION - WHEN TO CONSULT (MULTILINGUAL TE / HI / EN)    */}
+      {/* ======================================================== */}
+      <WhenToConsultSection
+        onBookClick={(dept) => {
+          const deptName = dept === 'speech' 
+            ? 'Speech Language Pathology' 
+            : dept === 'physio' 
+            ? 'Physiotherapy & Rehabilitation' 
+            : 'Audiology';
+          handleInquireTreatment(deptName);
+        }}
+      />
 
       {/* ======================================================== */}
       {/* SECTION 5 - PATIENT JOURNEY EXPLAINED CLEARLY            */}

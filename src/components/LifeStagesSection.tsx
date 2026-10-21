@@ -160,7 +160,7 @@ const LIFE_STAGES: LifeStageCardData[] = [
     accentColor: 'border-[#053543]/30',
     badgeBg: 'bg-teal-50 text-[#053543] border-teal-200',
     badgeText: 'Hospital-Grade Diagnostics',
-    image: '/images/audiology-soundproof-booth.png',
+    image: '/images/audiology-diagnostic-tests.jpg',
     imageAlt: 'Pure tone audiometry hearing assessment inside soundproof booth',
     icon: 'hearing',
     conditions: [

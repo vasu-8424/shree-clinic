@@ -94,7 +94,7 @@ export const ServiceExplorer: React.FC<ServiceExplorerProps> = ({
                         isActive ? 'text-[#dfe9cf]' : 'text-[#6c9f36]'
                       }`}
                     >
-                      {service.subServices.length} Procedures
+                      Clinical Care
                     </span>
                   </div>
 

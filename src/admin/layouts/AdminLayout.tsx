@@ -14,7 +14,7 @@ export const AdminLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#070b12] text-slate-100 flex flex-col admin-workspace selection:bg-emerald-500 selection:text-white">
       <div className="flex flex-1">
         {/* Desktop Sidebar */}
         <div className="hidden lg:block shrink-0">
@@ -25,13 +25,13 @@ export const AdminLayout: React.FC = () => {
         {mobileMenuOpen && (
           <div
             onClick={() => setMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-xs animate-fade-in"
+            className="fixed inset-0 bg-black/70 z-40 lg:hidden backdrop-blur-sm animate-fade-in"
           />
         )}
 
         {/* Mobile Drawer Content */}
         <div
-          className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#0b3037] transform transition-transform duration-300 ease-in-out lg:hidden ${
+          className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#070b12] border-r border-slate-800 transform transition-transform duration-300 ease-in-out lg:hidden ${
             mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
@@ -39,23 +39,23 @@ export const AdminLayout: React.FC = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 bg-[#070b12]">
           <Header onToggleMobileMenu={() => setMobileMenuOpen(true)} />
 
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8 max-w-7xl w-full mx-auto">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 lg:pb-10 max-w-7xl w-full mx-auto">
             <Outlet />
           </main>
         </div>
       </div>
 
       {/* Mobile Fixed Bottom Navigation Bar */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 z-30 px-2 py-1.5 flex items-center justify-around shadow-lg">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0a101a] border-t border-slate-800/90 z-30 px-3 py-2 flex items-center justify-around shadow-2xl backdrop-blur-md">
         <NavLink
           to="/admin"
           end
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-2 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-[#0b3037]' : 'text-neutral-500'
+            `flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs font-bold transition-colors ${
+              isActive ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 hover:text-slate-200'
             }`
           }
         >
@@ -66,8 +66,8 @@ export const AdminLayout: React.FC = () => {
         <NavLink
           to="/admin/patients"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-2 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-[#0b3037]' : 'text-neutral-500'
+            `flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs font-bold transition-colors ${
+              isActive ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 hover:text-slate-200'
             }`
           }
         >
@@ -78,8 +78,8 @@ export const AdminLayout: React.FC = () => {
         <NavLink
           to="/admin/appointments"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-2 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-[#0b3037]' : 'text-neutral-500'
+            `flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs font-bold transition-colors ${
+              isActive ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 hover:text-slate-200'
             }`
           }
         >
@@ -90,8 +90,8 @@ export const AdminLayout: React.FC = () => {
         <NavLink
           to="/admin/billing"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-1 p-2 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-[#0b3037]' : 'text-neutral-500'
+            `flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs font-bold transition-colors ${
+              isActive ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 hover:text-slate-200'
             }`
           }
         >
@@ -101,7 +101,7 @@ export const AdminLayout: React.FC = () => {
 
         <button
           onClick={() => setMobileMenuOpen(true)}
-          className="flex flex-col items-center gap-1 p-2 rounded-xl text-[10px] font-bold text-neutral-500 hover:text-black cursor-pointer"
+          className="flex flex-col items-center gap-1.5 p-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white cursor-pointer"
         >
           <Menu className="w-5 h-5" />
           <span>More</span>

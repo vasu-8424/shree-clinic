@@ -43,14 +43,268 @@
   background: #000000;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Professional High-Legibility Dark Theme for Admin Workspace */
+.admin-workspace {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.01em;
+  background-color: #070b12 !important;
+  color: #f8fafc !important;
+  font-size: 15px;
 }
+
+.admin-workspace ::-webkit-scrollbar-track {
+  background: #070b12;
+}
+
+.admin-workspace ::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+.admin-workspace ::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Dark Card & Surface Transformation */
+.admin-workspace .bg-white {
+  background-color: #0e1626 !important;
+  border-color: #1e293b !important;
+  color: #f8fafc;
+}
+
+.admin-workspace .bg-stone-50,
+.admin-workspace .bg-neutral-50 {
+  background-color: #09101c !important;
+  border-color: #1e293b !important;
+  color: #f1f5f9;
+}
+
+.admin-workspace .bg-stone-100,
+.admin-workspace .bg-neutral-100,
+.admin-workspace .bg-stone-200,
+.admin-workspace .bg-neutral-200,
+.admin-workspace .bg-stone-300,
+.admin-workspace .bg-neutral-300 {
+  background-color: #131e31 !important;
+  border-color: #26354a !important;
+  color: #f1f5f9 !important;
+}
+
+/* Alert banners, chips & status badges */
+.admin-workspace .bg-emerald-50,
+.admin-workspace .bg-emerald-50\/70,
+.admin-workspace .bg-emerald-100 {
+  background-color: rgba(6, 78, 59, 0.4) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #a7f3d0 !important;
+}
+.admin-workspace .bg-emerald-50 *,
+.admin-workspace .bg-emerald-50\/70 * {
+  color: #a7f3d0 !important;
+}
+.admin-workspace .text-emerald-950,
+.admin-workspace .text-emerald-900,
+.admin-workspace .text-emerald-800,
+.admin-workspace .text-emerald-700,
+.admin-workspace .text-emerald-600 {
+  color: #34d399 !important;
+}
+
+.admin-workspace .bg-amber-50,
+.admin-workspace .bg-amber-100 {
+  background-color: rgba(120, 53, 15, 0.4) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #fde68a !important;
+}
+.admin-workspace .bg-amber-50 *,
+.admin-workspace .bg-amber-100 * {
+  color: #fde68a !important;
+}
+.admin-workspace .text-amber-950,
+.admin-workspace .text-amber-900,
+.admin-workspace .text-amber-800,
+.admin-workspace .text-amber-700,
+.admin-workspace .text-amber-600 {
+  color: #fbbf24 !important;
+}
+
+.admin-workspace .bg-rose-50,
+.admin-workspace .bg-rose-100,
+.admin-workspace .bg-red-50,
+.admin-workspace .bg-red-100 {
+  background-color: rgba(136, 19, 55, 0.4) !important;
+  border-color: rgba(244, 63, 94, 0.4) !important;
+  color: #fecdd3 !important;
+}
+.admin-workspace .bg-rose-50 *,
+.admin-workspace .bg-rose-100 *,
+.admin-workspace .bg-red-50 *,
+.admin-workspace .bg-red-100 * {
+  color: #fecdd3 !important;
+}
+.admin-workspace .text-rose-950,
+.admin-workspace .text-rose-900,
+.admin-workspace .text-rose-800,
+.admin-workspace .text-rose-700,
+.admin-workspace .text-rose-600,
+.admin-workspace .text-red-700,
+.admin-workspace .text-red-600 {
+  color: #fb7185 !important;
+}
+
+.admin-workspace .bg-blue-50,
+.admin-workspace .bg-blue-100,
+.admin-workspace .bg-sky-50,
+.admin-workspace .bg-sky-100,
+.admin-workspace .bg-indigo-50,
+.admin-workspace .bg-indigo-100,
+.admin-workspace .bg-purple-50,
+.admin-workspace .bg-purple-100 {
+  background-color: rgba(30, 58, 138, 0.4) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  color: #93c5fd !important;
+}
+
+/* Borders */
+.admin-workspace .border-stone-200,
+.admin-workspace .border-stone-100,
+.admin-workspace .border-neutral-200,
+.admin-workspace .border-neutral-200\/90,
+.admin-workspace .border-stone-200\/90 {
+  border-color: #1e293b !important;
+}
+
+.admin-workspace .border-stone-300,
+.admin-workspace .border-neutral-300 {
+  border-color: #334155 !important;
+}
+
+/* Text Colors */
+.admin-workspace .text-stone-900,
+.admin-workspace .text-neutral-900 {
+  color: #ffffff !important;
+}
+
+.admin-workspace .text-stone-800,
+.admin-workspace .text-neutral-800 {
+  color: #f1f5f9 !important;
+}
+
+.admin-workspace .text-stone-700,
+.admin-workspace .text-neutral-700 {
+  color: #e2e8f0 !important;
+}
+
+.admin-workspace .text-stone-600,
+.admin-workspace .text-neutral-600 {
+  color: #cbd5e1 !important;
+}
+
+.admin-workspace .text-stone-500,
+.admin-workspace .text-neutral-500 {
+  color: #94a3b8 !important;
+}
+
+.admin-workspace .text-stone-400,
+.admin-workspace .text-neutral-400 {
+  color: #94a3b8 !important;
+}
+
+.admin-workspace .text-\[\#0b3037\] {
+  color: #38bdf8 !important;
+}
+
+/* Secondary & Action Buttons */
+.admin-workspace button.bg-white,
+.admin-workspace a.bg-white {
+  background-color: #162033 !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+.admin-workspace button.bg-white:hover,
+.admin-workspace a.bg-white:hover {
+  background-color: #1e293b !important;
+  border-color: #475569 !important;
+  color: #ffffff !important;
+}
+
+/* Primary buttons */
+.admin-workspace button.bg-\[\#0b3037\],
+.admin-workspace a.bg-\[\#0b3037\] {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.3) !important;
+}
+.admin-workspace button.bg-\[\#0b3037\]:hover,
+.admin-workspace a.bg-\[\#0b3037\]:hover {
+  background-color: #10b981 !important;
+}
+
+/* Table Hover & Dividers */
+.admin-workspace tbody tr:hover {
+  background-color: #131f33 !important;
+}
+
+.admin-workspace .divide-stone-100 > :not([hidden]) ~ :not([hidden]),
+.admin-workspace .divide-stone-200 > :not([hidden]) ~ :not([hidden]),
+.admin-workspace .divide-neutral-100 > :not([hidden]) ~ :not([hidden]),
+.admin-workspace .divide-neutral-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #1e293b !important;
+}
+
+/* Inputs, Selects, Textareas inside Admin Workspace */
+.admin-workspace input:not([type="checkbox"]):not([type="radio"]),
+.admin-workspace select,
+.admin-workspace textarea {
+  background-color: #070b12 !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+  font-size: 14.5px !important;
+}
+
+.admin-workspace input::placeholder,
+.admin-workspace textarea::placeholder {
+  color: #64748b !important;
+}
+
+.admin-workspace input:focus,
+.admin-workspace select:focus,
+.admin-workspace textarea:focus {
+  border-color: #10b981 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* Modals */
+.admin-workspace .fixed.inset-0.bg-black\/50,
+.admin-workspace .fixed.inset-0.bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Global Font Size Scale Boost in Admin */
+.admin-workspace .text-xs {
+  font-size: 0.84rem !important; /* ~13.5px instead of 12px */
+  line-height: 1.25rem !important;
+}
+
+.admin-workspace .text-sm {
+  font-size: 0.95rem !important; /* ~15.2px instead of 14px */
+  line-height: 1.45rem !important;
+}
+
+.admin-workspace .text-base {
+  font-size: 1.05rem !important; /* ~16.8px instead of 16px */
+  line-height: 1.6rem !important;
+}
+
+.admin-workspace .text-\[10px\],
+.admin-workspace .text-\[11px\] {
+  font-size: 0.78rem !important; /* ~12.5px instead of 10-11px */
+  font-weight: 600 !important;
+}
+
+
 
 
 

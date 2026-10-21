@@ -5,6 +5,8 @@ import {
   Users,
   CalendarDays,
   Headphones,
+  MessageSquareQuote,
+  Activity,
   Package,
   Receipt,
   FileSpreadsheet,
@@ -22,6 +24,8 @@ const navItems = [
   { label: 'Patients (EMR)', to: '/admin/patients', icon: Users },
   { label: 'Appointments', to: '/admin/appointments', icon: CalendarDays },
   { label: 'Hearing Aids', to: '/admin/hearing-aids', icon: Headphones },
+  { label: 'Speech Therapy', to: '/admin/speech-therapy', icon: MessageSquareQuote },
+  { label: 'Physiotherapy', to: '/admin/physiotherapy', icon: Activity },
   { label: 'Inventory', to: '/admin/inventory', icon: Package },
   { label: 'Billing & GST', to: '/admin/billing', icon: Receipt },
   { label: 'Reports & Export', to: '/admin/reports', icon: FileSpreadsheet },
@@ -31,12 +35,12 @@ const navItems = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
   return (
-    <aside className="w-64 bg-[#0b3037] text-white flex flex-col justify-between shrink-0 min-h-screen">
+    <aside className="w-72 bg-[#070b12] text-slate-100 flex flex-col justify-between shrink-0 min-h-screen border-r border-slate-800/80 shadow-2xl">
       <div>
         {/* Logo / Header */}
-        <div className="p-5 border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shrink-0 shadow-xs">
+        <div className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center justify-between bg-[#0a0f18]/60">
+          <div className="flex items-center gap-3.5">
+            <div className="w-11 h-11 rounded-2xl bg-white p-1.5 flex items-center justify-center shrink-0 shadow-md ring-2 ring-emerald-500/20">
               <img
                 src="/shree-logo-transparent.png"
                 alt="Shree Clinic"
@@ -44,10 +48,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-bold font-mono tracking-wider text-[#d9ae4a] uppercase leading-none">
+              <span className="text-sm font-black font-mono tracking-wider text-amber-400 uppercase leading-none">
                 SHREE CLINIC
               </span>
-              <span className="text-[10px] text-white/60 font-mono mt-1">
+              <span className="text-xs text-slate-400 font-medium mt-1 tracking-wide">
                 Admin PMS Portal
               </span>
             </div>
@@ -55,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="lg:hidden p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10"
+              className="lg:hidden p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800"
               aria-label="Close Sidebar"
             >
               <X className="w-5 h-5" />
@@ -64,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
         </div>
 
         {/* Navigation Items */}
-        <nav className="p-3 space-y-1">
+        <nav className="p-3.5 space-y-1.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -74,15 +78,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
                 end={item.end}
                 onClick={onCloseMobile}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                  `flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? 'bg-[#d9ae4a] text-[#0b3037] font-bold shadow-md shadow-black/10'
-                      : 'text-white/80 hover:bg-white/10 hover:text-white'
+                      ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold shadow-lg shadow-emerald-950/50 border border-emerald-400/30'
+                      : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
                   }`
                 }
               >
-                <Icon className="w-4 h-4 shrink-0" />
-                <span>{item.label}</span>
+                <Icon className="w-5 h-5 shrink-0" />
+                <span className="tracking-tight">{item.label}</span>
               </NavLink>
             );
           })}
@@ -90,12 +94,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
       </div>
 
       {/* Footer Info */}
-      <div className="p-4 border-t border-white/10 text-[11px] text-white/50 font-mono">
-        <div className="flex items-center gap-2 mb-1 text-emerald-400">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-bold">System Online</span>
+      <div className="p-5 border-t border-slate-800/80 bg-[#0a0f18]/60 text-xs text-slate-400 font-medium space-y-1">
+        <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/80" />
+          <span>System Online</span>
         </div>
-        <p className="truncate">Freedom Hospitals, Mokila</p>
+        <p className="truncate text-slate-400 text-xs">Freedom Hospitals, Mokila</p>
       </div>
     </aside>
   );
