@@ -1649,104 +1649,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 };
 
 // ==========================================
-// AUTHENTIC CLINICAL PATIENT REVIEWS & JOURNEYS
-// ==========================================
-interface PatientReview {
-  id: string;
-  patientName: string;
-  patientRole: string;
-  department: 'speech' | 'audiology' | 'physio';
-  departmentName: string;
-  rating: number;
-  condition: string;
-  milestone: string;
-  quote: string;
-  outcome: string;
-  date: string;
-}
-
-const patientReviews: PatientReview[] = [
-  {
-    id: 'rev-1',
-    patientName: 'Sneha & Rahul K.',
-    patientRole: 'Parents of Reyansh (4 yrs)',
-    department: 'speech',
-    departmentName: 'Speech-Language Pathology',
-    rating: 5,
-    condition: 'Pediatric Expressive Speech Delay',
-    milestone: '4 Months Structured Therapy',
-    quote: 'When Reyansh turned 3, he struggled to speak simple two-word phrases and had frequent frustrations. The speech therapists at Shree took time to understand him through playful clinical techniques. Within 4 months, he was expressing himself with clear full sentences. Their structured home guidance gave us confidence every single day.',
-    outcome: 'Clear multi-word sentence formation & confident classroom interaction',
-    date: 'Verified Family Story'
-  },
-  {
-    id: 'rev-2',
-    patientName: 'Col. Ramachandra Rao (Retd.)',
-    patientRole: '68 yrs, Veteran',
-    department: 'audiology',
-    departmentName: 'Audiology & Hearing Care',
-    rating: 5,
-    condition: 'Bilateral Sensorineural Hearing Loss',
-    milestone: 'Pure Tone Audiometry & Digital Fitting',
-    quote: 'I had avoided family gatherings for nearly two years because conversational speech sounded like muffled murmurs. The audiology team conducted thorough diagnostic testing and fit me with discreet digital hearing aids tuned to my exact frequencies. The difference is night and day. Conversations are crisp again, and the follow-up tuning sessions were exceptional.',
-    outcome: 'Restored speech clarity in noise & effortless family conversations',
-    date: 'Verified Patient Story'
-  },
-  {
-    id: 'rev-3',
-    patientName: 'Priya Sundaram',
-    patientRole: '42 yrs, Senior Software Architect',
-    department: 'physio',
-    departmentName: 'Physiotherapy & Spine Rehabilitation',
-    rating: 5,
-    condition: 'Lumbar Disc Bulge with Sciatica',
-    milestone: '8 Weeks Targeted Manual Care',
-    quote: 'Excruciating nerve pain down my left leg made even sitting at my desk impossible. Instead of temporary painkillers, the physiotherapy specialists at Shree mapped the root disc compression, applied hands-on spinal decompression, and guided me through specific progressive core exercises. Today I am 100% pain-free and back to active running.',
-    outcome: '100% pain-free mobility & restored spine strength',
-    date: 'Verified Patient Story'
-  },
-  {
-    id: 'rev-4',
-    patientName: 'K. Venkat Narayana',
-    patientRole: '56 yrs, Business Executive',
-    department: 'audiology',
-    departmentName: 'Vestibular & Balance Care',
-    rating: 5,
-    condition: 'Benign Paroxysmal Positional Vertigo (BPPV)',
-    milestone: '2 Repositioning Sessions + Balance Plan',
-    quote: 'Sudden spinning vertigo would hit me every time I rolled over in bed. The specialists diagnosed canalith displacement within minutes using specialized balance assessments. Two targeted repositioning maneuvers and guidance cured the dizziness completely. Immensely grateful for their clinical mastery.',
-    outcome: 'Complete resolution of vertigo & steady balance',
-    date: 'Verified Patient Story'
-  },
-  {
-    id: 'rev-5',
-    patientName: 'Ananya Deshmukh',
-    patientRole: '28 yrs, Corporate Trainer',
-    department: 'speech',
-    departmentName: 'Voice Therapy & Pathology',
-    rating: 5,
-    condition: 'Vocal Cord Strain & Chronic Hoarseness',
-    milestone: '6 Weeks Clinical Voice Therapy',
-    quote: 'Speaking for long training hours caused chronic vocal fatigue, pain, and voice cracking. The voice therapist taught me resonant voice techniques, vocal cord hygiene, and diaphragmatic projection. My vocal stamina has completely returned without any strain.',
-    outcome: 'Full vocal stamina restored without strain or fatigue',
-    date: 'Verified Patient Story'
-  },
-  {
-    id: 'rev-6',
-    patientName: 'Rajeshwar Varma',
-    patientRole: '61 yrs',
-    department: 'physio',
-    departmentName: 'Post-Surgical Joint Rehabilitation',
-    rating: 5,
-    condition: 'Total Knee Replacement (TKR) Recovery',
-    milestone: '10 Weeks Progressive Physical Therapy',
-    quote: 'Following my knee replacement, I was terrified of bending the joint and climbing stairs. The physical therapy team designed a gentle yet progressive recovery regimen. They were with me every step of the way. Today I walk unassisted with zero stiffness or fear.',
-    outcome: '125° knee flexion achieved & independent stair climbing',
-    date: 'Verified Patient Story'
-  }
-];
-
-// ==========================================
 // MAIN APPLICATION COMPONENT
 // ==========================================
 export default function App() {
@@ -1757,7 +1659,6 @@ export default function App() {
   const [selectedCategoryTab, setSelectedCategoryTab] = useState<string>('all');
   const [bookingService, setBookingService] = useState<string>('Audiology');
   const [activeSubGroup, setActiveSubGroup] = useState<Record<string, number>>({});
-  const [reviewFilter, setReviewFilter] = useState<'all' | 'speech' | 'audiology' | 'physio'>('all');
 
   const isMobile = useIsMobile();
   const { resolveImageUrl } = useWebsiteImages();
@@ -2562,51 +2463,24 @@ export default function App() {
         id="approach"
         className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100 scroll-mt-20"
       >
-        {/* Header Block with Trust & Rating Badge */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 md:mb-16">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#65a30d]" />
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#4d7c0f]">
-                RECOVERY ROADMAP & PATIENT EXPERIENCES
-              </span>
-            </div>
-            <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
-              Patient Journey
-              <br />
-              <span className="text-[#053543] font-serif italic font-normal">& Real Clinical Reviews.</span>
-            </h2>
-            <p className="text-sm md:text-base text-neutral-600 mt-3 max-w-2xl font-medium leading-relaxed">
-              From unhurried clinical listening to measured lifelong milestones—experience how personalized therapy transforms lives across Audiology, Speech Therapy, and Physiotherapy.
-            </p>
+        {/* Header Block */}
+        <div className="mb-12 md:mb-16">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#65a30d]" />
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#4d7c0f]">
+              RECOVERY ROADMAP
+            </span>
           </div>
-
-          {/* Rating Summary Card */}
-          <div className="bg-stone-50 border border-neutral-200/90 rounded-2xl p-5 shadow-sm shrink-0 flex items-center gap-4">
-            <div className="text-center pr-4 border-r border-neutral-200">
-              <div className="text-3xl font-extrabold text-[#053543] font-mono leading-none">4.9</div>
-              <div className="flex items-center justify-center gap-0.5 text-amber-500 mt-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <span className="text-[10px] font-mono text-neutral-500 font-bold uppercase block mt-1">
-                Out of 5.0
-              </span>
-            </div>
-            <div>
-              <div className="text-sm font-bold text-neutral-900">Verified Patient Trust</div>
-              <div className="text-xs text-neutral-600 mt-0.5">1,200+ Clinical Success Milestones</div>
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full mt-1.5 border border-emerald-200">
-                <Check className="w-3 h-3 text-emerald-600" />
-                <span>100% Objective Follow-ups</span>
-              </span>
-            </div>
-          </div>
+          <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
+            Patient Journey
+          </h2>
+          <p className="text-sm md:text-base text-neutral-600 mt-3 max-w-2xl font-medium leading-relaxed">
+            From unhurried clinical listening to measured lifelong milestones—experience how personalized therapy transforms lives across Audiology, Speech Therapy, and Physiotherapy.
+          </p>
         </div>
 
         {/* Step-by-Step Clinical Care Roadmap (5 Stages) */}
-        <div className="mb-16">
+        <div>
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl md:text-2xl font-bold text-neutral-900">
               How Your Therapy Works
@@ -2678,150 +2552,6 @@ export default function App() {
           <p className="text-center text-xs sm:text-sm font-semibold text-neutral-500 mt-6 tracking-wide">
             Across Audiology, Speech-Language Therapy and Physiotherapy.
           </p>
-        </div>
-
-        {/* Patient Reviews & Stories Section */}
-        <div className="pt-10 border-t border-neutral-200">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-1">
-                PATIENT REVIEWS & REAL RECOVERY OUTCOMES
-              </span>
-              <h3 className="text-2xl md:text-4xl font-bold text-black tracking-tight">
-                Verified Patient Stories
-              </h3>
-            </div>
-
-            {/* Department Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-1.5 bg-stone-100 p-1.5 rounded-full border border-neutral-200">
-              {[
-                { id: 'all', label: 'All Reviews' },
-                { id: 'audiology', label: 'Audiology' },
-                { id: 'speech', label: 'Speech Therapy' },
-                { id: 'physio', label: 'Physiotherapy' }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setReviewFilter(tab.id as any)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
-                    reviewFilter === tab.id
-                      ? 'bg-[#053543] text-white shadow-xs'
-                      : 'text-neutral-700 hover:text-black hover:bg-white/80'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Reviews Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-            {patientReviews
-              .filter((rev) => reviewFilter === 'all' || rev.department === reviewFilter)
-              .map((rev) => {
-                const isAudiology = rev.department === 'audiology';
-                const isSpeech = rev.department === 'speech';
-                const isPhysio = rev.department === 'physio';
-
-                const deptBadgeBg = isAudiology
-                  ? 'bg-teal-50 text-teal-800 border-teal-200'
-                  : isSpeech
-                  ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
-                  : 'bg-lime-50 text-lime-900 border-lime-200';
-
-                return (
-                  <div
-                    key={rev.id}
-                    className="bg-white rounded-2xl p-5 md:p-6 border border-neutral-200 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
-                  >
-                    <div>
-                      {/* Top row: Rating & Department Badge */}
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <div className="flex items-center gap-0.5 text-amber-500">
-                          {[...Array(rev.rating)].map((_, i) => (
-                            <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                          ))}
-                        </div>
-                        <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${deptBadgeBg}`}>
-                          {rev.departmentName}
-                        </span>
-                      </div>
-
-                      {/* Clinical Condition & Milestone */}
-                      <div className="mb-3">
-                        <h4 className="text-base font-bold text-neutral-900 leading-snug">
-                          {rev.condition}
-                        </h4>
-                        <span className="text-[11px] font-mono text-neutral-500 font-semibold block mt-0.5">
-                          Milestone: {rev.milestone}
-                        </span>
-                      </div>
-
-                      {/* Patient Quote */}
-                      <p className="text-xs md:text-sm text-neutral-700 leading-relaxed italic mb-4">
-                        "{rev.quote}"
-                      </p>
-                    </div>
-
-                    <div>
-                      {/* Clinical Outcome Pill */}
-                      <div className="p-2.5 rounded-xl bg-stone-50 border border-neutral-200/90 mb-3.5">
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 block mb-0.5">
-                          ✓ Documented Clinical Outcome
-                        </span>
-                        <p className="text-xs font-semibold text-neutral-800 leading-snug">
-                          {rev.outcome}
-                        </p>
-                      </div>
-
-                      {/* Patient Name & Verified Badge */}
-                      <div className="pt-2.5 border-t border-neutral-100 flex items-center justify-between">
-                        <div>
-                          <strong className="block text-xs md:text-sm font-bold text-neutral-900">
-                            {rev.patientName}
-                          </strong>
-                          <span className="text-[11px] text-neutral-500">
-                            {rev.patientRole}
-                          </span>
-                        </div>
-                        <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                          <Check className="w-2.5 h-2.5" />
-                          <span>Verified</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-
-          {/* Bottom Action Card */}
-          <div className="mt-10 p-6 md:p-8 rounded-2xl bg-gradient-to-r from-stone-50 via-teal-50/40 to-stone-50 border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h4 className="text-lg md:text-xl font-bold text-[#053543]">
-                Ready to start your own recovery journey?
-              </h4>
-              <p className="text-xs md:text-sm text-neutral-600 mt-1 font-medium">
-                Visit our clinical team at Freedom Hospitals, Subishi Town Center, Mokila.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2.5">
-              <button
-                onClick={() => setBookingModalOpen(true)}
-                className="px-6 py-3 bg-[#053543] hover:bg-[#0891b2] text-white rounded-full font-bold text-xs md:text-sm transition-all shadow-md active:scale-95"
-              >
-                Book Consultation
-              </button>
-              <a
-                href={CLINIC_PHONE_CALL}
-                className="px-5 py-3 bg-white hover:bg-stone-100 text-neutral-900 border border-neutral-300 rounded-full font-bold text-xs md:text-sm transition-all shadow-xs inline-flex items-center gap-1.5"
-              >
-                <Phone className="w-3.5 h-3.5 text-neutral-600" />
-                <span>Call {CLINIC_PHONE}</span>
-              </a>
-            </div>
-          </div>
         </div>
       </section>
 

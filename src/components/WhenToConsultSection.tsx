@@ -468,30 +468,6 @@ export const WhenToConsultSection: React.FC<WhenToConsultSectionProps> = ({ onBo
         })}
       </div>
 
-      {/* BOTTOM CLINICAL ADVICE CALLOUT */}
-      <div className="mt-8 bg-amber-50/80 rounded-2xl border border-amber-200/80 p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-900 flex items-center justify-center shrink-0 mt-0.5">
-            <AlertCircle className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-amber-950">
-              {currentContent.emergencyTitle}
-            </h4>
-            <p className="text-xs text-amber-800 mt-0.5 leading-relaxed font-medium">
-              {currentContent.emergencyText}
-            </p>
-          </div>
-        </div>
-
-        <a
-          href="tel:+919949961044"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 text-white text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs"
-        >
-          <PhoneCall className="w-3.5 h-3.5" />
-          <span>Call: +91 99499 61044</span>
-        </a>
-      </div>
 
       {/* FULLSCREEN / EMBEDDED PDF VIEWER MODAL */}
       {activePdfModal && (
