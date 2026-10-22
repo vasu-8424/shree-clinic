@@ -2010,12 +2010,6 @@ export default function App() {
                 <WhatsAppIcon className="w-4 h-4 text-white" />
                 <span>WhatsApp</span>
               </a>
-              <button
-                onClick={() => setBookingModalOpen(true)}
-                className="px-5 py-3.5 bg-white/15 hover:bg-white/25 border border-white/25 text-white rounded-full text-xs md:text-sm font-bold transition-all active:scale-95 shadow-sm"
-              >
-                Book Appointment
-              </button>
             </div>
           </div>
         </div>
