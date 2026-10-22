@@ -1789,11 +1789,11 @@ export default function App() {
                 }}
                 className={`w-full h-15 md:h-17 rounded-xl md:rounded-2xl p-3 md:p-3.5 bg-white shadow-sm hover:shadow-md border-2 ${cardBorder} transition-all duration-300 cursor-pointer group flex items-center justify-between gap-3`}
               >
-                <div className="flex items-center gap-2.5 md:gap-3 min-w-0">
-                  <div className={`w-9 h-9 rounded-xl ${iconBg} flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105`}>
-                    {item.icon === 'audiology' && <AudiologyMedicalIcon className="w-5 h-5 text-white" />}
-                    {item.icon === 'speech' && <SpeechMedicalIcon className="w-5 h-5 text-white" />}
-                    {item.icon === 'physio' && <PhysiotherapyMedicalIcon className="w-5 h-5 text-white" />}
+                <div className="flex items-center gap-3 md:gap-3.5 min-w-0">
+                  <div className="shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    {item.icon === 'audiology' && <AudiologyMedicalIcon className="w-8 h-8 md:w-9 md:h-9 text-[#053543]" />}
+                    {item.icon === 'speech' && <SpeechMedicalIcon className="w-8 h-8 md:w-9 md:h-9 text-[#0891b2]" />}
+                    {item.icon === 'physio' && <PhysiotherapyMedicalIcon className="w-9 h-9 md:w-10 md:h-10 text-[#2563eb]" />}
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className={`text-xs md:text-sm font-bold tracking-tight truncate leading-tight ${titleColor}`}>
@@ -2003,10 +2003,10 @@ export default function App() {
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className={`w-11 h-11 md:w-12 md:h-12 rounded-2xl ${iconBg} flex items-center justify-center transition-all duration-300 group-hover:scale-105 shadow-md`}>
-                        {isAudiology && <AudiologyMedicalIcon className="w-6 h-6 text-white" />}
-                        {isSpeech && <SpeechMedicalIcon className="w-6 h-6 text-white" />}
-                        {isPhysio && <PhysiotherapyMedicalIcon className="w-6 h-6 text-white" />}
+                      <div className="transition-all duration-300 group-hover:scale-110">
+                        {isAudiology && <AudiologyMedicalIcon className="w-10 h-10 md:w-12 md:h-12 text-[#053543]" />}
+                        {isSpeech && <SpeechMedicalIcon className="w-10 h-10 md:w-12 md:h-12 text-[#0891b2]" />}
+                        {isPhysio && <PhysiotherapyMedicalIcon className="w-11 h-11 md:w-13 md:h-13 text-[#2563eb]" />}
                       </div>
                     </div>
 

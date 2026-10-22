@@ -400,12 +400,10 @@ export const WhenToConsultSection: React.FC<WhenToConsultSectionProps> = ({ onBo
                 {/* CARD HEADER */}
                 <div className="flex items-center justify-between gap-2 mb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                      isAudiology ? 'bg-[#053543]/10 text-[#053543]' : isSpeech ? 'bg-[#0891b2]/10 text-[#0891b2]' : 'bg-[#65a30d]/10 text-[#65a30d]'
-                    }`}>
-                      {isAudiology && <Volume2 className="w-5 h-5" />}
-                      {isSpeech && <MessageSquare className="w-5 h-5" />}
-                      {isPhysio && <PhysiotherapyIcon className="w-5 h-5" />}
+                    <div className="shrink-0 flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                      {isAudiology && <Volume2 className="w-8 h-8 text-[#053543]" />}
+                      {isSpeech && <MessageSquare className="w-8 h-8 text-[#0891b2]" />}
+                      {isPhysio && <PhysiotherapyIcon className="w-9 h-9 text-[#2563eb]" />}
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-neutral-900 leading-tight">
