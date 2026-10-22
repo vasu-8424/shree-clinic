@@ -2091,7 +2091,7 @@ export default function App() {
       {/* ======================================================== */}
       <section id="procedures" className="pt-28 md:pt-40 pb-20 md:pb-28 px-3 md:px-5 max-w-[1440px] mx-auto relative z-10 clear-both">
         <div className="mb-10 md:mb-14">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
+          <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-neutral-600 block mb-2.5">
             CLINICAL DIRECTORY · STRUCTURED SPECIALTY SERVICES
           </span>
           <div>
@@ -2424,7 +2424,7 @@ export default function App() {
       {/* ======================================================== */}
       <section id="faqs" className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100">
         <div className="mb-12 md:mb-16">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
+          <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-neutral-600 block mb-2.5">
             PATIENT INFORMATION & FAQS
           </span>
           <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
@@ -2465,9 +2465,9 @@ export default function App() {
       >
         {/* Header Block */}
         <div className="mb-12 md:mb-16">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#65a30d]" />
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#4d7c0f]">
+          <div className="flex items-center gap-2.5 mb-2.5">
+            <span className="w-3 h-3 rounded-full bg-[#65a30d]" />
+            <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-[#4d7c0f]">
               RECOVERY ROADMAP
             </span>
           </div>
@@ -2485,7 +2485,7 @@ export default function App() {
             <h3 className="text-xl md:text-2xl font-bold text-neutral-900">
               How Your Therapy Works
             </h3>
-            <span className="text-xs font-mono font-semibold text-neutral-500 uppercase tracking-wider">
+            <span className="text-sm font-mono font-bold text-neutral-600 uppercase tracking-wider">
               5-Stage Clinical Pathway
             </span>
           </div>
@@ -2529,20 +2529,20 @@ export default function App() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold text-neutral-400 group-hover:text-[#053543] transition-colors">
+                    <span className="text-sm md:text-base font-mono font-extrabold text-neutral-800 group-hover:text-[#053543] transition-colors">
                       STAGE {item.step}
                     </span>
-                    <span className="w-2 h-2 rounded-full bg-neutral-300 group-hover:bg-[#65a30d] transition-colors" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-neutral-300 group-hover:bg-[#65a30d] transition-colors" />
                   </div>
                   <h4 className="text-lg md:text-xl font-bold text-black mb-2 leading-snug">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-neutral-600 leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
                     {item.desc}
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-neutral-200/70">
-                  <span className="text-[10px] font-mono font-bold text-[#053543] uppercase tracking-wider">
+                  <span className="text-xs font-mono font-bold text-[#053543] uppercase tracking-wider">
                     • {item.highlight}
                   </span>
                 </div>
@@ -2560,7 +2560,7 @@ export default function App() {
       {/* ======================================================== */}
       <section id="contact" className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100">
         <div className="mb-10 md:mb-14">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
+          <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-neutral-600 block mb-2.5">
             CLINIC LOCATION & ACCESS · FREEDOM HOSPITALS
           </span>
           <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
