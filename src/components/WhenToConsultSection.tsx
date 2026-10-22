@@ -16,6 +16,7 @@ import {
   Sparkles,
   ArrowRight
 } from 'lucide-react';
+import { PhysiotherapyIcon } from './PhysiotherapyIcon';
 
 export type LanguageCode = 'en' | 'te' | 'hi';
 
@@ -404,7 +405,7 @@ export const WhenToConsultSection: React.FC<WhenToConsultSectionProps> = ({ onBo
                     }`}>
                       {isAudiology && <Volume2 className="w-5 h-5" />}
                       {isSpeech && <MessageSquare className="w-5 h-5" />}
-                      {isPhysio && <Activity className="w-5 h-5" />}
+                      {isPhysio && <PhysiotherapyIcon className="w-5 h-5" />}
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-neutral-900 leading-tight">
