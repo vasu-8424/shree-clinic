@@ -2270,22 +2270,33 @@ export default function App() {
 
                         return (
                           <>
-                            <div className="relative rounded-2xl overflow-hidden border border-neutral-200 shadow-sm aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/5] bg-neutral-100 transition-all duration-300">
+                            <div className="relative rounded-2xl overflow-hidden border border-neutral-200/90 shadow-sm aspect-[4/3] sm:aspect-[16/11] lg:aspect-[16/11] bg-stone-900 transition-all duration-300 group">
+                              {/* Ambient blurred backdrop to seamlessly fill any wide or tall photo borders */}
+                              <img
+                                src={resolveImageUrl(displayImage)}
+                                alt=""
+                                aria-hidden="true"
+                                className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-110 pointer-events-none select-none transition-all duration-500"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = displayImage;
+                                }}
+                              />
+                              {/* Full uncropped clinical photograph */}
                               <img
                                 key={displayImage}
                                 src={resolveImageUrl(displayImage)}
                                 alt={displayAlt}
-                                className="w-full h-full object-cover object-center transition-all duration-500"
+                                className="relative z-10 w-full h-full object-contain select-none transition-all duration-500"
                                 loading="lazy"
                                 onError={(e) => {
                                   (e.target as HTMLImageElement).src = displayImage;
                                 }}
                               />
-                              <div className={`absolute top-3.5 left-3.5 ${badgeColor} text-[11px] font-mono font-bold px-3 py-1 rounded-full shadow-md transition-all`}>
+                              <div className={`absolute top-3.5 left-3.5 z-20 ${badgeColor} text-[11px] font-mono font-bold px-3 py-1 rounded-full shadow-md transition-all`}>
                                 {displayBadge}
                               </div>
                               {/* Current Service Indicator on Image */}
-                              <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md rounded-xl p-2.5 text-white text-[11px] font-medium flex items-center justify-between shadow-lg">
+                              <div className="absolute bottom-3 left-3 right-3 z-20 bg-black/80 backdrop-blur-md rounded-xl p-2.5 text-white text-[11px] font-medium flex items-center justify-between shadow-lg">
                                 <span className="truncate font-semibold">
                                   {currentGroup.title}
                                 </span>
