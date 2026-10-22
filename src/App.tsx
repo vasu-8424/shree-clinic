@@ -2420,44 +2420,7 @@ export default function App() {
       />
 
       {/* ======================================================== */}
-      {/* SECTION 5 - FREQUENTLY ASKED QUESTIONS                   */}
-      {/* ======================================================== */}
-      <section id="faqs" className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100">
-        <div className="mb-12 md:mb-16">
-          <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-neutral-600 block mb-2.5">
-            PATIENT INFORMATION & FAQS
-          </span>
-          <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
-            Frequently Asked
-          </h2>
-          <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl">
-            Clear, honest answers to the most common questions our clinic receives.
-          </p>
-        </div>
-
-        <div className="space-y-2 md:space-y-3">
-          {faqs.map((faq, i) => (
-            <details
-              key={i}
-              className="group bg-stone-50 rounded-xl md:rounded-2xl p-6 md:p-8 border border-neutral-200 cursor-pointer"
-            >
-              <summary className="flex items-center justify-between text-lg md:text-2xl font-bold text-black list-none">
-                <span>{faq.q}</span>
-                <span className="text-xl md:text-2xl font-normal transition-transform duration-200 group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <p className="mt-4 text-xs md:text-sm text-neutral-700 leading-relaxed max-w-3xl">
-                {faq.a}
-              </p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* SECTION 6 - PATIENT RECOVERY JOURNEY & REVIEWS           */}
-      {/* Placed immediately below FAQs with Clinical Reviews      */}
+      {/* SECTION 5 - HOW OUR THERAPY WORKS / PATIENT JOURNEY      */}
       {/* ======================================================== */}
       <section
         id="approach"
@@ -2552,6 +2515,42 @@ export default function App() {
           <p className="text-center text-xs sm:text-sm font-semibold text-neutral-500 mt-6 tracking-wide">
             Across Audiology, Speech-Language Therapy and Physiotherapy.
           </p>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* SECTION 6 - FREQUENTLY ASKED QUESTIONS                   */}
+      {/* ======================================================== */}
+      <section id="faqs" className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100">
+        <div className="mb-12 md:mb-16">
+          <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-neutral-600 block mb-2.5">
+            PATIENT INFORMATION & FAQS
+          </span>
+          <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
+            Frequently Asked
+          </h2>
+          <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl">
+            Clear, honest answers to the most common questions our clinic receives.
+          </p>
+        </div>
+
+        <div className="space-y-2 md:space-y-3">
+          {faqs.map((faq, i) => (
+            <details
+              key={i}
+              className="group bg-stone-50 rounded-xl md:rounded-2xl p-6 md:p-8 border border-neutral-200 cursor-pointer"
+            >
+              <summary className="flex items-center justify-between text-lg md:text-2xl font-bold text-black list-none">
+                <span>{faq.q}</span>
+                <span className="text-xl md:text-2xl font-normal transition-transform duration-200 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="mt-4 text-xs md:text-sm text-neutral-700 leading-relaxed max-w-3xl">
+                {faq.a}
+              </p>
+            </details>
+          ))}
         </div>
       </section>
 
