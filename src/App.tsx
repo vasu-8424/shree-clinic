@@ -1807,8 +1807,8 @@ export default function App() {
           <div className="relative z-10 h-full p-5 md:p-8 flex flex-col justify-between">
             {/* Top row */}
             <div>
-              <p className="text-black text-xs md:text-sm font-semibold leading-relaxed max-w-[300px] md:max-w-md bg-white/85 backdrop-blur-md p-3 rounded-xl border border-neutral-200/60 shadow-sm">
-                Expert Audiology, Speech-Language Therapy and Physiotherapy for every stage of life
+              <p className="text-black text-xs md:text-sm font-semibold leading-relaxed max-w-[320px] md:max-w-lg bg-white/85 backdrop-blur-md p-3 rounded-xl border border-neutral-200/60 shadow-sm">
+                Supporting communication, hearing and movement—from childhood development to adult rehabilitation.
               </p>
             </div>
 
