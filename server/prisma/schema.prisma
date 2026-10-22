@@ -128,11 +128,11 @@ model ClinicSettings {
   id            String   @id @default(uuid()) @db.Uuid
   clinicName    String   @default("SHREE Multidisciplinary Healthcare") @map("clinic_name") @db.VarChar(150)
   address       String   @default("SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203") @db.Text
-  phone         String   @default("+91 79954 78069") @db.VarChar(20)
-  whatsapp      String   @default("+91 79954 78069") @db.VarChar(20)
+  phone         String   @default("+91 99499 61044") @db.VarChar(20)
+  whatsapp      String   @default("+91 99499 61044") @db.VarChar(20)
   gstin         String?  @db.VarChar(30)
   rciNumber     String?  @map("rci_number") @db.VarChar(50)
-  invoiceFooter String?  @default("Thank you for choosing SHREE Multidisciplinary Healthcare. For clinical appointments and queries, contact: +91 79954 78069.") @map("invoice_footer") @db.Text
+  invoiceFooter String?  @default("Thank you for choosing SHREE Multidisciplinary Healthcare. For clinical appointments and queries, contact: +91 99499 61044.") @map("invoice_footer") @db.Text
   updatedAt     DateTime @updatedAt @map("updated_at")
 
   @@map("clinic_settings")

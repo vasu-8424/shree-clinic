@@ -19,9 +19,9 @@ router.get('/', async (_req: AuthenticatedRequest, res: Response): Promise<void>
         data: {
           clinicName: 'SHREE Multidisciplinary Healthcare',
           address: 'SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203',
-          phone: '+91 79954 78069',
-          whatsapp: '+91 79954 78069',
-          invoiceFooter: 'Thank you for choosing SHREE Multidisciplinary Healthcare. For clinical appointments and queries, contact: +91 79954 78069.',
+          phone: '+91 99499 61044',
+          whatsapp: '+91 99499 61044',
+          invoiceFooter: 'Thank you for choosing SHREE Multidisciplinary Healthcare. For clinical appointments and queries, contact: +91 99499 61044.',
         },
       });
     }

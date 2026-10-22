@@ -33,9 +33,9 @@ services:
       - key: CLINIC_NAME
         value: SHREE Multidisciplinary Healthcare
       - key: CLINIC_PHONE
-        value: "+91 79954 78069"
+        value: "+91 99499 61044"
       - key: CLINIC_WHATSAPP
-        value: "+91 79954 78069"
+        value: "+91 99499 61044"
       - key: CLINIC_ADDRESS
         value: "SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203"
       - key: CLOUDINARY_CLOUD_NAME

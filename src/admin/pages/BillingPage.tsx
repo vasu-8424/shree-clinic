@@ -879,7 +879,7 @@ export const BillingPage: React.FC = () => {
                   <p className="text-xs text-stone-600 mt-1 max-w-sm">
                     Freedom Hospitals, Subishi Town Center, Mokila, Hyderabad, Telangana 501203
                   </p>
-                  <p className="text-xs text-stone-600">Phone / WhatsApp: +91 79954 78069</p>
+                  <p className="text-xs text-stone-600">Phone / WhatsApp: +91 99499 61044</p>
                 </div>
                 <div className="text-right">
                   <div className="text-xs font-bold font-mono uppercase tracking-wider text-[#d9ae4a]">

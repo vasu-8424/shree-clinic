@@ -306,17 +306,17 @@ export const LifeStagesSection: React.FC<LifeStagesSectionProps> = ({ onBookStag
                   <div className="flex items-center justify-between text-xs text-neutral-600 font-semibold">
                     <span className="text-neutral-500 font-mono text-[11px]">Direct Reception:</span>
                     <a
-                      href="tel:+917995478069"
+                      href="tel:+919949961044"
                       className="inline-flex items-center gap-1 text-[#053543] hover:text-[#0891b2] font-bold"
                     >
                       <Phone className="w-3 h-3" />
-                      <span>+91 79954 78069</span>
+                      <span>+91 99499 61044</span>
                     </a>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2">
                     <a
-                      href={`https://wa.me/917995478069?text=${encodeURIComponent(card.phoneMessage)}`}
+                      href={`https://wa.me/919949961044?text=${encodeURIComponent(card.phoneMessage)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="py-2.5 px-3 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-xs transition-transform active:scale-95"
@@ -358,11 +358,11 @@ export const LifeStagesSection: React.FC<LifeStagesSectionProps> = ({ onBookStag
 
         <div className="flex items-center gap-3 shrink-0">
           <a
-            href="tel:+917995478069"
+            href="tel:+919949961044"
             className="px-5 py-2.5 rounded-full bg-[#053543] text-white text-xs font-bold hover:bg-[#0891b2] transition-colors shadow-sm inline-flex items-center gap-1.5"
           >
             <Phone className="w-3.5 h-3.5" />
-            <span>Call +91 79954 78069</span>
+            <span>Call +91 99499 61044</span>
           </a>
         </div>
       </div>

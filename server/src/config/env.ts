@@ -31,8 +31,8 @@ const envSchema = z.object({
 
   INVOICE_PREFIX: z.string().default('SHREE/26-27/'),
   CLINIC_NAME: z.string().default('SHREE Multidisciplinary Healthcare'),
-  CLINIC_PHONE: z.string().default('+91 79954 78069'),
-  CLINIC_WHATSAPP: z.string().default('+91 79954 78069'),
+  CLINIC_PHONE: z.string().default('+91 99499 61044'),
+  CLINIC_WHATSAPP: z.string().default('+91 99499 61044'),
   CLINIC_ADDRESS: z
     .string()
     .default(

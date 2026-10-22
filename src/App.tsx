@@ -37,12 +37,12 @@ const SECTION3_BG = '/images/hearing-aid-fitting.jpg';
 // ==========================================
 // CLINIC CONTACT CONSTANTS
 // ==========================================
-const CLINIC_PHONE = '+91 79954 78069';
-const CLINIC_PHONE_CALL = 'tel:+917995478069';
-const CLINIC_WHATSAPP_NUM = '917995478069';
-const CLINIC_EMAIL = 'nimmasakethsaketh@gmail.com';
+const CLINIC_PHONE = '+91 99499 61044';
+const CLINIC_PHONE_CALL = 'tel:+919949961044';
+const CLINIC_WHATSAPP_NUM = '919949961044';
+const CLINIC_EMAIL = 'nimmasakethreddy23@gmail.com';
 const WHATSAPP_URL =
-  'https://wa.me/917995478069?text=Hello%20Shree%20Clinic,%20I%20would%20like%20to%20inquire%20about%20a%20consultation';
+  'https://wa.me/919949961044?text=Hello%20Shree%20Clinic,%20I%20would%20like%20to%20inquire%20about%20a%20consultation';
 
 const CLINIC_FULL_ADDRESS =
   'SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203';
@@ -1206,7 +1206,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       'Sent from Shree Clinic Website'
     ].filter(Boolean).join('\n');
 
-    return `https://wa.me/917995478069?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/${CLINIC_WHATSAPP_NUM}?text=${encodeURIComponent(message)}`;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -1325,7 +1325,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                   <span>Call {CLINIC_PHONE}</span>
                 </a>
                 <a
-                  href={`https://wa.me/917995478069?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
+                  href={`https://wa.me/${CLINIC_WHATSAPP_NUM}?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-xs font-bold rounded-full hover:bg-[#20ba59] transition-colors shadow-xs"

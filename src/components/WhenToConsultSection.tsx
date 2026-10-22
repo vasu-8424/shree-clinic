@@ -486,11 +486,11 @@ export const WhenToConsultSection: React.FC<WhenToConsultSectionProps> = ({ onBo
         </div>
 
         <a
-          href="tel:+919177588998"
+          href="tel:+919949961044"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 text-white text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs"
         >
           <PhoneCall className="w-3.5 h-3.5" />
-          <span>Call: +91 91775 88998</span>
+          <span>Call: +91 99499 61044</span>
         </a>
       </div>
 

@@ -84,7 +84,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onBookAppointmen
               CALL
             </a>
             <a
-              href="https://wa.me/"
+              href={`https://wa.me/${clinicData.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about a consultation.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="py-3.5 px-4 rounded-full bg-[#6c9f36]/15 hover:bg-[#6c9f36]/25 text-center font-heading font-bold text-xs uppercase tracking-wider text-[#6c9f36] transition-colors"
             >
               WHATSAPP

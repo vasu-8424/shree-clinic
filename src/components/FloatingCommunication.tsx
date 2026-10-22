@@ -7,7 +7,8 @@ interface FloatingCommunicationProps {
 
 export const FloatingCommunication: React.FC<FloatingCommunicationProps> = ({ onBookClick }) => {
   const handleWhatsApp = () => {
-    window.location.href = `https://wa.me/?text=Hello%20SHREE%20Clinic,%20I%20would%20like%20to%20inquire%20about%20an%20appointment.`;
+    const cleanNum = clinicData.contact.whatsapp.replace(/[^0-9]/g, '');
+    window.open(`https://wa.me/${cleanNum}?text=Hello%20SHREE%20Clinic,%20I%20would%20like%20to%20inquire%20about%20an%20appointment.`, '_blank');
   };
 
   const handleCall = () => {

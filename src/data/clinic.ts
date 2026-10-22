@@ -33,9 +33,9 @@ export const clinicData: ClinicInfo = {
     people: "Human-centred care uniting specialists, patients, and loved ones as one."
   },
   contact: {
-    phone: "+91 79954 78069",
-    whatsapp: "+91 79954 78069",
-    email: "nimmasakethsaketh@gmail.com",
+    phone: "+91 99499 61044",
+    whatsapp: "+91 99499 61044",
+    email: "nimmasakethreddy23@gmail.com",
     address: "SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203",
     plusCode: "C5QM+PX Mokila, Telangana",
     facility: "Freedom Hospitals, Subishi Town Center",

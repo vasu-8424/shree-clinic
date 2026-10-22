@@ -162,7 +162,7 @@ const docs = [
     subtitle: 'Official Clinical Assessment Guidelines & Warning Signs Checklist',
     headerTitle: 'SHREE MULTIDISCIPLINARY HEALTHCARE',
     headerSub: 'Audiology · Speech Language Pathology · Physiotherapy',
-    contact: 'Opp. RTC Bus Stand, Anantapur - 515001<br/>Phone: +91 91775 88998 | 08554 355088<br/>Web: www.shreeclinic.org',
+    contact: 'Opp. RTC Bus Stand, Anantapur - 515001<br/>Phone: +91 99499 61044 | 08554 355088<br/>Web: www.shreeclinic.org',
     sections: [
       {
         badge: 'Audiology',
@@ -207,7 +207,7 @@ const docs = [
         advice: 'Recommended Action: Undergo a biomechanical movement assessment and targeted therapeutic rehabilitation plan.'
       }
     ],
-    callout: 'Appointments & Emergency Guidance: Call +91 91775 88998 or visit Shree Clinic directly for comprehensive evaluation.'
+    callout: 'Appointments & Emergency Guidance: Call +91 99499 61044 or visit Shree Clinic directly for comprehensive evaluation.'
   },
   {
     lang: 'Telugu',
@@ -216,7 +216,7 @@ const docs = [
     subtitle: 'వినికిడి, స్పీచ్ థెరపీ మరియు ఫిజియోథెరపీ లక్షణాలు & హెచ్చరిక సంకేతాలు',
     headerTitle: 'శ్రీ మల్టీడిసిప్లినరీ హెల్త్‌కేర్ క్లినిక్',
     headerSub: 'ఆడియోలజీ · స్పీచ్ లాంగ్వేజ్ పాథాలజీ · ఫిజియోథెరపీ',
-    contact: 'RTC బస్టాండ్ ఎదురుగా, అనంతపురం - 515001<br/>ఫోన్: +91 91775 88998 | 08554 355088<br/>వెబ్‌సైట్: www.shreeclinic.org',
+    contact: 'RTC బస్టాండ్ ఎదురుగా, అనంతపురం - 515001<br/>ఫోన్: +91 99499 61044 | 08554 355088<br/>వెబ్‌సైట్: www.shreeclinic.org',
     sections: [
       {
         badge: 'ఆడియోలజీ',
@@ -261,7 +261,7 @@ const docs = [
         advice: 'సూచించిన చర్య: శాస్త్రీయ మూవ్‌మెంట్ అసెస్‌మెంట్ చేయించుకుని టార్గెటెడ్ ఫిజియోథెరపీ ప్లాన్ ప్రారంభించండి.'
       }
     ],
-    callout: 'అపాయింట్‌మెంట్స్ & సహాయం కోసం: +91 91775 88998 కి కాల్ చేయండి లేదా నేరుగా శ్రీ క్లినిక్ సందర్శించండి.'
+    callout: 'అపాయింట్‌మెంట్స్ & సహాయం కోసం: +91 99499 61044 కి కాల్ చేయండి లేదా నేరుగా శ్రీ క్లినిక్ సందర్శించండి.'
   },
   {
     lang: 'Hindi',
@@ -270,7 +270,7 @@ const docs = [
     subtitle: 'ऑडियोलॉजी, स्पीच थेरेपी और फिजियोथेरेपी के लिए लक्षण व चेतावनी संकेत',
     headerTitle: 'श्री मल्टीडिसिप्लिनरी हेल्थकेयर क्लीनिक',
     headerSub: 'ऑडियोलॉजी · स्पीच लैंग्वेज पैथोलॉजी · फिजियोथेरेपी',
-    contact: 'RTC बस स्टैंड के सामने, अनंतपुर - 515001<br/>फोन: +91 91775 88998 | 08554 355088<br/>वेबसाइट: www.shreeclinic.org',
+    contact: 'RTC बस स्टैंड के सामने, अनंतपुर - 515001<br/>फोन: +91 99499 61044 | 08554 355088<br/>वेबसाइट: www.shreeclinic.org',
     sections: [
       {
         badge: 'ऑडियोलॉजी',
@@ -315,7 +315,7 @@ const docs = [
         advice: 'सलाह: विस्तृत बायोमैकेनिकल जांच कराएं और लक्षित फिजियोथेरेपी व्यायाम शुरू करें।'
       }
     ],
-    callout: 'अपॉइंटमेंट व परामर्श के लिए: +91 91775 88998 पर कॉल करें या सीधे श्री क्लीनिक आएं।'
+    callout: 'अपॉइंटमेंट व परामर्श के लिए: +91 99499 61044 पर कॉल करें या सीधे श्री क्लीनिक आएं।'
   }
 ];
 
