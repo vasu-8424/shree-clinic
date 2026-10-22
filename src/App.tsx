@@ -1348,14 +1348,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <a
-                  href={CLINIC_PHONE_CALL}
+                  href="tel:+917075926171"
                   className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#053543] text-white text-xs font-bold rounded-full hover:bg-[#0891b2] transition-colors shadow-xs"
                 >
                   <Phone className="w-3 h-3" />
-                  <span>Call {CLINIC_PHONE}</span>
+                  <span>Call +91 70759 26171</span>
                 </a>
                 <a
-                  href={`https://wa.me/${CLINIC_WHATSAPP_NUM}?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
+                  href={`https://wa.me/917075926171?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-xs font-bold rounded-full hover:bg-[#20ba59] transition-colors shadow-xs"
