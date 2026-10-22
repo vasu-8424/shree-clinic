@@ -47,6 +47,8 @@ const WHATSAPP_URL =
 const CLINIC_FULL_ADDRESS =
   'SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203';
 const CLINIC_PLUS_CODE = 'C5QM+PX Mokila, Telangana';
+const HOSPITAL_DESK_PHONE = '+91 70759 26171';
+const HOSPITAL_DESK_CALL = 'tel:+917075926171';
 const CLINIC_MAP_URL =
   'https://www.google.com/maps/search/?api=1&query=FREEDOM+HOSPITALS+SUBISHI+TOWN+CENTER+Mokila+Hyderabad+Telangana+501203';
 const CLINIC_MAP_EMBED_URL =
@@ -2636,6 +2638,14 @@ export default function App() {
                         <span className="inline-flex items-center gap-1 font-mono text-[11px] bg-stone-100 text-neutral-700 px-2.5 py-1 rounded-md border border-neutral-200 font-semibold">
                           Plus Code: {CLINIC_PLUS_CODE}
                         </span>
+                        <a
+                          href={HOSPITAL_DESK_CALL}
+                          className="inline-flex items-center gap-1.5 font-mono text-[11px] bg-stone-100 hover:bg-stone-200 text-neutral-800 px-2.5 py-1 rounded-md border border-neutral-200 font-semibold transition-colors"
+                          title="Call Hospital Desk"
+                        >
+                          <Phone className="w-3 h-3 text-neutral-600" />
+                          <span>Hospital Contact: {HOSPITAL_DESK_PHONE}</span>
+                        </a>
                       </div>
                     </div>
                   </div>
