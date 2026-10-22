@@ -1967,41 +1967,58 @@ export default function App() {
         }}
         className="w-full flex flex-col pt-1.5 md:pt-2 px-3 md:px-5 pb-1.5 md:pb-2 gap-2 md:gap-3"
       >
-        {/* Diagnostic & Therapeutic Care Banner with Ambient Background */}
-        <MaskedCard
-          cardRef={(el) => {
+        {/* Diagnostic & Therapeutic Care Access Banner */}
+        <div
+          ref={(el) => {
             s2CardRefs.current[0] = el;
           }}
-          bgImage={section2Image}
-          position={s2Positions[0]}
-          imageDimensions={s2ImageDimensions}
-          focalX={isMobile ? 0.65 : 0.8}
           style={s2Reveal.getAnimStyle(0)}
-          className="rounded-xl md:rounded-2xl overflow-hidden relative min-h-[200px] md:min-h-[220px] shadow-sm border border-neutral-200"
+          className="rounded-xl md:rounded-2xl overflow-hidden relative bg-gradient-to-br from-[#053543] via-[#074758] to-[#03232c] text-white p-5 sm:p-7 md:p-8 shadow-md border border-[#053543]"
         >
-          <div className="relative z-10 h-full p-5 md:p-8 flex flex-col justify-between">
-            <span className="text-[11px] font-mono font-bold tracking-widest text-[#053543] uppercase bg-white/95 backdrop-blur-md border border-neutral-200/90 px-3.5 py-1.5 rounded-full w-fit shadow-md">
-              DIAGNOSTIC & THERAPEUTIC CARE
-            </span>
+          {/* Subtle Ambient Glows */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#0891b2]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-[#65a30d]/10 rounded-full blur-2xl pointer-events-none" />
 
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 p-4 md:p-6 rounded-2xl bg-white/95 backdrop-blur-md border border-neutral-200/90 shadow-xl max-w-3xl">
-              <div className="text-neutral-900 text-xs md:text-sm font-semibold leading-relaxed max-w-md">
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-teal-200 text-[11px] font-mono font-bold tracking-widest uppercase mb-3">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>DIAGNOSTIC & THERAPEUTIC CARE</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-snug">
                 Need personalized hearing, speech, or movement therapy?
-                <br />
-                <span className="text-[#0891b2] font-bold">Speak with our clinical care team at Freedom Hospitals.</span>
-              </div>
-              <div>
-                <a
-                  href={CLINIC_PHONE_CALL}
-                  className="px-5 py-3 bg-[#053543] hover:bg-[#0891b2] rounded-full text-white text-xs md:text-sm font-bold transition-all active:scale-95 shadow-md whitespace-nowrap inline-flex items-center gap-2"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span>Call {CLINIC_PHONE}</span>
-                </a>
-              </div>
+              </h3>
+              <p className="text-xs sm:text-sm text-teal-100/90 font-medium mt-2 leading-relaxed max-w-xl">
+                Speak directly with our clinical care specialists at Freedom Hospitals, Subishi Town Center, Mokila. We offer structured, unhurried evaluations for children and adults.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <a
+                href={CLINIC_PHONE_CALL}
+                className="px-6 py-3.5 bg-white hover:bg-teal-50 text-[#053543] rounded-full text-xs md:text-sm font-bold transition-all active:scale-95 shadow-md inline-flex items-center gap-2 hover:scale-105"
+              >
+                <Phone className="w-4 h-4 text-[#053543]" />
+                <span>Call {CLINIC_PHONE}</span>
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-full text-xs md:text-sm font-bold transition-all active:scale-95 shadow-md inline-flex items-center gap-2 hover:scale-105"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>WhatsApp</span>
+              </a>
+              <button
+                onClick={() => setBookingModalOpen(true)}
+                className="px-5 py-3.5 bg-white/15 hover:bg-white/25 border border-white/25 text-white rounded-full text-xs md:text-sm font-bold transition-all active:scale-95 shadow-sm"
+              >
+                Book Appointment
+              </button>
             </div>
           </div>
-        </MaskedCard>
+        </div>
 
         {/* 3 Clinical Disciplines - Solid High-Contrast Cards */}
         <div
