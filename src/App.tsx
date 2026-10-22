@@ -1890,7 +1890,7 @@ export default function App() {
                 Need personalized hearing, speech, or movement therapy?
               </h3>
               <p className="text-xs sm:text-sm text-teal-100/90 font-medium mt-2 leading-relaxed max-w-xl">
-                Speak directly with our clinical care specialists at Freedom Hospitals, Subishi Town Center, Mokila. We offer structured, unhurried evaluations for children and adults.
+                Speak directly with our clinical care specialists.
               </p>
             </div>
 
