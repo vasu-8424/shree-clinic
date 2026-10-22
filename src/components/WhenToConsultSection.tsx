@@ -54,7 +54,7 @@ const CONSULT_DATA: Record<LanguageCode, LanguageContent> = {
     nativeLabel: 'English',
     tagline: 'CLINICAL GUIDELINES & SYMPTOM RECOGNITION',
     heading: 'When Should You Consult Us?',
-    subheading: 'Early identification leads to faster and permanent recovery. Review warning signs across our three clinical specialties and access official PDF guides in your preferred language.',
+    subheading: 'KNOW THE SIGNS • TAKE THE NEXT STEP',
     pdfTitle: 'Official Clinical Consultation Guide (English PDF)',
     pdfFilename: '/documents/When-to-Consult-English.pdf',
     pdfDownloadText: 'Download English Guide (PDF)',
@@ -305,7 +305,7 @@ export const WhenToConsultSection: React.FC<WhenToConsultSectionProps> = ({ onBo
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-neutral-900 tracking-tight leading-tight">
               {currentContent.heading}
             </h2>
-            <p className="text-sm md:text-base text-neutral-600 mt-2.5 max-w-2xl font-medium leading-relaxed">
+            <p className="text-sm md:text-base text-neutral-700 mt-2.5 max-w-2xl font-semibold tracking-wide leading-relaxed">
               {currentContent.subheading}
             </p>
           </div>
