@@ -2108,31 +2108,46 @@ export default function App() {
             <button
               type="button"
               onClick={() => setSelectedCategoryTab('all')}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                 selectedCategoryTab === 'all'
-                  ? 'bg-black text-white shadow-sm'
-                  : 'bg-stone-100 hover:bg-stone-200 text-neutral-700'
+                  ? 'bg-black text-white border-black shadow-sm'
+                  : 'bg-stone-100 hover:bg-stone-200 text-neutral-800 border-stone-300/80'
               }`}
             >
               All Clinical Services
             </button>
-            {detailedClinicServices.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setSelectedCategoryTab(cat.id)}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                  selectedCategoryTab === cat.id
-                    ? 'bg-black text-white shadow-sm'
-                    : 'bg-stone-100 hover:bg-stone-200 text-neutral-700'
-                }`}
-              >
-                {cat.icon === 'audiology' && <AudiologyMedicalIcon className="w-3.5 h-3.5" />}
-                {cat.icon === 'speech' && <SpeechMedicalIcon className="w-3.5 h-3.5" />}
-                {cat.icon === 'physio' && <PhysiotherapyMedicalIcon className="w-3.5 h-3.5" />}
-                <span>{cat.shortName}</span>
-              </button>
-            ))}
+            {detailedClinicServices.map((cat) => {
+              const isAudiology = cat.id === 'audiology';
+              const isSpeech = cat.id === 'speech';
+
+              const activeStyle = isAudiology
+                ? 'bg-[#053543] text-white border-[#053543] shadow-sm'
+                : isSpeech
+                ? 'bg-[#0891b2] text-white border-[#0891b2] shadow-sm'
+                : 'bg-[#65a30d] text-white border-[#65a30d] shadow-sm';
+
+              const inactiveStyle = isAudiology
+                ? 'bg-teal-50/90 hover:bg-teal-100 text-[#053543] border-teal-200'
+                : isSpeech
+                ? 'bg-cyan-50/90 hover:bg-cyan-100 text-cyan-900 border-cyan-200'
+                : 'bg-lime-50/90 hover:bg-lime-100 text-lime-900 border-lime-200';
+
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setSelectedCategoryTab(cat.id)}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
+                    selectedCategoryTab === cat.id ? activeStyle : inactiveStyle
+                  }`}
+                >
+                  {cat.icon === 'audiology' && <AudiologyMedicalIcon className="w-3.5 h-3.5" />}
+                  {cat.icon === 'speech' && <SpeechMedicalIcon className="w-3.5 h-3.5" />}
+                  {cat.icon === 'physio' && <PhysiotherapyMedicalIcon className="w-3.5 h-3.5" />}
+                  <span>{cat.shortName}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -2337,19 +2352,41 @@ export default function App() {
                       </h4>
 
                       {/* Numbered Sub-Service Groups in Clean 2-Column Grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
                         {category.groups.map((group, gIdx) => {
                           const activeGroupIdx = activeSubGroup[category.id] ?? 0;
                           const isSelected = activeGroupIdx === gIdx;
+
+                          // Color boxes for selected and other (non-selected) options
+                          const boxStyle = isAudiology
+                            ? isSelected
+                              ? 'bg-teal-100/90 border-teal-400 shadow-sm ring-2 ring-teal-400/50'
+                              : 'bg-teal-50/75 border-teal-200/90 hover:bg-teal-100/70 hover:border-teal-300 shadow-2xs'
+                            : isSpeech
+                            ? isSelected
+                              ? 'bg-cyan-100/90 border-cyan-400 shadow-sm ring-2 ring-cyan-400/50'
+                              : 'bg-cyan-50/75 border-cyan-200/90 hover:bg-cyan-100/70 hover:border-cyan-300 shadow-2xs'
+                            : isSelected
+                            ? 'bg-lime-100/90 border-lime-400 shadow-sm ring-2 ring-lime-400/50'
+                            : 'bg-lime-50/75 border-lime-200/90 hover:bg-lime-100/70 hover:border-lime-300 shadow-2xs';
+
+                          const photoBadgeStyle = isAudiology
+                            ? isSelected
+                              ? 'bg-[#053543] text-white shadow-xs'
+                              : 'text-[#053543] bg-teal-200/70 hover:bg-teal-200 font-bold'
+                            : isSpeech
+                            ? isSelected
+                              ? 'bg-[#0891b2] text-white shadow-xs'
+                              : 'text-cyan-900 bg-cyan-200/70 hover:bg-cyan-200 font-bold'
+                            : isSelected
+                            ? 'bg-[#65a30d] text-white shadow-xs'
+                            : 'text-lime-900 bg-lime-200/70 hover:bg-lime-200 font-bold';
+
                           return (
                             <div
                               key={group.title}
                               onClick={() => setActiveSubGroup((prev) => ({ ...prev, [category.id]: gIdx }))}
-                              className={`flex flex-col p-3.5 rounded-2xl transition-all cursor-pointer border ${
-                                isSelected
-                                  ? `${isAudiology ? 'bg-teal-50/80 border-teal-300 shadow-sm ring-1 ring-teal-200' : isSpeech ? 'bg-cyan-50/80 border-cyan-300 shadow-sm ring-1 ring-cyan-200' : 'bg-lime-50/80 border-lime-300 shadow-sm ring-1 ring-lime-200'}`
-                                  : 'border-neutral-200/70 hover:bg-stone-50 hover:border-neutral-300'
-                              }`}
+                              className={`flex flex-col p-4 rounded-2xl transition-all cursor-pointer border ${boxStyle}`}
                             >
                               <div className="flex items-center justify-between mb-2 gap-2">
                                 <h5 className="text-sm md:text-base font-bold text-neutral-900 flex items-baseline gap-1.5 leading-snug">
@@ -2357,11 +2394,7 @@ export default function App() {
                                   <span>{group.title}</span>
                                 </h5>
                                 {(category.id === 'audiology' || category.id === 'speech') && (
-                                  <span className={`shrink-0 text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase transition-all ${
-                                    isSelected
-                                      ? `${badgeColor} shadow-xs`
-                                      : 'text-neutral-500 bg-neutral-100 hover:bg-neutral-200'
-                                  }`}>
+                                  <span className={`shrink-0 text-[9px] font-mono px-2 py-0.5 rounded-full uppercase transition-all ${photoBadgeStyle}`}>
                                     {isSelected ? 'Active Photo' : 'View Photo'}
                                   </span>
                                 )}
