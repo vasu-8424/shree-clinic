@@ -94,6 +94,11 @@ export const Footer: React.FC<FooterProps> = ({ onBookAppointment }) => {
               CARE DESK
             </h3>
             <p className="text-xs font-body text-[#f7f4ec]/70 mb-2">{clinicData.contact.phone}</p>
+            {clinicData.contact.hospitalContact && (
+              <p className="text-xs font-body text-[#f7f4ec]/70 mb-2">
+                Hospital: {clinicData.contact.hospitalContact}
+              </p>
+            )}
             <p className="text-xs font-body text-[#d9ae4a] mb-2">{clinicData.contact.whatsapp}</p>
             <p className="text-xs font-body text-[#f7f4ec]/70 mb-4">{clinicData.contact.email}</p>
             <p className="text-[11px] font-body text-[#f7f4ec]/50 leading-relaxed">{clinicData.contact.hours}</p>

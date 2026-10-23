@@ -2802,10 +2802,15 @@ export default function App() {
                   </a>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-300">
+              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs font-mono text-neutral-300">
                 <a href={CLINIC_PHONE_CALL} className="flex items-center gap-1.5 hover:text-white">
                   <Phone className="w-3.5 h-3.5" />
                   <span>{CLINIC_PHONE}</span>
+                </a>
+                <span>·</span>
+                <a href={HOSPITAL_DESK_CALL} className="flex items-center gap-1.5 hover:text-white">
+                  <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Hospital Contact: {HOSPITAL_DESK_PHONE}</span>
                 </a>
                 <span>·</span>
                 <a
