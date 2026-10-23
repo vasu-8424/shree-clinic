@@ -1342,11 +1342,11 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                   <Phone className="w-4 h-4" />
                 </div>
                 <div className="text-xs text-neutral-800">
-                  <span className="font-semibold block text-neutral-900">Prefer to speak directly?</span>
-                  <span className="text-neutral-600">Call our reception</span>
+                  <span className="font-semibold block text-neutral-900">Speak directly to therapists</span>
+                  <span className="text-neutral-600">Call reception or WhatsApp specialist</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <a
                   href="tel:+917075926171"
                   className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#053543] text-white text-xs font-bold rounded-full hover:bg-[#0891b2] transition-colors shadow-xs"
@@ -1355,13 +1355,13 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                   <span>Call +91 70759 26171</span>
                 </a>
                 <a
-                  href={`https://wa.me/917075926171?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
+                  href={`https://wa.me/919949961044?text=${encodeURIComponent('Hello Shree Clinic, I would like to inquire about an appointment.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-[#25D366] text-white text-xs font-bold rounded-full hover:bg-[#20ba59] transition-colors shadow-xs"
                 >
                   <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
-                  <span>WhatsApp</span>
+                  <span>WhatsApp +91 99499 61044</span>
                 </a>
               </div>
             </div>
