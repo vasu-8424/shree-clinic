@@ -156,8 +156,7 @@ const handlePostPublicReview = async (req: Request, res: Response): Promise<void
 
     res.status(201).json({
       success: true,
-      message:
-        'Thank you! Your review has been submitted successfully and will appear on the clinic website once approved by our team.',
+      message: 'Thank you! Your review helps improve our services.',
       review: {
         id: newReview.id,
         patientName: newReview.patientName,

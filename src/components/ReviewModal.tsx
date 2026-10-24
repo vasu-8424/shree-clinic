@@ -149,11 +149,11 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
             </div>
 
             <h3 className="text-2xl font-bold text-neutral-900">
-              Thank You for Sharing!
+              Thank You!
             </h3>
 
             <p className="text-xs sm:text-sm text-neutral-600 max-w-md mx-auto leading-relaxed">
-              Your feedback is deeply appreciated by our clinical team. To ensure patient authenticity and privacy, reviews are verified by our clinic admin before being published on the website.
+              Your review improves our services. Thank you for sharing your experience with us!
             </p>
 
             <div className="pt-4">
