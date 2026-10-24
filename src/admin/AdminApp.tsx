@@ -16,6 +16,7 @@ import { BillingPage } from './pages/BillingPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { AuditLogPage } from './pages/AuditLogPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { ReviewsPage } from './pages/ReviewsPage';
 
 export const AdminApp: React.FC = () => {
   return (
@@ -43,6 +44,7 @@ export const AdminApp: React.FC = () => {
           <Route path="inventory" element={<InventoryPage />} />
           <Route path="billing" element={<BillingPage />} />
           <Route path="reports" element={<ReportsPage />} />
+          <Route path="reviews" element={<ReviewsPage />} />
           <Route path="audit-log" element={<AuditLogPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="*" element={<Navigate to="/admin" replace />} />

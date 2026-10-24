@@ -13,6 +13,7 @@ import {
   ShieldAlert,
   Settings,
   X,
+  Star,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -29,6 +30,7 @@ const navItems = [
   { label: 'Inventory', to: '/admin/inventory', icon: Package },
   { label: 'Billing & GST', to: '/admin/billing', icon: Receipt },
   { label: 'Reports & Export', to: '/admin/reports', icon: FileSpreadsheet },
+  { label: 'Reviews', to: '/admin/reviews', icon: Star },
   { label: 'Audit Log (DPDP)', to: '/admin/audit-log', icon: ShieldAlert },
   { label: 'Settings', to: '/admin/settings', icon: Settings },
 ];

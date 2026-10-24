@@ -579,3 +579,23 @@ model WebsiteImage {
   @@map("website_images")
 }
 
+// -------------------------------------------------------------
+// 16. PATIENT REVIEWS & TESTIMONIALS (Admin moderation)
+// -------------------------------------------------------------
+
+model Review {
+  id          String   @id @default(uuid()) @db.Uuid
+  patientName String   @map("patient_name") @db.VarChar(120)
+  rating      Int      @default(5)
+  department  String   @default("General") @db.VarChar(80)
+  treatment   String?  @db.VarChar(150)
+  comment     String   @db.Text
+  city        String?  @db.VarChar(100)
+  isPublished Boolean  @default(false) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([isPublished, createdAt])
+  @@map("reviews")
+}
+

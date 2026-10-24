@@ -169,6 +169,14 @@ app.use('/api/v1/settings', settingsRoutes);
 import therapyRoutes from './routes/therapy.routes.js';
 app.use('/api/v1/therapy', therapyRoutes);
 
+// ─── 14. Patient Reviews & Testimonials (/api/v1/reviews/*) ───────────────────
+import reviewRoutes from './routes/review.routes.js';
+app.use('/api/v1/reviews', reviewRoutes);
+app.use('/api/v1/public/reviews', (req, _res, next) => {
+  req.url = '/public' + (req.url === '/' ? '' : req.url);
+  next();
+}, reviewRoutes);
+
 // ─── Static Uploads (Clinical PDFs) ──────────────────────────────────────────
 app.use(
   '/uploads',

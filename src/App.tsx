@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useWebsiteImages } from './context/ImageContext';
 import { WhenToConsultSection } from './components/WhenToConsultSection';
+import { ReviewModal } from './components/ReviewModal';
 
 // ==========================================
 // REAL HEALTHCARE PHOTOGRAPHY (from internet)
@@ -1608,6 +1609,9 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [patientReviews, setPatientReviews] = useState<any[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
   const [activeServices, setActiveServices] = useState<ServiceItem[]>(initialServices);
   const [selectedCategoryTab, setSelectedCategoryTab] = useState<string>('all');
   const [bookingService, setBookingService] = useState<string>('Audiology');
@@ -1615,6 +1619,27 @@ export default function App() {
 
   const isMobile = useIsMobile();
   const { resolveImageUrl } = useWebsiteImages();
+
+  const fetchPublicReviews = async () => {
+    try {
+      setReviewsLoading(true);
+      const res = await fetch(apiUrl('/api/v1/public/reviews'));
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reviews && Array.isArray(data.reviews)) {
+          setPatientReviews(data.reviews);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to fetch public reviews:', e);
+    } finally {
+      setReviewsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPublicReviews();
+  }, []);
 
   // Dynamic Images from Database / Cache
   const heroImage = resolveImageUrl(HERO_IMAGE);
@@ -1679,6 +1704,13 @@ export default function App() {
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         preselectedService={bookingService}
+      />
+
+      {/* 03B. PATIENT REVIEW SUBMISSION MODAL */}
+      <ReviewModal
+        isOpen={reviewModalOpen}
+        onClose={() => setReviewModalOpen(false)}
+        onReviewSubmitted={fetchPublicReviews}
       />
 
       {/* ======================================================== */}
@@ -2486,19 +2518,32 @@ export default function App() {
         className="py-20 md:py-28 px-3 md:px-5 max-w-[1440px] mx-auto border-t border-neutral-100 scroll-mt-20"
       >
         {/* Header Block */}
-        <div className="mb-12 md:mb-16">
-          <div className="flex items-center gap-2.5 mb-2.5">
-            <span className="w-3 h-3 rounded-full bg-[#65a30d]" />
-            <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-[#4d7c0f]">
-              RECOVERY ROADMAP
-            </span>
+        <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <span className="w-3 h-3 rounded-full bg-[#65a30d]" />
+              <span className="text-sm md:text-base font-mono font-bold uppercase tracking-wider text-[#4d7c0f]">
+                RECOVERY ROADMAP & PATIENT STORIES
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
+              Patient Journey
+            </h2>
+            <p className="text-sm md:text-base text-neutral-600 mt-3 max-w-2xl font-medium leading-relaxed">
+              From unhurried clinical listening to measured lifelong milestones—experience how personalized therapy transforms lives across Audiology, Speech Therapy, and Physiotherapy.
+            </p>
           </div>
-          <h2 className="text-4xl md:text-7xl font-bold text-black leading-tight tracking-tight">
-            Patient Journey
-          </h2>
-          <p className="text-sm md:text-base text-neutral-600 mt-3 max-w-2xl font-medium leading-relaxed">
-            From unhurried clinical listening to measured lifelong milestones—experience how personalized therapy transforms lives across Audiology, Speech Therapy, and Physiotherapy.
-          </p>
+
+          <div className="shrink-0">
+            <button
+              type="button"
+              onClick={() => setReviewModalOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-neutral-900 hover:bg-[#053543] text-white text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95 cursor-pointer hover:scale-105"
+            >
+              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <span>Write a Patient Review</span>
+            </button>
+          </div>
         </div>
 
         {/* Step-by-Step Clinical Care Roadmap (5 Stages) */}
@@ -2574,6 +2619,130 @@ export default function App() {
           <p className="text-center text-xs sm:text-sm font-semibold text-neutral-500 mt-6 tracking-wide">
             Across Audiology, Speech-Language Therapy and Physiotherapy.
           </p>
+        </div>
+
+        {/* Patient Reviews & Clinical Testimonials Showcase */}
+        <div className="mt-16 pt-12 border-t border-neutral-200/80">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800">
+                  PATIENT EXPERIENCES & REVIEWS
+                </span>
+              </div>
+              <h3 className="text-2xl md:text-4xl font-bold text-black tracking-tight">
+                Verified Clinical Reviews
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-xl">
+                Real recovery milestones and experiences shared by individuals and families cared for at Shree Clinic.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setReviewModalOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 border border-amber-300 text-xs font-bold transition-all self-start sm:self-auto cursor-pointer"
+            >
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+              <span>Share Your Review</span>
+            </button>
+          </div>
+
+          {reviewsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[1, 2, 3].map((n) => (
+                <div key={n} className="bg-stone-50 rounded-2xl p-6 border border-neutral-200 animate-pulse h-48" />
+              ))}
+            </div>
+          ) : patientReviews.length === 0 ? (
+            <div className="bg-stone-50 rounded-2xl p-8 border border-neutral-200 text-center max-w-xl mx-auto">
+              <Star className="w-8 h-8 text-amber-400 fill-amber-400 mx-auto mb-2 opacity-80" />
+              <h4 className="text-base font-bold text-neutral-900 mb-1">Be the First to Share Your Experience</h4>
+              <p className="text-xs text-neutral-600 mb-4">
+                Have you or a loved one completed therapy at Shree Clinic? Your feedback inspires other patients.
+              </p>
+              <button
+                type="button"
+                onClick={() => setReviewModalOpen(true)}
+                className="px-6 py-2.5 rounded-full bg-neutral-900 text-white text-xs font-bold hover:bg-[#053543] transition-colors"
+              >
+                Write a Review
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {patientReviews.map((rev) => {
+                const isAudiology = (rev.department || '').toLowerCase().includes('audiology');
+                const isSpeech = (rev.department || '').toLowerCase().includes('speech');
+                const isPhysio = (rev.department || '').toLowerCase().includes('physio');
+
+                const badgeColor = isAudiology
+                  ? 'bg-teal-50 text-teal-800 border-teal-200'
+                  : isSpeech
+                  ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
+                  : isPhysio
+                  ? 'bg-lime-50 text-lime-800 border-lime-200'
+                  : 'bg-stone-100 text-neutral-700 border-neutral-200';
+
+                return (
+                  <div
+                    key={rev.id}
+                    className="bg-stone-50 rounded-2xl p-5 md:p-6 border border-neutral-200/90 shadow-2xs hover:shadow-sm hover:border-[#053543]/30 transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      {/* Top Bar: Stars & Verified Badge */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((s) => (
+                            <Star
+                              key={s}
+                              className={`w-3.5 h-3.5 ${
+                                s <= rev.rating ? 'text-amber-400 fill-amber-400' : 'text-neutral-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                          <ShieldCheck className="w-3 h-3" />
+                          <span>Verified Patient</span>
+                        </span>
+                      </div>
+
+                      {/* Review Comment Quote */}
+                      <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-normal mb-4 italic">
+                        “{rev.comment}”
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-neutral-200/70 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-bold text-neutral-900 leading-snug">
+                          {rev.patientName}
+                        </span>
+                        {rev.city && (
+                          <span className="text-[11px] text-neutral-500 font-medium">
+                            {rev.city}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold uppercase border ${badgeColor}`}>
+                          {rev.department}
+                        </span>
+                        {rev.treatment && (
+                          <span className="text-[10px] text-neutral-600 bg-white px-2 py-0.5 rounded-full border border-neutral-200 font-medium">
+                            {rev.treatment}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
