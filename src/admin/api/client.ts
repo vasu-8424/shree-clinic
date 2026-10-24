@@ -7,7 +7,21 @@
 
 // In production, VITE_API_BASE_URL points to the Render backend (e.g. https://shree-clinic-api.onrender.com)
 // In development, Vite proxy handles /api → localhost:5000, so BASE is empty string.
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+const DEFAULT_PROD_BACKEND = 'https://shree-clinic-pfjz.onrender.com';
+
+function getApiBase(): string {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return '';
+    }
+    return DEFAULT_PROD_BACKEND;
+  }
+  return import.meta.env.PROD ? DEFAULT_PROD_BACKEND : '';
+}
 
 let memoryAccessToken: string | null = null;
 let isRefreshing = false;
@@ -39,8 +53,9 @@ const processQueue = (error: any, token: string | null = null) => {
  * Resolve a relative /api/... path to the full backend URL in production.
  */
 function resolveUrl(endpoint: string): string {
-  if (API_BASE && endpoint.startsWith('/api')) {
-    return `${API_BASE}${endpoint}`;
+  const base = getApiBase();
+  if (base && endpoint.startsWith('/api')) {
+    return `${base.replace(/\/+$/, '')}${endpoint}`;
   }
   return endpoint;
 }

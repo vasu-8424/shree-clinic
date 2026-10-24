@@ -1623,7 +1623,10 @@ export default function App() {
   const fetchPublicReviews = async () => {
     try {
       setReviewsLoading(true);
-      const res = await fetch(apiUrl('/api/v1/public/reviews'));
+      let res = await fetch(apiUrl('/api/v1/public/reviews'));
+      if (!res.ok && res.status === 404) {
+        res = await fetch(apiUrl('/api/v1/reviews/public'));
+      }
       if (res.ok) {
         const data = await res.json();
         if (data.reviews && Array.isArray(data.reviews)) {
@@ -1631,7 +1634,17 @@ export default function App() {
         }
       }
     } catch (e) {
-      console.warn('Failed to fetch public reviews:', e);
+      try {
+        const fallbackRes = await fetch(apiUrl('/api/v1/reviews/public'));
+        if (fallbackRes.ok) {
+          const data = await fallbackRes.json();
+          if (data.reviews && Array.isArray(data.reviews)) {
+            setPatientReviews(data.reviews);
+          }
+        }
+      } catch (err2) {
+        console.warn('Failed to fetch public reviews:', err2);
+      }
     } finally {
       setReviewsLoading(false);
     }

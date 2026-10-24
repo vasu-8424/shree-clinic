@@ -41,31 +41,71 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
 
     try {
       setSubmitting(true);
-      const res = await fetch(apiUrl('/api/v1/public/reviews'), {
+      const payload = {
+        patientName: patientName.trim(),
+        rating,
+        department,
+        treatment: treatment.trim() || undefined,
+        city: city.trim() || undefined,
+        comment: comment.trim(),
+      };
+
+      // Try primary endpoint (/api/v1/public/reviews), fallback to (/api/v1/reviews/public)
+      let res = await fetch(apiUrl('/api/v1/public/reviews'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          patientName: patientName.trim(),
-          rating,
-          department,
-          treatment: treatment.trim() || undefined,
-          city: city.trim() || undefined,
-          comment: comment.trim(),
-        }),
+        body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      if (res.ok && data.success) {
+      if (!res.ok && res.status === 404) {
+        res = await fetch(apiUrl('/api/v1/reviews/public'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      }
+
+      let data: any = null;
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      }
+
+      if (res.ok && (data?.success || res.status === 200 || res.status === 201)) {
         setIsSuccess(true);
         if (onReviewSubmitted) {
           onReviewSubmitted();
         }
       } else {
-        setErrorMsg(data.error || 'Failed to submit review. Please try again.');
+        const errorText = data?.error || (res.status === 404 ? 'Review service is updating. Please try again shortly.' : `Submission failed (${res.status}). Please try again.`);
+        setErrorMsg(errorText);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Review submit error:', err);
-      setErrorMsg('Network error while submitting review. Please check your connection.');
+      // Secondary attempt directly against /api/v1/reviews/public if network error on primary
+      try {
+        const fallbackRes = await fetch(apiUrl('/api/v1/reviews/public'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            patientName: patientName.trim(),
+            rating,
+            department,
+            treatment: treatment.trim() || undefined,
+            city: city.trim() || undefined,
+            comment: comment.trim(),
+          }),
+        });
+        const fallbackData = await fallbackRes.json();
+        if (fallbackRes.ok && (fallbackData?.success || fallbackRes.status === 201)) {
+          setIsSuccess(true);
+          if (onReviewSubmitted) onReviewSubmitted();
+          return;
+        }
+      } catch (_) {
+        // Fallback also failed
+      }
+      setErrorMsg('Unable to reach server. Please check your internet connection or try again in a few moments.');
     } finally {
       setSubmitting(false);
     }

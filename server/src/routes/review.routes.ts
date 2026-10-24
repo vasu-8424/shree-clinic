@@ -92,13 +92,11 @@ async function ensureInitialReviews() {
   }
 }
 
-// ─── 1. PUBLIC ENDPOINTS ───────────────────────────────────────────────────────
+// ─── 1. PUBLIC ENDPOINTS & ROUTERS ──────────────────────────────────────────
 
-/**
- * GET /api/v1/public/reviews
- * Returns all published reviews for display on the public website.
- */
-router.get('/public', async (_req: Request, res: Response): Promise<void> => {
+export const publicReviewRouter = Router();
+
+const handleGetPublicReviews = async (_req: Request, res: Response): Promise<void> => {
   try {
     await ensureInitialReviews();
 
@@ -129,14 +127,9 @@ router.get('/public', async (_req: Request, res: Response): Promise<void> => {
       error: 'Failed to retrieve patient reviews',
     });
   }
-});
+};
 
-/**
- * POST /api/v1/public/reviews
- * Public submission of patient review.
- * Default isPublished = false so clinic admin can review & approve before displaying.
- */
-router.post('/public', async (req: Request, res: Response): Promise<void> => {
+const handlePostPublicReview = async (req: Request, res: Response): Promise<void> => {
   try {
     const parseResult = createReviewSchema.safeParse(req.body);
     if (!parseResult.success) {
@@ -179,7 +172,17 @@ router.post('/public', async (req: Request, res: Response): Promise<void> => {
       error: 'Failed to submit review. Please try again later.',
     });
   }
-});
+};
+
+// Handlers for publicReviewRouter (mounted at /api/v1/public/reviews)
+publicReviewRouter.get('/', handleGetPublicReviews);
+publicReviewRouter.post('/', handlePostPublicReview);
+publicReviewRouter.get('/public', handleGetPublicReviews);
+publicReviewRouter.post('/public', handlePostPublicReview);
+
+// Handlers for router (mounted at /api/v1/reviews)
+router.get('/public', handleGetPublicReviews);
+router.post('/public', handlePostPublicReview);
 
 // ─── 2. PROTECTED ADMIN ENDPOINTS ─────────────────────────────────────────────
 

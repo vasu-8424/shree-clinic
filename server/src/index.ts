@@ -43,7 +43,15 @@ app.use(
         styleSrc: ["'self'", "'unsafe-inline'"], // allow inline styles for PDF viewer
         imgSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        connectSrc: ["'self'", env.FRONTEND_URL],
+        connectSrc: [
+          "'self'",
+          env.FRONTEND_URL,
+          'https://shreespeechhearingandrehabilitation.com',
+          'https://www.shreespeechhearingandrehabilitation.com',
+          'https://shree-clinic.pages.dev',
+          'https://shree-clinic.nimmasakethsaketh.workers.dev',
+          'https://shree-clinic-pfjz.onrender.com',
+        ],
         objectSrc: ["'none'"],
         frameSrc: ["'none'"],
         upgradeInsecureRequests: [],
@@ -66,11 +74,35 @@ app.use(
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowed = [env.FRONTEND_URL, 'http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001'];
-      // Allow requests with no origin (mobile apps, curl, etc.)
-      if (!origin || allowed.includes(origin)) {
+      // Allow requests with no origin (mobile apps, curl, server-to-server)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      const allowedExact = [
+        env.FRONTEND_URL,
+        'https://shreespeechhearingandrehabilitation.com',
+        'https://www.shreespeechhearingandrehabilitation.com',
+        'http://shreespeechhearingandrehabilitation.com',
+        'http://www.shreespeechhearingandrehabilitation.com',
+        'https://shree-clinic.pages.dev',
+        'https://shree-clinic.nimmasakethsaketh.workers.dev',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'http://localhost:3001',
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+      ];
+
+      if (
+        allowedExact.includes(origin) ||
+        origin.endsWith('.pages.dev') ||
+        origin.endsWith('.workers.dev') ||
+        origin.includes('shreespeechhearingandrehabilitation.com')
+      ) {
         callback(null, true);
       } else {
+        console.warn('[CORS BLOCKED]', origin);
         callback(new Error('CORS: Origin not allowed'));
       }
     },
@@ -169,13 +201,10 @@ app.use('/api/v1/settings', settingsRoutes);
 import therapyRoutes from './routes/therapy.routes.js';
 app.use('/api/v1/therapy', therapyRoutes);
 
-// ─── 14. Patient Reviews & Testimonials (/api/v1/reviews/*) ───────────────────
-import reviewRoutes from './routes/review.routes.js';
+// ─── 14. Patient Reviews & Testimonials (/api/v1/reviews/* & /api/v1/public/reviews) ─────
+import reviewRoutes, { publicReviewRouter } from './routes/review.routes.js';
+app.use('/api/v1/public/reviews', publicReviewRouter);
 app.use('/api/v1/reviews', reviewRoutes);
-app.use('/api/v1/public/reviews', (req, _res, next) => {
-  req.url = '/public' + (req.url === '/' ? '' : req.url);
-  next();
-}, reviewRoutes);
 
 // ─── Static Uploads (Clinical PDFs) ──────────────────────────────────────────
 app.use(
