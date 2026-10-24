@@ -37,7 +37,7 @@ export const clinicData: ClinicInfo = {
     phone: "+91 99499 61044",
     whatsapp: "+91 99499 61044",
     hospitalContact: "+91 70759 26171",
-    email: "nimmasakethreddy23@gmail.com",
+    email: "srav@shreespeechhearingandrehabilitation.com",
     address: "SY.NO.196/P, GROUNDFLOOR, LLP, FREEDOM HOSPITALS, SUBISHI TOWN CENTER, Shankarpalli, Mokila, Hyderabad, Telangana 501203",
     plusCode: "C5QM+PX Mokila, Telangana",
     facility: "Freedom Hospitals, Subishi Town Center",

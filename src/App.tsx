@@ -41,7 +41,7 @@ const SECTION3_BG = '/images/hearing-aid-fitting.jpg';
 const CLINIC_PHONE = '+91 99499 61044';
 const CLINIC_PHONE_CALL = 'tel:+919949961044';
 const CLINIC_WHATSAPP_NUM = '919949961044';
-const CLINIC_EMAIL = 'nimmasakethreddy23@gmail.com';
+const CLINIC_EMAIL = 'srav@shreespeechhearingandrehabilitation.com';
 const WHATSAPP_URL =
   'https://wa.me/919949961044?text=Hello%20Shree%20Clinic,%20I%20would%20like%20to%20inquire%20about%20a%20consultation';
 
@@ -1131,7 +1131,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState<'Audiology' | 'Speech Therapy' | 'Physiotherapy'>('Audiology');
-  const [selectedProcedure, setSelectedProcedure] = useState<string>('General Audiology & Hearing Consultation');
   const [time, setTime] = useState<'Morning (9:00 AM – 1:00 PM)' | 'Evening (4:00 PM – 8:00 PM)'>('Morning (9:00 AM – 1:00 PM)');
   const [file, setFile] = useState<File | null>(null);
   const [concern, setConcern] = useState('');
@@ -1166,16 +1165,10 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
       if (isSpeech) {
         setSelectedDepartment('Speech Therapy');
-        const match = SPEECH_THERAPY_PROCEDURES.find((p) => p.toLowerCase() === s);
-        setSelectedProcedure(match || (preselectedService !== 'Speech Therapy' ? preselectedService : 'General Speech & Language Consultation'));
       } else if (isPhysio) {
         setSelectedDepartment('Physiotherapy');
-        const match = PHYSIOTHERAPY_PROCEDURES.find((p) => p.toLowerCase() === s);
-        setSelectedProcedure(match || (preselectedService !== 'Physiotherapy' ? preselectedService : 'General Physiotherapy Consultation'));
       } else {
         setSelectedDepartment('Audiology');
-        const match = AUDIOLOGY_PROCEDURES.find((p) => p.toLowerCase() === s);
-        setSelectedProcedure(match || (preselectedService !== 'Audiology' ? preselectedService : 'General Audiology & Hearing Consultation'));
       }
     } else {
       document.body.style.overflow = '';
@@ -1193,13 +1186,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const handleDepartmentChange = (dept: 'Audiology' | 'Speech Therapy' | 'Physiotherapy') => {
     setSelectedDepartment(dept);
-    if (dept === 'Audiology') {
-      setSelectedProcedure('General Audiology & Hearing Consultation');
-    } else if (dept === 'Speech Therapy') {
-      setSelectedProcedure('General Speech & Language Consultation');
-    } else {
-      setSelectedProcedure('General Physiotherapy Consultation');
-    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1214,21 +1200,13 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     }
   };
 
-  const currentProcedures =
-    selectedDepartment === 'Audiology'
-      ? AUDIOLOGY_PROCEDURES
-      : selectedDepartment === 'Speech Therapy'
-      ? SPEECH_THERAPY_PROCEDURES
-      : PHYSIOTHERAPY_PROCEDURES;
-
   const getFullEnquiryUrl = () => {
     const message = [
       '*CLINICAL CONSULTATION APPOINTMENT — SHREE CLINIC*',
       '----------------------------------------',
       `• *Patient Name:* ${name.trim() || 'Not specified'}`,
       `• *Contact Number:* ${phone.trim() || 'Not specified'}`,
-      `• *Department:* ${selectedDepartment}`,
-      selectedProcedure ? `• *Service / Procedure:* ${selectedProcedure}` : null,
+      `• *Service:* ${selectedDepartment}`,
       `• *Preferred Time:* ${time}`,
       file ? `• *Medical Records:* Attached (${file.name}) — ready to share in this chat` : null,
       concern.trim() ? `• *Health Note:* ${concern.trim()}` : null,
@@ -1281,7 +1259,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         : 'Physiotherapy & Mobility';
 
     const combinedConcern = [
-      selectedProcedure && !selectedProcedure.startsWith('General') ? `Procedure: ${selectedProcedure}` : null,
       file ? `Medical Record: ${file.name}` : null,
       concern.trim() || null,
     ].filter(Boolean).join(' | ');
@@ -1404,12 +1381,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 />
               </div>
 
-              {/* Field 3: Service Selection */}
+              {/* Field 3: Service Selection (3 Main Services Only) */}
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-                  3. Select a service
+                  3. Select a service <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {[
                     {
                       id: 'Audiology',
@@ -1447,24 +1424,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                       </span>
                     </button>
                   ))}
-                </div>
-
-                {/* Specific Clinical Service / Treatment Dropdown */}
-                <div className="bg-stone-50 p-2.5 rounded-xl border border-neutral-200">
-                  <label className="block text-[11px] font-bold text-neutral-700 mb-1">
-                    Specific Treatment / Procedure:
-                  </label>
-                  <select
-                    value={selectedProcedure}
-                    onChange={(e) => setSelectedProcedure(e.target.value)}
-                    className="w-full p-2.5 rounded-lg border border-neutral-300 text-xs sm:text-sm font-semibold text-neutral-900 bg-white focus:border-[#053543] focus:outline-none transition-colors cursor-pointer"
-                  >
-                    {currentProcedures.map((proc) => (
-                      <option key={proc} value={proc}>
-                        {proc}
-                      </option>
-                    ))}
-                  </select>
                 </div>
               </div>
 
@@ -1601,15 +1560,9 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 <span className="font-bold text-neutral-900 font-mono">{phone}</span>
               </div>
               <div className="flex justify-between border-b border-neutral-200 pb-1">
-                <span className="text-neutral-500 font-semibold">Department:</span>
+                <span className="text-neutral-500 font-semibold">Service:</span>
                 <span className="font-bold text-neutral-900">{selectedDepartment}</span>
               </div>
-              {selectedProcedure && (
-                <div className="flex justify-between border-b border-neutral-200 pb-1">
-                  <span className="text-neutral-500 font-semibold">Procedure:</span>
-                  <span className="font-bold text-neutral-900 truncate max-w-[200px] text-right">{selectedProcedure}</span>
-                </div>
-              )}
               {file && (
                 <div className="flex justify-between border-b border-neutral-200 pb-1">
                   <span className="text-neutral-500 font-semibold">Records:</span>
@@ -2330,6 +2283,45 @@ export default function App() {
                                 </div>
                               </div>
                             )}
+
+                            {/* Book Online Session & Visit Our Clinic Card for Speech Therapy (matching reference) */}
+                            {category.id === 'speech' && (
+                              <div className="bg-gradient-to-br from-cyan-50 via-sky-50 to-white rounded-2xl p-4 sm:p-5 border border-cyan-200/90 shadow-xs flex flex-col gap-3">
+                                <div>
+                                  <div className="flex items-center gap-2 mb-1.5">
+                                    <span className="w-2 h-2 rounded-full bg-[#0284c7] animate-pulse" />
+                                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0284c7]">
+                                      CLINIC & ONLINE THERAPY
+                                    </span>
+                                  </div>
+                                  <h5 className="text-sm sm:text-base font-bold text-neutral-900 leading-snug">
+                                    Online Sessions & In-Person Care
+                                  </h5>
+                                  <p className="text-xs text-neutral-600 mt-1 leading-relaxed">
+                                    We offer both clinic-based and online therapy that are equally engaging and effective. You choose what works best for your lifestyle—access certified therapists from anywhere, or visit our clinic for hands-on personalized care.
+                                  </p>
+                                </div>
+
+                                <div className="flex flex-col gap-2 pt-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleInquireTreatment('Speech Therapy')}
+                                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold text-xs sm:text-sm transition-all shadow-md active:scale-95 cursor-pointer"
+                                  >
+                                    <Calendar className="w-4 h-4" />
+                                    <span>Book Online Session</span>
+                                  </button>
+
+                                  <a
+                                    href="#contact"
+                                    className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-white hover:bg-neutral-50 text-[#0284c7] border-2 border-[#0284c7] font-bold text-xs sm:text-sm transition-all shadow-xs active:scale-95 text-center"
+                                  >
+                                    <MapPin className="w-4 h-4 text-[#0284c7]" />
+                                    <span>Visit Our Clinic</span>
+                                  </a>
+                                </div>
+                              </div>
+                            )}
                           </>
                         );
                       })()}
@@ -2429,6 +2421,40 @@ export default function App() {
                           );
                         })}
                       </div>
+
+                      {/* Online Session action banner for Speech Therapy */}
+                      {category.id === 'speech' && (
+                        <div className="mt-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-cyan-50/90 to-sky-50/90 border border-cyan-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#0284c7] block mb-0.5">
+                              TELE-THERAPY & CLINIC ACCESS
+                            </span>
+                            <h5 className="text-sm sm:text-base font-bold text-neutral-900">
+                              Prefer online speech therapy from home?
+                            </h5>
+                            <p className="text-xs text-neutral-600 mt-0.5 max-w-md">
+                              Live 1-on-1 speech and language consultations available anywhere, plus full in-person therapy at Freedom Hospitals, Mokila.
+                            </p>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => handleInquireTreatment('Speech Therapy')}
+                              className="inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold text-xs transition-all shadow-sm active:scale-95 cursor-pointer"
+                            >
+                              <Calendar className="w-3.5 h-3.5" />
+                              <span>Book Online Session</span>
+                            </button>
+                            <a
+                              href="#contact"
+                              className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-white hover:bg-neutral-50 text-[#0284c7] border-2 border-[#0284c7] font-bold text-xs transition-all shadow-2xs active:scale-95"
+                            >
+                              <MapPin className="w-3.5 h-3.5 text-[#0284c7]" />
+                              <span>Visit Our Clinic</span>
+                            </a>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                   </div>
