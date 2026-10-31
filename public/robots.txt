@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /favicon.ico
+Allow: /favicon*.png
+Allow: /apple-touch-icon.png
+Allow: /shree-logo*.png
+Allow: /images/
+
+Sitemap: https://shreespeechhearingandrehabilitation.com/sitemap.xml
+
