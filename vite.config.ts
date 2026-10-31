@@ -28,6 +28,8 @@ export default defineConfig(() => {
     },
 
     build: {
+      // Clean output directory before building
+      emptyOutDir: true,
       // Target modern browsers for smaller, faster bundles
       target: 'es2020',
       // Produce smaller chunks for faster initial load under high concurrency
