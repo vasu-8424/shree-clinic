@@ -1,7 +1,7 @@
 {
-  "name": "SHREE — Speech, Hearing & Rehabilitation Clinic",
-  "short_name": "SHREE Clinic",
-  "description": "Multidisciplinary clinic in Hyderabad for Speech Therapy, Physiotherapy, Audiology & Neuro Rehabilitation.",
+  "name": "Shree Clinic — Speech, Hearing & Rehabilitation",
+  "short_name": "Shree Clinic",
+  "description": "Shree Clinic in Mokila, Hyderabad for Speech Therapy, Audiology & Hearing Rehabilitation.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -21,4 +21,3 @@
     }
   ]
 }
-

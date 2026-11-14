@@ -225,8 +225,8 @@ export const AppointmentFlow: React.FC<AppointmentFlowProps> = ({
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {['Audiology', 'Speech Therapy', 'Physiotherapy', 'Not Sure'].map((item) => (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {['Audiology', 'Speech Therapy', 'Not Sure'].map((item) => (
                       <button
                         type="button"
                         key={item}
@@ -243,8 +243,7 @@ export const AppointmentFlow: React.FC<AppointmentFlowProps> = ({
                         <span className={`text-xs block ${service === item ? 'text-[#d9ae4a]' : 'text-[#12333a]/60'}`}>
                           {item === 'Audiology' && 'Hearing tests, audiometry & aids'}
                           {item === 'Speech Therapy' && 'Speech delay, stuttering & voice'}
-                          {item === 'Physiotherapy' && 'Joints, neuro-rehab & mobility'}
-                          {item === 'Not Sure' && 'Multidisciplinary guidance'}
+                          {item === 'Not Sure' && 'Expert clinical guidance'}
                         </span>
                       </button>
                     ))}

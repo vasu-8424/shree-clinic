@@ -73,7 +73,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartJourney, onExploreServices })
             <div className="flex items-center gap-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-[#d9ae4a]" />
               <span className="text-[11px] font-bold tracking-[0.16em] uppercase font-body text-[#123f48]">
-                Audiology · Speech · Physiotherapy
+                Audiology · Speech Therapy · Rehabilitation
               </span>
             </div>
 

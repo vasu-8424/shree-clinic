@@ -52,7 +52,7 @@ const LIFE_STAGES: LifeStageCardData[] = [
     conditions: [
       'Newborn Hearing Screening (OAE & Early PTA)',
       'Speech & Babbling Delays (No words by 12–18 mos)',
-      'Pediatric Motor Delay & Torticollis Exercises',
+      'Early Sound Discrimination & Milestones',
       'Early Feeding & Swallowing Guidance'
     ],
     whyItMatters: 'Intervention in the first 1,000 days capitalizes on neuroplasticity to build foundational speech and hearing clarity.',
@@ -76,7 +76,7 @@ const LIFE_STAGES: LifeStageCardData[] = [
       'Sound Articulation & Pronunciation Correction',
       'Stuttering & Stammering Fluency Therapy',
       'Autism Spectrum Communication Support (AAC)',
-      'Pediatric Physiotherapy for Posture & Coordination'
+      'Auditory Processing & Classroom Listening Support'
     ],
     whyItMatters: 'Empowering children with self-confidence in the classroom and joyful everyday peer conversation.',
     recommendedService: 'Pediatric Speech & Language Therapy',
@@ -86,30 +86,30 @@ const LIFE_STAGES: LifeStageCardData[] = [
     id: 'adults',
     stageName: 'Working Adults',
     ageBracket: '18 – 55 Years',
-    tagline: 'Spine Health, Pain Relief & Professional Voice Care',
-    gradient: 'from-lime-600/10 via-emerald-500/5 to-white',
-    accentColor: 'border-lime-500/30',
-    badgeBg: 'bg-lime-50 text-lime-800 border-lime-200',
+    tagline: 'Voice Care, Fluency & Hearing Protection',
+    gradient: 'from-cyan-600/10 via-teal-500/5 to-white',
+    accentColor: 'border-cyan-500/30',
+    badgeBg: 'bg-cyan-50 text-cyan-800 border-cyan-200',
     badgeText: 'Active Professionals',
-    image: '/images/physiotherapy-clinic-rehab.jpg',
-    imageAlt: 'Adult physiotherapy and back pain rehabilitation in modern studio',
+    image: '/images/speech-adult-therapy.png',
+    imageAlt: 'Adult speech, voice and hearing care in modern clinical setting',
     icon: 'adult',
     conditions: [
-      'Computer Posture Neck Strain, Sciatica & Low Back Pain',
-      'Sports Injury & Joint Mobilization Physiotherapy',
       'Voice Therapy for Teachers, Callers & Vocal Fatigue',
-      'Tinnitus (Ear Ringing) Assessment & Noise Protection',
-      'Sudden Hearing Changes & Occupational Assessments'
+      'Adult Stammering / Fluency Shaping & Executive Speaking',
+      'Tinnitus (Ear Ringing) Assessment & Sound Therapy',
+      'Sudden Hearing Changes & Occupational Noise Checks',
+      'Post-Stroke Speech Recovery & Word Retrieval (Aphasia)'
     ],
-    whyItMatters: 'Drug-free physical recovery and vocal endurance to keep you thriving at work and in daily life.',
-    recommendedService: 'Orthopedic Physiotherapy',
-    phoneMessage: 'Hello Shree Clinic, I would like to book an Adult Physiotherapy / Hearing appointment.'
+    whyItMatters: 'Clear vocal endurance, confident speech, and sharp hearing to keep you thriving at work and in daily life.',
+    recommendedService: 'General Speech & Language Consultation',
+    phoneMessage: 'Hello Shree Clinic, I would like to book an Adult Speech / Hearing appointment.'
   },
   {
     id: 'seniors',
     stageName: 'Seniors & Golden Age',
     ageBracket: '60+ Years',
-    tagline: 'Hearing Aid Care, Mobility & Stroke Neuro-Rehab',
+    tagline: 'Hearing Aid Care, Speech & Stroke Neuro-Rehab',
     gradient: 'from-amber-600/10 via-teal-500/5 to-white',
     accentColor: 'border-amber-500/30',
     badgeBg: 'bg-amber-50 text-amber-900 border-amber-200',
@@ -119,12 +119,12 @@ const LIFE_STAGES: LifeStageCardData[] = [
     icon: 'senior',
     conditions: [
       'Digital Hearing Aid Trials, Fitting & Computer Tuning',
-      'Post-Stroke Rehabilitation (Aphasia & Hemiplegia)',
-      'Balance Training & Safe Walking Fall Prevention',
-      'Age-Related Knee Osteoarthritis Joint Therapy',
-      'Home-Based Therapy Visits for Bed-Bound Patients'
+      'Post-Stroke Speech Rehabilitation (Aphasia)',
+      'Difficulty Swallowing, Coughing or Choking (Dysphagia)',
+      'Tinnitus Counselling & Middle Ear Assessment',
+      'Home-Based Therapy Visits for Senior Speech & Hearing'
     ],
-    whyItMatters: 'Restoring effortless conversation with family, dining safety, and independent, stable mobility.',
+    whyItMatters: 'Restoring effortless conversation with family, dining safety, and independent, joyful communication.',
     recommendedService: 'Hearing Aid Evaluation & Fitting',
     phoneMessage: 'Hello Shree Clinic, I would like to inquire about Senior hearing aid / rehabilitation care.'
   },
@@ -207,7 +207,7 @@ export const LifeStagesSection: React.FC<LifeStagesSectionProps> = ({ onBookStag
           </h2>
           <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl font-medium leading-relaxed">
             From a baby’s first sounds to a grandparent’s recovery — our integrated clinic provides compassionate,
-            evidence-based Audiology, Speech-Language Therapy, and Physiotherapy tailored for your loved one.
+            evidence-based Audiology, Speech-Language Therapy, and Hearing Rehabilitation tailored for your loved one.
           </p>
         </div>
 

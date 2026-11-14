@@ -17,15 +17,13 @@ export const DepartmentSection: React.FC<DepartmentSectionProps> = ({
 
   const isAudiology = service.id === 'audiology';
   const isSpeech = service.id === 'speech-therapy';
-  const isPhysio = service.id === 'physiotherapy';
+  const isRehab = service.id === 'rehabilitation';
 
   // Section 21, 22, 23 Background Colors
   const sectionBgClass = isAudiology
     ? 'bg-[#0b3037] text-[#f7f4ec]'
     : isSpeech
     ? 'bg-[#f7f4ec] text-[#12333a]'
-    : isPhysio
-    ? 'bg-[#dfe9cf] text-[#12333a]'
     : 'bg-[#eee9dc] text-[#12333a]';
 
   const headingColor = isAudiology ? 'text-[#f7f4ec]' : 'text-[#0b3037]';
@@ -74,13 +72,13 @@ export const DepartmentSection: React.FC<DepartmentSectionProps> = ({
                   <span className="font-editorial italic font-normal text-[#0b3037]">voice.</span>
                 </>
               )}
-              {isPhysio && (
+              {isRehab && (
                 <>
-                  MOVE <br />
-                  <span className="font-editorial italic font-normal text-[#0b3037]">forward.</span>
+                  REBUILD <br />
+                  <span className="font-editorial italic font-normal text-[#0b3037]">confidence.</span>
                 </>
               )}
-              {!isAudiology && !isSpeech && !isPhysio && service.headline}
+              {!isAudiology && !isSpeech && !isRehab && service.headline}
             </h2>
 
             {/* Gold Accent Line */}
@@ -153,7 +151,7 @@ export const DepartmentSection: React.FC<DepartmentSectionProps> = ({
                   </>
                 )}
 
-                {isPhysio && (
+                {isRehab && (
                   <>
                     <line x1="80" y1="620" x2="520" y2="180" stroke="#d9ae4a" strokeWidth="2" strokeOpacity="0.4" strokeDasharray="6 4" />
                     <circle cx="200" cy="500" r="18" fill="#f7f4ec" />

@@ -70,7 +70,7 @@ export const BrandIntro: React.FC<BrandIntroProps> = ({ onComplete }) => {
               : 'opacity-0 translate-y-3'
           }`}
         >
-          Audiology · Speech · Physiotherapy
+          Audiology · Speech Therapy · Rehabilitation
         </p>
 
         {/* Animated Thin Pathway from Left to Right */}

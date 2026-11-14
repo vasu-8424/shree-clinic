@@ -5,29 +5,38 @@ export const SeoStructuredData: React.FC = () => {
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "MedicalClinic",
-      "name": "SHREE — Multidisciplinary Healthcare",
-      "description": "Ultra-premium multidisciplinary clinic offering Audiology, Speech Therapy, Physiotherapy, and Integrated Neuro-Rehabilitation.",
+      "name": "Shree Clinic",
+      "alternateName": [
+        "Shree Clinic Mokila",
+        "Shree Clinic Hyderabad",
+        "Shree Speech Hearing and Rehabilitation Clinic",
+        "SHREE Clinic"
+      ],
+      "description": "Shree Clinic is a premier clinic in Mokila, Hyderabad offering specialized Speech Therapy, Audiology, Digital Hearing Aids, and Speech Rehabilitation.",
       "medicalSpecialty": [
         "Audiology",
-        "SpeechTherapy",
-        "Physiotherapy"
+        "SpeechTherapy"
       ],
       "availableService": [
         {
           "@type": "MedicalTest",
-          "name": "Pure Tone Audiometry"
+          "name": "Pure Tone Audiometry (PTA)"
         },
         {
           "@type": "MedicalTherapy",
           "name": "Speech and Language Therapy"
         },
         {
-          "@type": "MedicalTherapy",
-          "name": "Neurological and Musculoskeletal Physiotherapy"
+          "@type": "MedicalTest",
+          "name": "Tympanometry & Pediatric OAE Screening"
         },
         {
           "@type": "MedicalTherapy",
           "name": "VitalStim Therapy for Dysphagia"
+        },
+        {
+          "@type": "MedicalDevice",
+          "name": "Digital Hearing Aid Evaluation and Fitting"
         }
       ]
     };

@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onBookAppointment }) => {
             <ul className="space-y-2 text-xs font-body text-[#f7f4ec]/70">
               <li><a href="#section-audiology" className="hover:text-[#d9ae4a] transition-colors">Audiology & Diagnostics</a></li>
               <li><a href="#section-speech-therapy" className="hover:text-[#d9ae4a] transition-colors">Speech & Language Therapy</a></li>
-              <li><a href="#section-physiotherapy" className="hover:text-[#d9ae4a] transition-colors">Physiotherapy & Mobility</a></li>
+              <li><a href="#section-rehabilitation" className="hover:text-[#d9ae4a] transition-colors">Rehabilitation &amp; Recovery</a></li>
               <li><a href="#section-speech-therapy" className="hover:text-[#d9ae4a] transition-colors">Swallowing & VitalStim Care</a></li>
             </ul>
           </div>

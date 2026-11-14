@@ -1,6 +1,6 @@
 export interface ResourceArticle {
   id: string;
-  category: "Hearing" | "Speech" | "Language" | "Swallowing" | "Rehabilitation" | "Physiotherapy" | "Child Development";
+  category: "Hearing" | "Speech" | "Language" | "Swallowing" | "Rehabilitation" | "Child Development";
   title: string;
   excerpt: string;
   readTime: string;
@@ -38,27 +38,14 @@ export const resourcesData: ResourceArticle[] = [
   {
     id: "post-stroke-neuroplasticity",
     category: "Rehabilitation",
-    title: "Neuroplasticity in Action: The Crucial Role of Synchronized Recovery",
-    excerpt: "How co-managing speech retraining, safe deglutition, and motor gait rehabilitation within one unified team optimizes neurogenic recovery.",
+    title: "Neuroplasticity in Action: Speech & Swallowing Recovery",
+    excerpt: "How co-managing speech retraining and safe deglutition within one unified clinical team optimizes post-stroke recovery.",
     readTime: "7 min read",
-    publishedDate: "Multidisciplinary Review",
+    publishedDate: "Speech Rehabilitation Review",
     keyTakeaways: [
-      "Why repetitive, task-specific movement exercises rebuild damaged motor pathways.",
+      "Why repetitive, task-specific language exercises rebuild damaged neural communication pathways.",
       "Aphasia rehabilitation: pairing communicative practice with family engagement.",
       "Managing dysphagia early to guarantee safe nutrition and prevent aspiration risks."
-    ]
-  },
-  {
-    id: "spine-movement-ergonomics",
-    category: "Physiotherapy",
-    title: "Restoring Spinal Dynamics: Beyond Temporary Pain Relief to Active Strength",
-    excerpt: "Why passive treatments alone fail chronic back discomfort—and how progressive biomechanical loading reconditions core stability for life.",
-    readTime: "4 min read",
-    publishedDate: "Movement Science",
-    keyTakeaways: [
-      "The role of deep stabilizing musculature in protecting lumbar and cervical joints.",
-      "How gradual resistance loading stimulates tendon remodeling and disc health.",
-      "Daily postural reset exercises to counteract prolonged sedentary sitting."
     ]
   },
   {

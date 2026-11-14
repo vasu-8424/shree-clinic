@@ -15,8 +15,8 @@ export const TrustStrip: React.FC = () => {
       accent: '#6c9f36'
     },
     {
-      word: 'MOVE',
-      desc: 'Physiotherapy & rehabilitation',
+      word: 'RECOVER',
+      desc: 'Speech, swallowing & hearing rehabilitation',
       accent: '#123f48'
     },
     {

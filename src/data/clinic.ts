@@ -24,12 +24,12 @@ export interface ClinicInfo {
 }
 
 export const clinicData: ClinicInfo = {
-  name: "SHREE",
-  tagline: "Care that helps you move forward.",
-  emotionalKicker: "Better hearing. Better communication. Better movement.",
+  name: "Shree Clinic",
+  tagline: "Care that helps you communicate and hear with confidence.",
+  emotionalKicker: "Better hearing. Better communication. Restored confidence.",
   brandConcepts: {
     path: "Every patient has an individual healthcare journey tailored with patience and precision.",
-    tree: "Growth, rehabilitation, and long-term sustainable wellbeing rooted in clinical evidence.",
+    tree: "Growth, speech rehabilitation, and long-term sustainable wellbeing rooted in clinical evidence.",
     sun: "Hope, measurable progress, and a confident future for patients and their families.",
     people: "Human-centred care uniting specialists, patients, and loved ones as one."
   },

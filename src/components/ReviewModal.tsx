@@ -16,7 +16,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   const [patientName, setPatientName] = useState('');
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
-  const [department, setDepartment] = useState<'Audiology' | 'Speech Therapy' | 'Physiotherapy' | 'General Care'>('Audiology');
+  const [department, setDepartment] = useState<'Audiology' | 'Speech Therapy' | 'General Care'>('Audiology');
   const [treatment, setTreatment] = useState('');
   const [city, setCity] = useState('');
   const [comment, setComment] = useState('');
@@ -250,12 +250,11 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                 <label className="block text-xs font-bold text-neutral-900 mb-1">
                   3. Therapy Specialty
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {(
                     [
                       { id: 'Audiology', label: 'Audiology' },
                       { id: 'Speech Therapy', label: 'Speech' },
-                      { id: 'Physiotherapy', label: 'Physio' },
                       { id: 'General Care', label: 'General' },
                     ] as const
                   ).map((dept) => (

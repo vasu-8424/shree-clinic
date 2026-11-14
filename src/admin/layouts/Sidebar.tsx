@@ -26,7 +26,6 @@ const navItems = [
   { label: 'Appointments', to: '/admin/appointments', icon: CalendarDays },
   { label: 'Hearing Aids', to: '/admin/hearing-aids', icon: Headphones },
   { label: 'Speech Therapy', to: '/admin/speech-therapy', icon: MessageSquareQuote },
-  { label: 'Physiotherapy', to: '/admin/physiotherapy', icon: Activity },
   { label: 'Inventory', to: '/admin/inventory', icon: Package },
   { label: 'Billing & GST', to: '/admin/billing', icon: Receipt },
   { label: 'Reports & Export', to: '/admin/reports', icon: FileSpreadsheet },

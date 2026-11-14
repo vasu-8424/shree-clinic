@@ -8,7 +8,7 @@ export interface SubService {
 export interface DepartmentService {
   id: string;
   number: string;
-  category: "Audiology" | "Speech Therapy" | "Physiotherapy" | "Rehabilitation";
+  category: "Audiology" | "Speech Therapy" | "Rehabilitation";
   headline: string;
   subheadline: string;
   summary: string;
@@ -32,7 +32,7 @@ export const servicesData: DepartmentService[] = [
     subServices: [
       {
         id: "pta",
-        name: "Pure Tone Audiometry",
+        name: "Pure Tone Audiometry (PTA)",
         description: "Measures the softest sounds you can hear across a full frequency spectrum to precisely identify the nature, type, and degree of hearing loss.",
         indication: "Comprehensive auditory threshold mapping"
       },
@@ -68,7 +68,7 @@ export const servicesData: DepartmentService[] = [
       },
       {
         id: "hearing-aid-walkins",
-        name: "Hearing Aid Walk-ins",
+        name: "Hearing Aid Walk-ins & Servicing",
         description: "Immediate diagnostic troubleshooting, ultrasonic cleaning, receiver servicing, dome replacement, and fine-tuning for existing amplification wearers.",
         indication: "Ongoing device maintenance & calibration"
       }
@@ -111,7 +111,7 @@ export const servicesData: DepartmentService[] = [
       },
       {
         id: "aphasia-stroke",
-        name: "Aphasia & Post-Stroke Rehabilitation",
+        name: "Aphasia & Post-Stroke Speech Rehabilitation",
         description: "Intensive neurogenic speech re-education restoring word retrieval, auditory comprehension, reading, and pragmatic conversational expression following neurological events.",
         indication: "Neuro-rehabilitation for stroke recovery"
       },
@@ -135,95 +135,40 @@ export const servicesData: DepartmentService[] = [
       },
       {
         id: "autism-developmental",
-        name: "Autism & Developmental Disorders",
+        name: "Autism & Developmental Communication",
         description: "Holistic augmentative and alternative communication (AAC), social pragmatic coaching, and sensory-integrated communication therapy for neurodivergent individuals.",
         indication: "Neurodiversity-affirming communicative growth"
       }
     ]
   },
   {
-    id: "physiotherapy",
-    number: "03",
-    category: "Physiotherapy",
-    headline: "MOVE FORWARD.",
-    subheadline: "Physical restoration, neurological retraining, and active movement rehabilitation.",
-    summary: "Whether recovering from orthopedic surgery, regaining independence after a stroke, or optimizing mobility in aging, our physical therapists craft guided functional progressions.",
-    accentColor: "#DDA133",
-    bgGradient: "from-[#10383D] to-[#0A262A]",
-    imageHint: "physio",
-    subServices: [
-      {
-        id: "musculoskeletal",
-        name: "Musculoskeletal & Orthopaedic Physiotherapy",
-        description: "Manual joint mobilization, soft tissue therapy, and progressive loading for spinal disorders, osteoarthritis, tendonitis, and postural mechanical syndromes.",
-        indication: "Spine, joint & soft-tissue pain relief"
-      },
-      {
-        id: "neuro-rehab",
-        name: "Neuro Rehabilitation",
-        description: "Task-oriented neuro-facilitation, balance perturbation training, gait re-education, and motor recovery for stroke, Parkinson's disease, and neuropathy.",
-        indication: "Central and peripheral neural retraining"
-      },
-      {
-        id: "pediatric-physio",
-        name: "Pediatric Physiotherapy",
-        description: "Play-based gross motor development, hypotonia management, torticollis correction, and coordination training for infants and developing children.",
-        indication: "Milestone facilitation & developmental movement"
-      },
-      {
-        id: "geriatric-physio",
-        name: "Geriatric Physiotherapy",
-        description: "Fall prevention programs, dynamic equilibrium conditioning, functional transfer training, and gentle joint preservation designed for senior independence.",
-        indication: "Fall reduction & sustained elderly vitality"
-      },
-      {
-        id: "sports-postsurgery",
-        name: "Sports Injury & Post-Surgery Rehabilitation",
-        description: "Phase-based postoperative protocols (ACL, rotator cuff, total joint replacements) focusing on controlled range of motion, strength kinetic chains, and return to activity.",
-        indication: "Systematic surgical & athletic recovery"
-      },
-      {
-        id: "electro-exercise",
-        name: "Electrotherapy & Exercise Therapy",
-        description: "Integration of clinical modalities (TENS, ultrasound, therapeutic heat) combined with precise therapeutic exercise prescriptions and neuromuscular re-education.",
-        indication: "Pain modulation & active tissue strengthening"
-      },
-      {
-        id: "home-visits",
-        name: "Home Visits (Subject to Clinical Assessment)",
-        description: "Dedicated mobile physical therapy services delivered in the home environment for bed-bound, frail, or acute postoperative patients within designated catchment areas.",
-        indication: "In-home functional rehabilitation support"
-      }
-    ]
-  },
-  {
     id: "rehabilitation",
-    number: "04",
+    number: "03",
     category: "Rehabilitation",
     headline: "REBUILD CONFIDENCE.",
-    subheadline: "Integrated multidisciplinary care bringing all clinical disciplines together.",
-    summary: "When multiple challenges intersect—such as stroke recovery requiring speech, swallowing, and physical therapy simultaneously—SHREE synchronizes your care under one unified team.",
+    subheadline: "Integrated care synchronizing hearing, speech, and communication recovery.",
+    summary: "When multiple challenges intersect—such as stroke recovery requiring speech and swallowing therapy, or childhood delays needing both audiology and language therapy—Shree Clinic coordinates your care under one unified team.",
     accentColor: "#3F7A59",
     bgGradient: "from-[#0E3537] to-[#082022]",
     imageHint: "rehab",
     subServices: [
       {
         id: "stroke-recovery",
-        name: "Comprehensive Stroke Recovery Program",
-        description: "Unified cross-specialty clinical pathways coordinating physical gait restoration, upper limb fine motor retraining, speech recovery, and safe deglutition.",
-        indication: "Synchronized multidisciplinary neuro-rehabilitation"
+        name: "Post-Stroke Communication & Deglutition Recovery",
+        description: "Specialized clinical pathway coordinating speech recovery, cognitive word retrieval, and safe swallowing protocols for post-stroke patients.",
+        indication: "Synchronized speech & swallowing neuro-rehabilitation"
       },
       {
         id: "child-development-rehab",
-        name: "Multidisciplinary Child Development",
-        description: "Collaborative pediatric assessment aligning speech therapy, gross motor physical therapy, and auditory processing for holistic developmental progression.",
-        indication: "Integrated child growth & communicative agility"
+        name: "Child Development & Language Agility",
+        description: "Collaborative pediatric assessment aligning speech therapy and auditory processing for holistic developmental progression.",
+        indication: "Integrated child speech growth & social engagement"
       },
       {
         id: "senior-vitality",
-        name: "Senior Vitality & Active Aging Pathway",
-        description: "Synergistic hearing preservation, speech comprehension in social groups, vestibular balance training, and bone-strengthening mobility routines.",
-        indication: "Independence, sensory retention & fall prevention"
+        name: "Senior Hearing Vitality & Auditory Pathway",
+        description: "Synergistic hearing preservation, speech comprehension in family and social settings, and personalized hearing technology adaptation.",
+        indication: "Social connection, sensory retention & active communication"
       }
     ]
   }
@@ -242,25 +187,25 @@ export const whoWeHelpData: WhoWeHelpGroup[] = [
   {
     id: "children",
     category: "Children",
-    subtitle: "Nurturing early foundations of expression & movement",
-    disciplines: ["Speech & Language", "Child Development", "Pediatric Movement", "Auditory Screening"],
-    description: "Gentle, play-integrated interventions supporting speech delays, articulation, sensory integration, and early motor milestones.",
+    subtitle: "Nurturing early foundations of expression & speech",
+    disciplines: ["Speech & Language", "Child Development", "Articulation", "Auditory Screening"],
+    description: "Gentle, play-integrated interventions supporting speech delays, articulation, vocabulary, and developmental milestones.",
     imageHint: "child"
   },
   {
     id: "adults",
     category: "Adults",
-    subtitle: "Overcoming physical setbacks & communication barriers",
-    disciplines: ["Hearing Restoration", "Voice Therapy", "Spine & Joint Health", "Post-Surgery Recovery"],
-    description: "Evidence-driven therapeutic programs designed for busy adults seeking targeted relief from musculoskeletal strain, vocal exhaustion, or hearing changes.",
+    subtitle: "Overcoming communication barriers & hearing changes",
+    disciplines: ["Hearing Restoration", "Voice Therapy", "Stammering / Fluency", "Tinnitus Care"],
+    description: "Evidence-driven therapeutic programs designed for busy adults seeking targeted relief from vocal strain, stammering, or high-frequency hearing changes.",
     imageHint: "adult"
   },
   {
     id: "seniors",
     category: "Seniors",
-    subtitle: "Protecting balance, dignity, and active independence",
-    disciplines: ["Dynamic Balance", "Fall Prevention", "Hearing Aid Fitting", "Post-Stroke Care"],
-    description: "Compassionate, patient-paced rehabilitation preserving balance, cognitive-linguistic acuity, hearing clarity, and daily physical autonomy.",
+    subtitle: "Protecting hearing clarity, communication & connection",
+    disciplines: ["Digital Hearing Aids", "Post-Stroke Aphasia", "Swallowing Safety", "Auditory Vitality"],
+    description: "Compassionate, patient-paced rehabilitation preserving communication clarity, speech understanding in noise, and dining comfort.",
     imageHint: "senior"
   },
   {
@@ -268,7 +213,7 @@ export const whoWeHelpData: WhoWeHelpGroup[] = [
     category: "Families",
     subtitle: "Empowering caregivers through every step of the journey",
     disciplines: ["Clinical Counseling", "Home Strategy Coaching", "Shared Progress Mapping", "Ongoing Support"],
-    description: "Therapy doesn't stop at the clinic door. We guide parents, spouses, and caregivers with practical home routines and transparent clinical benchmarks.",
+    description: "Therapy doesn't stop at the clinic door. We guide parents, spouses, and caregivers with practical home speech routines and transparent benchmarks.",
     imageHint: "family"
   }
 ];
@@ -285,36 +230,36 @@ export const patientJourneySteps: JourneyStep[] = [
     step: "01",
     title: "Understand",
     subtitle: "Deep Clinical Listening",
-    description: "Every journey begins with attentive, unhurried listening. We explore your symptoms, medical background, personal aspirations, and daily functional goals."
+    description: "Every journey begins with attentive, unhurried listening. We explore your symptoms, medical background, personal aspirations, and daily communication goals."
   },
   {
     step: "02",
     title: "Assess",
     subtitle: "Precision Diagnostics",
-    description: "Using advanced diagnostic equipment—from pure tone audiometers to standardized physical mobility evaluations—we map precise baseline metrics."
+    description: "Using advanced diagnostic equipment—from pure tone audiometers to standardized speech-language evaluations—we map precise baseline metrics."
   },
   {
     step: "03",
     title: "Plan",
     subtitle: "Personalized Clinical Roadmap",
-    description: "Our cross-disciplinary therapists construct a transparent, realistic treatment blueprint with scheduled milestones and measurable objectives."
+    description: "Our licensed speech-language and audiology specialists construct a transparent, realistic treatment blueprint with scheduled milestones."
   },
   {
     step: "04",
     title: "Treat",
     subtitle: "Hands-on, Evidence-Based Sessions",
-    description: "Targeted one-on-one therapy sessions combining cutting-edge modalities, manual techniques, speech exercises, and acoustic verifications."
+    description: "Targeted one-on-one therapy sessions combining phonetic training, fluency shaping, swallowing re-education, and real-ear hearing verification."
   },
   {
     step: "05",
     title: "Progress",
     subtitle: "Objective Milestones",
-    description: "We regularly re-measure your functional gains against established baselines, adjusting treatment intensity to ensure steady, perceptible improvement."
+    description: "We regularly re-measure your communicative gains against established baselines, adjusting treatment intensity to ensure steady, perceptible improvement."
   },
   {
     step: "06",
     title: "Continue",
     subtitle: "Empowerment & Lifetime Care",
-    description: "Transition into sustainable home exercise programs, routine hearing calibrations, and ongoing support for lifelong functional wellbeing."
+    description: "Transition into guided home communication practice, routine hearing device calibrations, and ongoing support for lifelong communicative wellbeing."
   }
 ];

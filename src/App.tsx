@@ -32,7 +32,7 @@ const SECTION2_IMAGE = '/images/clinic-facility-reception.jpg';
 
 const SECTION3_IMG1 = '/images/speech-pediatric-therapy.png';
 
-const SECTION3_IMG2 = '/images/physiotherapy-clinic-rehab.jpg';
+const SECTION3_IMG2 = '/images/speech-adult-therapy.png';
 
 const SECTION3_BG = '/images/hearing-aid-fitting.jpg';
 
@@ -138,30 +138,23 @@ interface ClinicalDiscipline {
   title: string;
   tagline: string;
   serviceIdx: number;
-  icon: 'audiology' | 'speech' | 'physio';
+  icon: 'audiology' | 'speech';
 }
 
 const clinicalDisciplines: ClinicalDiscipline[] = [
   {
     id: 'audiology',
-    title: 'Audiology',
-    tagline: 'Complete hearing assessment and hearing aid care',
+    title: 'Audiology & Hearing Care',
+    tagline: 'Complete diagnostic hearing tests and digital hearing aids',
     serviceIdx: 0,
     icon: 'audiology'
   },
   {
     id: 'speech',
-    title: 'Speech Therapy',
-    tagline: 'Speech language and swallowing care',
+    title: 'Speech & Language Therapy',
+    tagline: 'Speech delay, stammering, autism & swallowing therapy',
     serviceIdx: 1,
     icon: 'speech'
-  },
-  {
-    id: 'physio',
-    title: 'Physiotherapy',
-    tagline: 'Personalized Pain Relief & Motor Rehab',
-    serviceIdx: 2,
-    icon: 'physio'
   }
 ];
 
@@ -194,24 +187,6 @@ export const SPEECH_THERAPY_PROCEDURES = [
   'Speech, Language & Swallowing Assessment',
 ] as const;
 
-export const PHYSIOTHERAPY_PROCEDURES = [
-  'General Physiotherapy Consultation',
-  'Orthopedic Physiotherapy',
-  'Neurological Physiotherapy',
-  'Post-Stroke Rehabilitation',
-  'Post-Surgical Rehabilitation',
-  'Pain Management',
-  'Musculoskeletal Rehabilitation',
-  'Sports Injury Rehabilitation',
-  'Geriatric Physiotherapy',
-  'Pediatric Physiotherapy',
-  'Balance & Mobility Training',
-  'Strength & Functional Rehabilitation',
-  'Posture & Gait Training',
-  'Home-Based Physiotherapy',
-  'Exercise Therapy & Rehabilitation',
-] as const;
-
 export interface ClinicalSubGroup {
   number: number;
   title: string;
@@ -233,7 +208,7 @@ export interface DetailedCategory {
   shortName: string;
   tagline: string;
   subtitle: string;
-  icon: 'audiology' | 'speech' | 'physio';
+  icon: 'audiology' | 'speech';
   image: string;
   imageAlt: string;
   imageBadge: string;
@@ -472,96 +447,6 @@ const detailedClinicServices: DetailedCategory[] = [
         description: 'Hearing screening, audiological assessment, hearing-related counselling, and auditory rehabilitation.'
       }
     ]
-  },
-  {
-    id: 'physio',
-    name: 'Our Physiotherapy & Rehabilitation Services:',
-    shortName: 'Physiotherapy',
-    tagline: 'Personalized physical rehabilitation, advanced electrotherapy, manual joint mobilization, and stroke motor recovery.',
-    subtitle: 'Assessment, Diagnosis and Rehabilitation for :',
-    icon: 'physio',
-    image: '/images/physiotherapy-clinic-rehab.jpg',
-    imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
-    imageBadge: 'Physical Rehabilitation Studio',
-    groups: [
-      {
-        number: 1,
-        title: 'Musculoskeletal & Orthopaedic Conditions',
-        image: '/images/physiotherapy-clinic-rehab.jpg',
-        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
-        imageBadge: 'Physical Rehabilitation Studio',
-        items: [
-          'Acute & Chronic Low Back Pain, Sciatica & Disc Bulge',
-          'Cervical Spondylosis, Neck Pain & Postural Strain',
-          'Frozen Shoulder & Rotator Cuff Tendonitis',
-          'Knee Osteoarthritis, Joint Pain & Post-Fracture Stiffness'
-        ]
-      },
-      {
-        number: 2,
-        title: 'Neurological Rehabilitation',
-        image: '/images/physiotherapy-clinic-rehab.jpg',
-        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
-        imageBadge: 'Physical Rehabilitation Studio',
-        items: [
-          'Stroke Recovery & Hemiplegia Motor Retraining',
-          "Parkinson's Movement Therapy & Balance Retraining",
-          "Bell's Palsy Facial Neuromuscular Stimulation",
-          'Spinal Cord & Peripheral Nerve Injury Rehabilitation'
-        ]
-      },
-      {
-        number: 3,
-        title: 'Pediatric Physiotherapy',
-        image: '/images/physiotherapy-clinic-rehab.jpg',
-        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
-        imageBadge: 'Physical Rehabilitation Studio',
-        items: [
-          'Developmental Delay & Motor Milestones',
-          'Cerebral Palsy (CP) Rehabilitation & Spasticity Control',
-          'Congenital Musculoskeletal & Gait Abnormalities'
-        ]
-      },
-      {
-        number: 4,
-        title: 'Geriatric Mobility & Fall Prevention',
-        image: '/images/physiotherapy-clinic-rehab.jpg',
-        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
-        imageBadge: 'Physical Rehabilitation Studio',
-        items: [
-          'Balance, Coordination & Safe Walking Training',
-          'Age-Related Joint Mobility & Functional Independence'
-        ]
-      },
-      {
-        number: 5,
-        title: 'Electrotherapy & Exercise Modalities',
-        image: '/images/physiotherapy-clinic-rehab.jpg',
-        imageAlt: 'Physical therapy and mobility rehabilitation studio with clinician and patient',
-        imageBadge: 'Physical Rehabilitation Studio',
-        items: [
-          'TENS, Ultrasound Therapy & Muscle Stimulation',
-          'Targeted Therapeutic Exercises & Core Strengthening',
-          'Post-Surgery Rehabilitation & Home Care Guidance'
-        ]
-      }
-    ],
-    services: [
-      { title: 'Orthopedic Physiotherapy' },
-      { title: 'Neurological Physiotherapy' },
-      { title: 'Post-Stroke Rehabilitation' },
-      { title: 'Post-Surgical Rehabilitation' },
-      { title: 'Pain Management' },
-      { title: 'Musculoskeletal Rehabilitation' },
-      { title: 'Sports Injury Rehabilitation' },
-      { title: 'Geriatric Physiotherapy' },
-      { title: 'Pediatric Physiotherapy' },
-      { title: 'Balance & Mobility Training' },
-      { title: 'Strength & Functional Rehabilitation' },
-      { title: 'Posture & Gait Training' },
-      { title: 'Home-Based Physiotherapy' },
-      { title: 'Exercise Therapy & Rehabilitation' }
-    ]
   }
 ];
 
@@ -572,7 +457,7 @@ interface ServiceItem {
   plainEnglishSummary: string;
   whoItHelps: string;
   treatmentCount: number;
-  icon: 'audiology' | 'speech' | 'physio';
+  icon: 'audiology' | 'speech';
 }
 
 const initialServices: ServiceItem[] = [
@@ -581,7 +466,7 @@ const initialServices: ServiceItem[] = [
     name: 'Audiology\nServices',
     active: true,
     plainEnglishSummary:
-      'Complete hearing assessment and hearing aid care for children and adults.',
+      'Complete diagnostic hearing assessments and certified digital hearing aid care for children and adults.',
     whoItHelps: 'Infants, late-talking children, working adults, and seniors needing clear hearing.',
     treatmentCount: 6,
     icon: 'audiology'
@@ -591,35 +476,25 @@ const initialServices: ServiceItem[] = [
     name: 'Speech Therapy\nServices',
     active: false,
     plainEnglishSummary:
-      'Assessment and therapy for speech, language, communication, neuro-rehab and swallowing difficulties.',
-    whoItHelps: 'Children with delays, stuttering, voice disorders, swallowing difficulties, and adult neuro-rehabilitation.',
+      'Assessment and therapy for speech delays, stuttering, communication, adult neuro-rehab and swallowing difficulties.',
+    whoItHelps: 'Children with delays, stuttering, voice disorders, swallowing difficulties, and adult post-stroke recovery.',
     treatmentCount: 9,
     icon: 'speech'
-  },
-  {
-    id: 'physio',
-    name: 'Physiotherapy\nServices',
-    active: false,
-    plainEnglishSummary:
-      'Personalized rehabilitation to reduce pain, restore movement and improve independence.',
-    whoItHelps: 'Back & joint pain sufferers, post-surgery recovery, stroke patients, and motor delays.',
-    treatmentCount: 7,
-    icon: 'physio'
   }
 ];
 
 const faqs = [
   {
-    q: 'What healthcare services does SHREE provide?',
-    a: 'SHREE is a multidisciplinary clinic that specializes in three core healthcare fields: 1) Audiology (Hearing tests and hearing aids), 2) Speech Therapy (Speech delays, stuttering, voice issues, and swallowing difficulties), and 3) Physiotherapy (Back/joint pain, stroke recovery, balance, and child motor therapy).'
+    q: 'What healthcare services does Shree Clinic provide?',
+    a: 'Shree Clinic specializes in two core clinical healthcare fields: 1) Audiology (Diagnostic hearing tests, audiometry, pediatric OAE, and digital hearing aids), and 2) Speech Therapy (Pediatric speech delays, stuttering, voice therapy, swallowing disorders, and stroke speech rehabilitation).'
   },
   {
     q: 'Do I need a doctor referral to book an appointment?',
-    a: 'No prior doctor referral is required. You can book directly with us for an initial clinical assessment. However, if you already have physician notes, scans, or audiograms, please bring them along to your first consultation.'
+    a: 'No prior doctor referral is required. You can book directly with Shree Clinic for an initial clinical assessment. However, if you already have physician notes, scans, or audiograms, please bring them along to your first consultation.'
   },
   {
-    q: 'What age groups do your clinicians treat?',
-    a: "From a baby's first sounds to a grandparent's recovery, we care for every age: infants and young children (pediatric speech delay, newborn hearing checks, motor delays), working adults (hearing health, voice therapy, back pain), and seniors (hearing aids, balance, and post-stroke recovery)."
+    q: 'What age groups do your clinicians treat at Shree Clinic?',
+    a: "From a baby's first sounds to a senior's hearing health, we care for every age: infants and young children (pediatric speech delay, newborn hearing checks, sound clarity), working adults (hearing health, voice therapy, executive fluency), and seniors (digital hearing aids and post-stroke speech recovery)."
   },
   {
     q: 'What happens during a hearing test?',
@@ -635,7 +510,7 @@ const faqs = [
   },
   {
     q: 'Do you offer home visits for elderly or bed-bound patients?',
-    a: 'Yes, home visits are available for physiotherapy, speech-language therapy, dysphagia therapy, and hearing aid testing, trials & fittings for patients who are unable to travel due to recent surgery, severe pain, or mobility limitations. Availability depends on location; please contact our care desk to confirm.'
+    a: 'Yes, home visits are available for speech-language therapy, dysphagia swallowing therapy, and hearing aid testing, trials & fittings for patients who are unable to travel due to mobility limitations or stroke recovery. Availability depends on location; please contact our care desk to confirm.'
   },
   {
     q: 'Can I speak with a clinician before scheduling an appointment?',
@@ -891,7 +766,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             SHREE
           </span>
           <span className="text-[8px] md:text-[9px] font-medium leading-none mt-1.5 uppercase tracking-widest text-neutral-500">
-            Multidisciplinary Clinic · Audiology · Speech · Physiotherapy
+            Speech Therapy · Audiology · Hearing Rehabilitation
           </span>
         </div>
         <span className="text-xs font-mono font-bold tracking-widest text-neutral-400 uppercase">
@@ -1131,7 +1006,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState<'Audiology' | 'Speech Therapy' | 'Physiotherapy'>('Audiology');
+  const [selectedDepartment, setSelectedDepartment] = useState<'Audiology' | 'Speech Therapy'>('Audiology');
   const [time, setTime] = useState<'Morning (9:00 AM – 1:00 PM)' | 'Evening (4:00 PM – 8:00 PM)'>('Morning (9:00 AM – 1:00 PM)');
   const [file, setFile] = useState<File | null>(null);
   const [concern, setConcern] = useState('');
@@ -1155,19 +1030,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         s.includes('dysarthria') ||
         SPEECH_THERAPY_PROCEDURES.some((p) => p.toLowerCase() === s);
 
-      const isPhysio =
-        s.includes('physio') ||
-        s.includes('ortho') ||
-        s.includes('stroke') ||
-        s.includes('mobility') ||
-        s.includes('gait') ||
-        s.includes('rehab') ||
-        PHYSIOTHERAPY_PROCEDURES.some((p) => p.toLowerCase() === s);
-
       if (isSpeech) {
         setSelectedDepartment('Speech Therapy');
-      } else if (isPhysio) {
-        setSelectedDepartment('Physiotherapy');
       } else {
         setSelectedDepartment('Audiology');
       }
@@ -1185,7 +1049,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleDepartmentChange = (dept: 'Audiology' | 'Speech Therapy' | 'Physiotherapy') => {
+  const handleDepartmentChange = (dept: 'Audiology' | 'Speech Therapy') => {
     setSelectedDepartment(dept);
   };
 
@@ -1255,9 +1119,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     const canonicalDepartmentService =
       selectedDepartment === 'Audiology'
         ? 'Audiology & Hearing Care'
-        : selectedDepartment === 'Speech Therapy'
-        ? 'Speech & Language Therapy'
-        : 'Physiotherapy & Mobility';
+        : 'Speech & Language Therapy';
 
     const combinedConcern = [
       file ? `Medical Record: ${file.name}` : null,
@@ -1382,12 +1244,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 />
               </div>
 
-              {/* Field 3: Service Selection (3 Main Services Only) */}
+              {/* Field 3: Service Selection (Audiology & Speech Therapy) */}
               <div>
                 <label className="block text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
                   3. Select a service <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {[
                     {
                       id: 'Audiology',
@@ -1398,11 +1260,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                       id: 'Speech Therapy',
                       label: 'Speech Therapy',
                       sub: 'Speech, Voice & Swallowing',
-                    },
-                    {
-                      id: 'Physiotherapy',
-                      label: 'Physiotherapy',
-                      sub: 'Joint, Back & Stroke Rehab',
                     }
                   ].map((svc) => (
                     <button
@@ -1737,42 +1594,26 @@ export default function App() {
         }}
         className="min-h-screen md:h-screen w-full flex flex-col pt-20 md:pt-20 px-3 md:px-5 pb-2 md:pb-3 gap-2 md:gap-2.5"
       >
-        {/* 3 Clinical Feature Disciplines - High-Visibility Cards Styled with Logo Colors */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 shrink-0 z-10">
+        {/* Clinical Feature Disciplines - High-Visibility Cards Styled with Logo Colors */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 shrink-0 z-10">
           {clinicalDisciplines.map((item, i) => {
             const isAudiology = item.icon === 'audiology';
-            const isSpeech = item.icon === 'speech';
-            const isPhysio = item.icon === 'physio';
 
             const cardBorder = isAudiology
               ? 'border-teal-200/90 hover:border-[#053543]'
-              : isSpeech
-              ? 'border-cyan-200/90 hover:border-[#0891b2]'
-              : 'border-lime-200/90 hover:border-[#65a30d]';
-
-            const iconBg = isAudiology
-              ? 'bg-[#053543] text-white shadow-sm'
-              : isSpeech
-              ? 'bg-[#0891b2] text-white shadow-sm'
-              : 'bg-[#65a30d] text-white shadow-sm';
+              : 'border-cyan-200/90 hover:border-[#0891b2]';
 
             const titleColor = isAudiology
               ? 'text-[#053543]'
-              : isSpeech
-              ? 'text-[#0891b2]'
-              : 'text-[#3f6212]';
+              : 'text-[#0891b2]';
 
             const badgeColor = isAudiology
               ? 'bg-teal-50 text-[#053543] border border-teal-200'
-              : isSpeech
-              ? 'bg-cyan-50 text-[#0891b2] border border-cyan-200'
-              : 'bg-lime-50 text-[#4d7c0f] border border-lime-200';
+              : 'bg-cyan-50 text-[#0891b2] border border-cyan-200';
 
             const arrowBg = isAudiology
               ? 'bg-teal-50 text-[#053543] group-hover:bg-[#053543] group-hover:text-white'
-              : isSpeech
-              ? 'bg-cyan-50 text-[#0891b2] group-hover:bg-[#0891b2] group-hover:text-white'
-              : 'bg-lime-50 text-[#65a30d] group-hover:bg-[#65a30d] group-hover:text-white';
+              : 'bg-cyan-50 text-[#0891b2] group-hover:bg-[#0891b2] group-hover:text-white';
 
             return (
               <div
@@ -1792,7 +1633,6 @@ export default function App() {
                   <div className="shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                     {item.icon === 'audiology' && <AudiologyMedicalIcon className="w-8 h-8 md:w-9 md:h-9 text-[#053543]" />}
                     {item.icon === 'speech' && <SpeechMedicalIcon className="w-8 h-8 md:w-9 md:h-9 text-[#0891b2]" />}
-                    {item.icon === 'physio' && <PhysiotherapyMedicalIcon className="w-9 h-9 md:w-10 md:h-10 text-[#2563eb]" />}
                   </div>
                   <div className="flex flex-col min-w-0">
                     <span className={`text-xs md:text-sm font-bold tracking-tight truncate leading-tight ${titleColor}`}>
@@ -1817,25 +1657,33 @@ export default function App() {
           })}
         </div>
 
-        {/* Main Hero Card (Card index 3) */}
+        {/* Main Hero Card (Card index 2) */}
         <MaskedCard
           cardRef={(el) => {
-            s1CardRefs.current[3] = el;
+            s1CardRefs.current[2] = el;
           }}
           bgImage={heroImage}
-          position={s1Positions[3]}
+          position={s1Positions[2] || s1Positions[0]}
           imageDimensions={s1ImageDimensions}
           focalX={isMobile ? 0.7 : 0.8}
-          style={s1Reveal.getAnimStyle(3)}
+          style={s1Reveal.getAnimStyle(2)}
           className="w-full flex-1 min-h-[380px] md:min-h-0 rounded-xl md:rounded-2xl overflow-hidden relative shadow-sm border border-neutral-200/50"
         >
           {/* Structured flex content container that prevents any overlapping */}
           <div className="relative z-10 h-full p-5 md:p-8 flex flex-col justify-between">
-            {/* Top row */}
+            {/* Top row with H1 for Search Engine Dominance */}
             <div>
-              <p className="text-black text-xs md:text-sm font-semibold leading-relaxed max-w-[320px] md:max-w-lg bg-white/85 backdrop-blur-md p-3 rounded-xl border border-neutral-200/60 shadow-sm">
-                Supporting communication, hearing and movement—from childhood development to adult rehabilitation.
-              </p>
+              <div className="bg-white/90 backdrop-blur-md p-3.5 sm:p-5 rounded-2xl border border-neutral-200/70 shadow-sm max-w-[340px] sm:max-w-xl">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0b3037] tracking-tight leading-snug">
+                  Shree Clinic
+                  <span className="block text-xs sm:text-sm md:text-base font-semibold text-neutral-600 mt-1">
+                    Speech Therapy, Audiology &amp; Hearing Rehabilitation
+                  </span>
+                </h1>
+                <p className="text-xs sm:text-sm font-medium text-neutral-700 leading-relaxed mt-2.5">
+                  Supporting communication, speech clarity and hearing health—from early childhood development to adult stroke speech recovery at Freedom Hospitals, Mokila.
+                </p>
+              </div>
             </div>
 
             {/* Bottom row */}
@@ -1913,7 +1761,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* 3 Clinical Disciplines - Solid High-Contrast Cards */}
+        {/* 2 Clinical Disciplines - Solid High-Contrast Cards */}
         <div
           ref={(el) => {
             s2CardRefs.current[1] = el;
@@ -1921,29 +1769,22 @@ export default function App() {
           style={s2Reveal.getAnimStyle(1)}
           className="rounded-xl md:rounded-2xl p-2 md:p-3 bg-stone-100 border border-neutral-200 shadow-sm"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 md:gap-3 h-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 max-w-4xl mx-auto gap-2.5 md:gap-3 h-full">
             {activeServices.map((svc, idx) => {
               const isAudiology = svc.icon === 'audiology' || svc.id === 'audiology';
               const isSpeech = svc.icon === 'speech' || svc.id === 'speech';
-              const isPhysio = svc.icon === 'physio' || svc.id === 'physio';
 
               const cardBorder = isAudiology
                 ? 'border-teal-200/90 hover:border-[#053543]'
-                : isSpeech
-                ? 'border-cyan-200/90 hover:border-[#0891b2]'
-                : 'border-lime-200/90 hover:border-[#65a30d]';
+                : 'border-cyan-200/90 hover:border-[#0891b2]';
 
               const activeStyle = isAudiology
                 ? 'border-2 border-[#053543] ring-2 ring-[#053543]/20 bg-gradient-to-br from-teal-50/80 via-white to-white shadow-md'
-                : isSpeech
-                ? 'border-2 border-[#0891b2] ring-2 ring-[#0891b2]/20 bg-gradient-to-br from-cyan-50/80 via-white to-white shadow-md'
-                : 'border-2 border-[#65a30d] ring-2 ring-[#65a30d]/20 bg-gradient-to-br from-lime-50/80 via-white to-white shadow-md';
+                : 'border-2 border-[#0891b2] ring-2 ring-[#0891b2]/20 bg-gradient-to-br from-cyan-50/80 via-white to-white shadow-md';
 
               const actionTextColor = isAudiology
                 ? 'text-[#053543]'
-                : isSpeech
-                ? 'text-[#0891b2]'
-                : 'text-[#4d7c0f]';
+                : 'text-[#0891b2]';
 
               return (
                 <div
@@ -1961,7 +1802,6 @@ export default function App() {
                     <div className="transition-all duration-300 group-hover:scale-110">
                       {isAudiology && <AudiologyMedicalIcon className="w-10 h-10 md:w-12 md:h-12 text-[#053543]" />}
                       {isSpeech && <SpeechMedicalIcon className="w-10 h-10 md:w-12 md:h-12 text-[#0891b2]" />}
-                      {isPhysio && <PhysiotherapyMedicalIcon className="w-11 h-11 md:w-13 md:h-13 text-[#2563eb]" />}
                     </div>
                   </div>
 
@@ -2009,7 +1849,7 @@ export default function App() {
                 Rehabilitation
               </h2>
               <p className="text-xs md:text-sm font-semibold text-neutral-800">
-                Restoring Hearing Clarity, Speech Fluency & Movement Independence
+                Restoring Hearing Clarity, Speech Fluency &amp; Communication Independence
               </p>
             </div>
 
@@ -2097,7 +1937,7 @@ export default function App() {
               Our Clinical Services
             </h2>
             <p className="text-sm md:text-base text-neutral-600 mt-2 max-w-2xl font-medium">
-              Evidence-based clinical care across Audiology, Speech Language Pathology, and Physiotherapy. Structured assessment, diagnosis, and rehabilitation for every condition.
+              Evidence-based clinical care across Audiology and Speech Language Pathology at Shree Clinic. Structured assessment, diagnosis, and rehabilitation for every condition.
             </p>
           </div>
 
@@ -2116,19 +1956,14 @@ export default function App() {
             </button>
             {detailedClinicServices.map((cat) => {
               const isAudiology = cat.id === 'audiology';
-              const isSpeech = cat.id === 'speech';
 
               const activeStyle = isAudiology
                 ? 'bg-[#053543] text-white border-[#053543] shadow-sm'
-                : isSpeech
-                ? 'bg-[#0891b2] text-white border-[#0891b2] shadow-sm'
-                : 'bg-[#65a30d] text-white border-[#65a30d] shadow-sm';
+                : 'bg-[#0891b2] text-white border-[#0891b2] shadow-sm';
 
               const inactiveStyle = isAudiology
                 ? 'bg-teal-50/90 hover:bg-teal-100 text-[#053543] border-teal-200'
-                : isSpeech
-                ? 'bg-cyan-50/90 hover:bg-cyan-100 text-cyan-900 border-cyan-200'
-                : 'bg-lime-50/90 hover:bg-lime-100 text-lime-900 border-lime-200';
+                : 'bg-cyan-50/90 hover:bg-cyan-100 text-cyan-900 border-cyan-200';
 
               return (
                 <button
@@ -2141,7 +1976,6 @@ export default function App() {
                 >
                   {cat.icon === 'audiology' && <AudiologyMedicalIcon className="w-3.5 h-3.5" />}
                   {cat.icon === 'speech' && <SpeechMedicalIcon className="w-3.5 h-3.5" />}
-                  {cat.icon === 'physio' && <PhysiotherapyMedicalIcon className="w-3.5 h-3.5" />}
                   <span>{cat.shortName}</span>
                 </button>
               );
@@ -2156,31 +1990,22 @@ export default function App() {
             .map((category) => {
               const isAudiology = category.id === 'audiology';
               const isSpeech = category.id === 'speech';
-              const isPhysio = category.id === 'physio';
 
               const accentColor = isAudiology
                 ? 'bg-[#053543]'
-                : isSpeech
-                ? 'bg-[#0891b2]'
-                : 'bg-[#65a30d]';
+                : 'bg-[#0891b2]';
 
               const badgeColor = isAudiology
                 ? 'bg-[#053543] text-white'
-                : isSpeech
-                ? 'bg-[#0891b2] text-white'
-                : 'bg-[#65a30d] text-white';
+                : 'bg-[#0891b2] text-white';
 
               const btnColor = isAudiology
                 ? 'bg-[#053543] hover:bg-[#0891b2] text-white'
-                : isSpeech
-                ? 'bg-[#0891b2] hover:bg-[#053543] text-white'
-                : 'bg-[#65a30d] hover:bg-[#4d7c0f] text-white';
+                : 'bg-[#0891b2] hover:bg-[#053543] text-white';
 
               const bulletHover = isAudiology
                 ? 'group-hover/item:text-[#053543]'
-                : isSpeech
-                ? 'group-hover/item:text-[#0891b2]'
-                : 'group-hover/item:text-[#65a30d]';
+                : 'group-hover/item:text-[#0891b2]';
 
               return (
                 <article
@@ -2238,8 +2063,6 @@ export default function App() {
                                       : activeGroupIdx === 3
                                       ? 'VitalStim® NMES'
                                       : 'Adult Therapy'
-                                    : isPhysio
-                                    ? 'Physical Rehabilitation'
                                     : 'Clinical Audiology'}
                                 </span>
                               </div>
@@ -2513,11 +2336,9 @@ export default function App() {
       {/* SECTION - WHEN TO CONSULT (MULTILINGUAL TE / HI / EN)    */}
       {/* ======================================================== */}
       <WhenToConsultSection
-        onBookClick={(dept) => {
+        onBookDepartment={(dept) => {
           const deptName = dept === 'speech' 
-            ? 'Speech Language Pathology' 
-            : dept === 'physio' 
-            ? 'Physiotherapy & Rehabilitation' 
+            ? 'Speech & Language Therapy' 
             : 'Audiology';
           handleInquireTreatment(deptName);
         }}
@@ -2543,7 +2364,7 @@ export default function App() {
               Patient Journey
             </h2>
             <p className="text-sm md:text-base text-neutral-600 mt-3 max-w-2xl font-medium leading-relaxed">
-              From unhurried clinical listening to measured lifelong milestones—experience how personalized therapy transforms lives across Audiology, Speech Therapy, and Physiotherapy.
+              From unhurried clinical listening to measured lifelong milestones—experience how personalized therapy transforms lives across Audiology, Speech Therapy, and Rehabilitation at Shree Clinic.
             </p>
           </div>
 
@@ -2581,7 +2402,7 @@ export default function App() {
               {
                 step: '02',
                 title: 'Objective Testing',
-                desc: 'We run high-precision assessments (audiometry, speech evaluations, mobility mapping) to find root causes.',
+                desc: 'We run high-precision assessments (pure tone audiometry, speech-language diagnostics, swallowing evaluations) to find root causes.',
                 highlight: 'Precision Diagnostics'
               },
               {
@@ -2630,7 +2451,7 @@ export default function App() {
             ))}
           </div>
           <p className="text-center text-xs sm:text-sm font-semibold text-neutral-500 mt-6 tracking-wide">
-            Across Audiology, Speech-Language Therapy and Physiotherapy.
+            Across Audiology and Speech-Language Therapy at Shree Clinic.
           </p>
         </div>
 
@@ -2688,14 +2509,11 @@ export default function App() {
               {patientReviews.map((rev) => {
                 const isAudiology = (rev.department || '').toLowerCase().includes('audiology');
                 const isSpeech = (rev.department || '').toLowerCase().includes('speech');
-                const isPhysio = (rev.department || '').toLowerCase().includes('physio');
 
                 const badgeColor = isAudiology
                   ? 'bg-teal-50 text-teal-800 border-teal-200'
                   : isSpeech
                   ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
-                  : isPhysio
-                  ? 'bg-lime-50 text-lime-800 border-lime-200'
                   : 'bg-stone-100 text-neutral-700 border-neutral-200';
 
                 return (
@@ -2896,7 +2714,7 @@ export default function App() {
                 Have a question before booking?
               </h3>
               <p className="text-xs md:text-sm text-neutral-700 leading-relaxed mb-6 font-medium">
-                Our care coordinators at Freedom Hospitals, Subishi Town Center are available directly on telephone or WhatsApp to answer questions regarding speech milestones, audiometry diagnostics, hearing aid trials, or home physiotherapy visits.
+                Our care coordinators at Freedom Hospitals, Subishi Town Center are available directly on telephone or WhatsApp to answer questions regarding speech milestones, audiometry diagnostics, hearing aid trials, or home speech therapy visits.
               </p>
 
               <div className="space-y-2.5">

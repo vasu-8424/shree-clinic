@@ -1,7 +1,7 @@
 export interface Specialist {
   id: string;
   role: string;
-  department: "Audiology" | "Speech Therapy" | "Physiotherapy" | "Rehabilitation";
+  department: "Audiology" | "Speech Therapy" | "Rehabilitation";
   name: string;
   qualification: string;
   registration: string;
@@ -34,25 +34,14 @@ export const specialistsData: Specialist[] = [
     availableDays: "Tuesday – Saturday"
   },
   {
-    id: "specialist-physio",
-    role: "Chief Physiotherapist & Rehabilitation Director",
-    department: "Physiotherapy",
-    name: "[CLINICAL SPECIALIST NAME — TO BE ANNOUNCED]",
-    qualification: "MPT / BPT [CREDENTIAL TO BE CONFIRMED]",
-    registration: "State Allied Healthcare Council [CONTENT REQUIRED]",
-    focus: "Neuro-Rehabilitation, Post-Surgical Orthopedics, Gait Retraining & Spine Dynamics",
-    bio: "Focusing on motor recovery, musculoskeletal kinetics, and tailored exercise rehabilitation to return patients to confident, pain-free daily activities.",
-    availableDays: "Monday – Friday"
-  },
-  {
     id: "specialist-pediatric",
     role: "Pediatric Rehabilitation & Child Development Consultant",
     department: "Rehabilitation",
     name: "[CLINICAL SPECIALIST NAME — TO BE ANNOUNCED]",
     qualification: "Clinical Developmental Fellow [CONTENT REQUIRED]",
     registration: "Licensed Healthcare Allied Professional [CONTENT REQUIRED]",
-    focus: "Early Child Development, Sensory Integration, Torticollis & Motor Coordination",
-    bio: "Passionate child developmental therapist helping children achieve vital communicative and motor milestones through engaging, family-integrated clinical protocols.",
+    focus: "Early Child Development, Sensory Integration, Speech Delays & Social Communication",
+    bio: "Passionate child developmental therapist helping children achieve vital communicative and cognitive milestones through engaging, family-integrated clinical protocols.",
     availableDays: "Monday – Saturday"
   }
 ];
