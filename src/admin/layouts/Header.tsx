@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
           </span>
           <span className="text-slate-600">/</span>
           <span className="text-sm font-semibold text-slate-200">
-            Audiology · Speech · Physiotherapy
+            Audiology · Speech · Rehabilitation
           </span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 {
   "name": "SHREE — Multidisciplinary Healthcare",
-  "description": "Ultra-premium digital experience for SHREE multidisciplinary clinic: Audiology, Speech Therapy, Physiotherapy, and Rehabilitation.",
+  "description": "Ultra-premium digital experience for SHREE clinic: Audiology, Speech Therapy, and Rehabilitation.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

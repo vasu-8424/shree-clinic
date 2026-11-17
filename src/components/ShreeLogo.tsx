@@ -112,7 +112,7 @@ export const ShreeLogo: React.FC<ShreeLogoProps> = ({
               className="text-[10px] tracking-[0.16em] uppercase font-medium mt-1 font-body"
               style={{ color: subtextColor }}
             >
-              Audiology · Speech · Physiotherapy
+              Audiology · Speech · Rehabilitation
             </span>
           )}
         </div>
